@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Powered TVET Pilot Initiative — Africa Partnership Framework</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #1A2E42;
+    --navy-light: #243B55;
+    --gold: #C8922A;
+    --gold-light: #E8B84B;
+    --gold-pale: #F5E6C8;
+    --teal: #2A9D8F;
+    --teal-light: #4BBDAD;
+    --teal-pale: #D4F0EC;
+    --sand: #F7F3EE;
+    --sand-dark: #EDE6DB;
+    --white: #FFFFFF;
+    --text-dark: #0D1B2A;
+    --text-mid: #3A4A5C;
+    --text-light: #6B7D8F;
+    --border: rgba(13,27,42,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--sand);
+    color: var(--text-dark);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    background: var(--navy);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 56px;
+    border-bottom: 1px solid rgba(200,146,42,0.3);
+  }
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    color: var(--gold-light);
+    letter-spacing: 0.02em;
+    font-weight: 400;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    color: var(--white);
+    padding: 5rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,146,42,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(42,157,143,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 860px; margin: 0 auto; position: relative; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(200,146,42,0.2);
+    border: 1px solid rgba(200,146,42,0.4);
+    color: var(--gold-light);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.65);
+    max-width: 620px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-meta-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 3px;
+  }
+  .hero-meta-value {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 400;
+  }
+
+  /* MAIN LAYOUT */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 3rem; }
+
+  section { padding: 4rem 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  .section-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+  }
+  .section-body {
+    color: var(--text-mid);
+    line-height: 1.8;
+    max-width: 680px;
+    margin-bottom: 2rem;
+    font-size: 15px;
+  }
+
+  /* PROBLEM CARDS */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+  .problem-card {
+    background: var(--white);
+    padding: 1.75rem;
+  }
+  .problem-icon {
+    width: 36px; height: 36px;
+    background: var(--sand);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 18px;
+  }
+  .problem-card h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+  .problem-card p {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.65;
+  }
+
+  /* COUNTRIES */
+  .country-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .country-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .country-header {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .country-flag {
+    font-size: 24px;
+    line-height: 1;
+  }
+  .country-name {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--navy);
+  }
+  .country-body { padding: 1.25rem 1.5rem; }
+  .country-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--sand-dark);
+    font-size: 13px;
+  }
+  .country-stat:last-child { border-bottom: none; }
+  .country-stat-label { color: var(--text-light); }
+  .country-stat-value { color: var(--navy); font-weight: 500; font-size: 13px; }
+  .country-tag {
+    display: inline-block;
+    background: var(--teal-pale);
+    color: var(--teal);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-top: 1rem;
+    font-weight: 500;
+  }
+
+  /* WHO WE SERVE */
+  .target-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  .target-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .target-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .target-card.c-youth::before { background: var(--teal); }
+  .target-card.c-instructor::before { background: var(--gold); }
+  .target-card.c-institution::before { background: var(--navy); }
+  .target-card.c-employer::before { background: #7B5EA7; }
+  .target-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+    margin-bottom: 1rem;
+  }
+  .target-card.c-youth .target-avatar { background: var(--teal-pale); }
+  .target-card.c-instructor .target-avatar { background: var(--gold-pale); }
+  .target-card.c-institution .target-avatar { background: rgba(13,27,42,0.06); }
+  .target-card.c-employer .target-avatar { background: #EDE8F5; }
+  .target-card h3 { font-size: 14px; font-weight: 500; color: var(--navy); margin-bottom: 0.4rem; }
+  .target-card .target-who { font-size: 12px; color: var(--text-light); margin-bottom: 0.75rem; font-style: italic; }
+  .target-card p { font-size: 13px; color: var(--text-mid); line-height: 1.65; }
+  .target-need {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--sand-dark);
+    font-size: 12px;
+    color: var(--text-light);
+  }
+  .target-need strong { color: var(--navy); font-weight: 500; display: block; margin-bottom: 2px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* WHAT & WHY — country deep dives */
+  .country-deep {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .deep-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .deep-header {
+    background: var(--navy);
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .deep-header .flag { font-size: 22px; }
+  .deep-header h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 300; color: var(--white); }
+  .deep-header .deep-sector { font-size: 11px; color: var(--gold-light); margin-left: auto; background: rgba(200,146,42,0.2); padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+  .deep-body { padding: 1.5rem; }
+  .deep-block { margin-bottom: 1.25rem; }
+  .deep-block:last-child { margin-bottom: 0; }
+  .deep-block-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .deep-block p { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
+  .deep-intervention {
+    background: var(--sand);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .deep-intervention li {
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.65;
+    padding: 4px 0;
+    padding-left: 1rem;
+    position: relative;
+    list-style: none;
+  }
+  .deep-intervention li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 12px;
+  }
+
+  /* OUTPUTS & OUTCOMES */
+  .outputs-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .output-col h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid;
+  }
+  .output-col.tangible h3 { color: var(--navy); border-color: var(--navy); }
+  .output-col.outcomes h3 { color: var(--teal); border-color: var(--teal); }
+  .output-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .output-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .tangible .output-icon { background: rgba(13,27,42,0.06); }
+  .outcomes .output-icon { background: var(--teal-pale); }
+  .output-item h4 { font-size: 13px; font-weight: 500; color: var(--navy); margin-bottom: 3px; }
+  .output-item p { font-size: 12px; color: var(--text-light); line-height: 1.55; }
+  .scale-note {
+    grid-column: 1 / -1;
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 1.75rem;
+    color: var(--white);
+    margin-top: 0.5rem;
+  }
+  .scale-note h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 300; color: var(--gold-light); margin-bottom: 0.75rem; }
+  .scale-note p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.75; }
+  .scale-steps {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+  .scale-step {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .scale-step span { color: var(--gold-light); font-weight: 500; }
+
+  /* THREE PILLARS */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .pillar {
+    position: relative;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .pillar:hover {
+    border-color: var(--gold);
+    box-shadow: 0 4px 20px rgba(200,146,42,0.1);
+  }
+  .pillar.active {
+    border-color: var(--navy);
+    background: var(--navy);
+    color: var(--white);
+  }
+  .pillar-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--sand-dark);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    transition: color 0.2s;
+  }
+  .pillar.active .pillar-num { color: rgba(255,255,255,0.2); }
+  .pillar h3 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: inherit;
+  }
+  .pillar p {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.6;
+    transition: color 0.2s;
+  }
+  .pillar.active p { color: rgba(255,255,255,0.6); }
+  .pillar-detail {
+    display: none;
+    grid-column: 1 / -1;
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 2rem;
+    color: var(--white);
+    animation: fadeIn 0.25s ease;
+  }
+  .pillar-detail.visible { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  .pillar-detail h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    color: var(--gold-light);
+  }
+  .pillar-detail ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .pillar-detail ul li {
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    line-height: 1.55;
+  }
+  .pillar-detail ul li::before {
+    content: '→';
+    color: var(--gold-light);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* PARTNERSHIP MODEL */
+  .partner-model {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr 40px 1fr;
+    align-items: center;
+    gap: 0;
+    margin-top: 2rem;
+  }
+  .partner-node {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .partner-node.highlight {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+  }
+  .partner-icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    margin: 0 auto 0.75rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .partner-node.highlight .partner-icon { background: rgba(255,255,255,0.1); }
+  .partner-node:not(.highlight) .partner-icon { background: var(--sand); }
+  .partner-node h4 {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+    color: inherit;
+  }
+  .partner-node p {
+    font-size: 11px;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+  .partner-node.highlight p { color: rgba(255,255,255,0.55); }
+  .partner-arrow {
+    text-align: center;
+    color: var(--gold);
+    font-size: 18px;
+  }
+
+  /* FINANCIERS TAB */
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    background: var(--sand-dark);
+    padding: 4px;
+    border-radius: 10px;
+    margin-top: 2rem;
+    max-width: 460px;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    color: var(--text-mid);
+    transition: all 0.15s;
+  }
+  .tab-btn.active {
+    background: var(--white);
+    color: var(--navy);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .tab-panel { display: none; margin-top: 1.5rem; animation: fadeIn 0.2s ease; }
+  .tab-panel.active { display: block; }
+  .funder-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+  }
+  .funder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+  }
+  .funder-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--navy);
+  }
+  .funder-badge {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: var(--gold-pale);
+    color: var(--gold);
+  }
+  .funder-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .funder-item label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-light);
+    margin-bottom: 4px;
+  }
+  .funder-item p {
+    font-size: 13px;
+    color: var(--text-dark);
+    font-weight: 400;
+  }
+  .funder-pitch {
+    background: var(--sand);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    font-size: 13px;
+    color: var(--text-mid);
+    line-height: 1.7;
+    border-left: 3px solid var(--gold);
+  }
+  .funder-pitch strong { color: var(--navy); font-weight: 500; }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    margin-top: 2rem;
+    padding-left: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--sand-dark);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot {
+    position: absolute;
+    left: -2rem;
+    top: 5px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--sand-dark);
+    transition: border-color 0.2s;
+  }
+  .tl-item.done .tl-dot {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+  .tl-item.active .tl-dot {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .tl-phase {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-light);
+    margin-bottom: 3px;
+  }
+  .tl-title {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 0.35rem;
+  }
+  .tl-desc {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  .tl-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 0.5rem;
+  }
+  .tl-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--sand-dark);
+    color: var(--text-mid);
+  }
+
+  /* KPI */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .kpi-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .kpi-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .kpi-num span { font-size: 1.2rem; color: var(--gold); }
+  .kpi-label {
+    font-size: 12px;
+    color: var(--text-light);
+    line-height: 1.4;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: var(--navy);
+    color: var(--white);
+    padding: 4rem 3rem;
+    text-align: center;
+  }
+  .cta-section h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+  .cta-section p {
+    color: rgba(255,255,255,0.6);
+    max-width: 520px;
+    margin: 0 auto 2rem;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); }
+  .btn-outline {
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.6); }
+
+  /* CONTACT */
+  .contact-strip {
+    background: var(--sand-dark);
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .contact-info {
+    font-size: 13px;
+    color: var(--text-mid);
+  }
+  .contact-info strong { color: var(--navy); }
+  .doc-meta {
+    font-size: 11px;
+    color: var(--text-light);
+    text-align: right;
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .hero { padding: 3rem 1.25rem 2.5rem; }
+    .container { padding: 0 1.25rem; }
+    .country-grid, .pillars { grid-template-columns: 1fr; }
+    .partner-model { grid-template-columns: 1fr; }
+    .partner-arrow { transform: rotate(90deg); }
+    .pillar-detail ul { grid-template-columns: 1fr; }
+    .funder-grid { grid-template-columns: 1fr; }
+    .cta-section { padding: 3rem 1.25rem; }
+    .contact-strip { padding: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">IEG × Africa TVET Partnership</div>
+  <ul class="nav-links">
+    <li><a href="#rationale">Challenge</a></li>
+    <li><a href="#who">Who We Serve</a></li>
+    <li><a href="#whatwhy">What & Why</a></li>
+    <li><a href="#outputs">Outputs</a></li>
+    <li><a href="#model">Model</a></li>
+    <li><a href="#financing">Financing</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Strategic Partnership Proposal · 2026</div>
+    <h1>AI-Powered TVET for <em>Africa's</em><br>Manufacturing Future</h1>
+    <p class="hero-sub">A co-designed pilot initiative integrating Korean smart factory training infrastructure with AI-assisted pedagogy — built with and for local TVET experts in South Africa and Zambia.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Lead Partner</span>
+        <span class="hero-meta-value">IEG Co., Ltd. (Korea)</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Pilot Countries</span>
+        <span class="hero-meta-value">South Africa · Zambia</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Pilot Duration</span>
+        <span class="hero-meta-value">18 months</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Financing Channels</span>
+        <span class="hero-meta-value">GIZ · AfDB · USAID</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SECTION 1: RATIONALE -->
+<section id="rationale">
+  <div class="container">
+    <div class="section-label">The Challenge</div>
+    <h2 class="section-title">Africa's Skills Gap Is a<br>Solvable Infrastructure Problem</h2>
+    <p class="section-body">
+      Sub-Saharan Africa's manufacturing sector is expanding, yet TVET institutions struggle to deliver industry-aligned, technology-integrated training. The gap is not a lack of ambition — it is a lack of the right tools, qualified instructors, and adaptive content delivery at scale.
+    </p>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">⚡</div>
+        <h3>Infrastructure constraints</h3>
+        <p>Unreliable power supply and limited lab equipment leave learners without hands-on exposure to modern industrial systems.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">👩‍🏫</div>
+        <h3>Instructor capacity gap</h3>
+        <p>Qualified TVET trainers in smart manufacturing are scarce. When equipment exists, the expertise to teach with it often does not.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📋</div>
+        <h3>Certification misalignment</h3>
+        <p>Training programmes often lack alignment with recognised qualification frameworks (NQF, TEVETA, BTEC), limiting graduate employability.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">🤝</div>
+        <h3>Industry linkage deficit</h3>
+        <p>TVET institutions rarely have structured pathways to manufacturing employers, leaving graduates without clear employment pipelines.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: WHO WE SERVE -->
+<section id="who">
+  <div class="container">
+    <div class="section-label">Target Beneficiaries</div>
+    <h2 class="section-title">Who We Serve — and What They Need</h2>
+    <p class="section-body">
+      This pilot targets four distinct beneficiary groups whose needs are interconnected. Solving for one without the others produces programmes that look good on paper but fail in practice. IEG's integrated approach addresses all four simultaneously.
+    </p>
+    <div class="target-grid">
+      <div class="target-card c-youth">
+        <div class="target-avatar">🧑‍🔧</div>
+        <h3>Young Job Seekers</h3>
+        <div class="target-who">Ages 18–30 · NEET population · school-to-work transition</div>
+        <p>Young people who have completed secondary education but cannot access formal employment because their skills do not match what manufacturers actually need on the factory floor.</p>
+        <div class="target-need">
+          <strong>Core unmet need</strong>
+          Hands-on, industry-relevant technical training with a recognised qualification that employers trust — delivered in their own language and context.
+        </div>
+      </div>
+      <div class="target-card c-instructor">
+        <div class="target-avatar">👩‍🏫</div>
+        <h3>TVET Instructors</h3>
+        <div class="target-who">Existing college staff · technical trainers · workshop facilitators</div>
+        <p>Instructors who are experienced educators but have not had access to modern smart factory equipment or digital pedagogy tools. Their knowledge is deep — their toolbox is outdated.</p>
+        <div class="target-need">
+          <strong>Core unmet need</strong>
+          Practical upskilling on IEG equipment, AI-assisted teaching tools, and updated curriculum frameworks that align with current industry standards.
+        </div>
+      </div>
+      <div class="target-card c-institution">
+        <div class="target-avatar">🏛️</div>
+        <h3>TVET Institutions</h3>
+        <div class="target-who">Public TVET colleges · polytechnics · training centres</div>
+        <p>Institutions that want to modernise but face budget constraints, procurement complexity, and lack of technical implementation support. Equipment alone is not enough — they need a complete system.</p>
+        <div class="target-need">
+          <strong>Core unmet need</strong>
+          A turnkey Living Lab model: equipment, curriculum, AI delivery platform, instructor training, and qualification accreditation — implemented as one integrated package.
+        </div>
+      </div>
+      <div class="target-card c-employer">
+        <div class="target-avatar">🏭</div>
+        <h3>Manufacturing Employers</h3>
+        <div class="target-who">Automotive · electronics · mining processing · light manufacturing</div>
+        <p>Companies hiring at volume who spend significant resources re-training TVET graduates because entry-level skills do not match production line requirements. They want reliable talent pipelines, not one-off recruits.</p>
+        <div class="target-need">
+          <strong>Core unmet need</strong>
+          A predictable pipeline of graduates whose practical competencies are verified against real equipment — with qualifications they can trust without additional internal testing.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: WHAT WE DO & WHY — country deep dives -->
+<section id="whatwhy">
+  <div class="container">
+    <div class="section-label">Country-Specific Intervention</div>
+    <h2 class="section-title">What We Do, and Why It Matters Here</h2>
+    <p class="section-body">
+      The same structural problems — skills mismatch, outdated equipment, no employer linkage — manifest differently in South Africa and Zambia. Each country receives a tailored intervention designed with local TVET experts, not imported wholesale from Korea.
+    </p>
+    <div class="country-deep">
+
+      <div class="deep-card">
+        <div class="deep-header">
+          <div class="flag">🇿🇦</div>
+          <h3>South Africa</h3>
+          <div class="deep-sector">Automotive · E&E</div>
+        </div>
+        <div class="deep-body">
+          <div class="deep-block">
+            <div class="deep-block-label">The local reality</div>
+            <p>South Africa has one of the continent's most developed TVET systems — 50 public colleges, an NQF framework, and active SETAs — yet youth unemployment exceeds 60%. The problem is not the absence of TVET; it is the disconnect between what colleges teach and what the automotive and electronics manufacturing sectors actually require. Employers report that graduates lack practical, equipment-level competency.</p>
+          </div>
+          <div class="deep-block">
+            <div class="deep-block-label">Why IEG's approach works here</div>
+            <p>South Africa's qualification infrastructure is mature enough to absorb an aligned intervention immediately. IEG equipment maps directly onto merSETA (Manufacturing, Engineering and Related Services SETA) unit standards. The AI layer (Emotii) addresses the instructor capacity shortage without requiring new hires. Most importantly, the co-design model ensures NQF Level 4 certification is embedded from day one — not retrofitted.</p>
+          </div>
+          <div class="deep-block">
+            <div class="deep-block-label">Specific interventions</div>
+            <div class="deep-intervention">
+              <ul>
+                <li>Deploy IEG 3432 E&E workstations aligned to merSETA electrical unit standards</li>
+                <li>Install IEG 3200-M Smart Factory Trainer in one host college as a certified Living Lab</li>
+                <li>Co-author NQF Level 4 curriculum with local TVET experts and merSETA advisors</li>
+                <li>AI tutoring in English + isiZulu/Afrikaans to close language-access barriers</li>
+                <li>Structured employer placement programme with 3 anchor manufacturers in Gauteng / KZN</li>
+                <li>Instructor upskilling certification: 15 trainers through IEG Train-the-Trainer programme</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="deep-card">
+        <div class="deep-header">
+          <div class="flag">🇿🇲</div>
+          <h3>Zambia</h3>
+          <div class="deep-sector">Mining Process · Manufacturing</div>
+        </div>
+        <div class="deep-body">
+          <div class="deep-block">
+            <div class="deep-block-label">The local reality</div>
+            <p>Zambia's copper mining sector and adjacent manufacturing industry are expanding rapidly — but the TVET system, overseen by TEVETA, struggles to keep pace. Equipment in most colleges is 15–20 years old. Load-shedding (up to 14 hours daily in some regions) makes technology-dependent training unreliable. Instructors are willing but under-resourced. Employers — increasingly including Chinese and international mining operators — cannot find locally trained technicians at the skill level they require.</p>
+          </div>
+          <div class="deep-block">
+            <div class="deep-block-label">Why IEG's approach works here</div>
+            <p>IEG's equipment is designed for industrial training environments, not university labs — robust, modular, and serviceable. The hybrid power configuration (solar-assisted) directly addresses load-shedding. The AI-assisted delivery model with offline capability means training continues even when connectivity fails. TEVETA's willingness to co-accredit with Korean SKKNI standards creates an internationally portable qualification that mining operators recognise.</p>
+          </div>
+          <div class="deep-block">
+            <div class="deep-block-label">Specific interventions</div>
+            <div class="deep-intervention">
+              <ul>
+                <li>Deploy IEG 3200-M (PLC/automation) and IEG 6030 (mechatronics) at one TEVETA-accredited college</li>
+                <li>Solar-assisted hybrid power supply integrated into Living Lab setup</li>
+                <li>Offline-capable AI curriculum delivery via Emotii platform (English + Nyanja/Bemba)</li>
+                <li>Co-author TEVETA Level 4 Electrical/Mechanical Technician programme with local TVET experts</li>
+                <li>Direct employer MOU with 2–3 copper processing or manufacturing operators for graduate intake</li>
+                <li>Instructor certification: 10 trainers through adapted IEG Train-the-Trainer programme</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: OUTPUTS & OUTCOMES -->
+<section id="outputs">
+  <div class="container">
+    <div class="section-label">What This Pilot Produces</div>
+    <h2 class="section-title">Tangible Outputs & Long-Term Outcomes</h2>
+    <p class="section-body">
+      Development programmes often conflate activity with impact. This pilot is designed around a clear distinction: outputs are what we produce; outcomes are what changes in people's lives as a result. Both are tracked, verified, and reported.
+    </p>
+    <div class="outputs-layout">
+
+      <div class="output-col tangible">
+        <h3>Tangible Outputs — What Is Produced</h3>
+        <div class="output-item">
+          <div class="output-icon">📦</div>
+          <div>
+            <h4>2 Fully Operational Living Labs</h4>
+            <p>One per country — equipped, staffed, and accredited. Each lab remains operational beyond the pilot as a permanent institutional asset.</p>
+          </div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon">📄</div>
+          <div>
+            <h4>2 Co-Accredited Qualification Pathways</h4>
+            <p>NQF Level 4 (South Africa, via merSETA) and TEVETA Level 4 (Zambia), both mapped to BTEC unit standards for international portability.</p>
+          </div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon">📚</div>
+          <div>
+            <h4>Full Curriculum Package</h4>
+            <p>200+ hours of co-designed instructional content per country, available in English and one local language, integrated into the Emotii AI platform.</p>
+          </div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon">👩‍🏫</div>
+          <div>
+            <h4>25 Certified Instructors</h4>
+            <p>15 in South Africa, 10 in Zambia — each certified through the IEG Train-the-Trainer programme and capable of independently delivering the curriculum.</p>
+          </div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon">🤝</div>
+          <div>
+            <h4>Employer Partnership MOUs</h4>
+            <p>Signed agreements with 5+ manufacturing or mining employers per country, committing to graduate intake pipelines and providing input into curriculum relevance reviews.</p>
+          </div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon">📊</div>
+          <div>
+            <h4>Replication Playbook</h4>
+            <p>A documented, open-access methodology for replicating the AI-TVET Living Lab model in other Sub-Saharan African contexts — designed for use by development funders and national TVET bodies.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="output-col outcomes">
+        <h3>Long-Term Outcomes — What Changes</h3>
+        <div class="output-item">
+          <div class="output-icon">💼</div>
+          <div>
+            <h4>Employed Graduates, Not Just Certified Ones</h4>
+            <p>Target: 70% of pilot graduates in formal employment within 6 months of qualification. Tracked at 6, 12, and 24 months via employer and graduate surveys.</p>
+          </div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon">💰</div>
+          <div>
+            <h4>Measurable Wage Premium</h4>
+            <p>Graduates entering manufacturing roles with verified practical competency command higher starting wages. Target: 20–30% wage premium over non-TVET-qualified peers in equivalent roles.</p>
+          </div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon">🌍</div>
+          <div>
+            <h4>Institutional Capacity That Outlasts the Pilot</h4>
+            <p>Certified instructors, accredited curricula, and functional equipment remain with the host institutions permanently. The pilot ends; the capability does not.</p>
+          </div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon">♀️</div>
+          <div>
+            <h4>Women in Technical Roles</h4>
+            <p>40% female enrolment target with dedicated outreach. Intentional design of learning environments, AI delivery, and scheduling to remove structural barriers for women entering manufacturing.</p>
+          </div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon">🔄</div>
+          <div>
+            <h4>A Replicable Model for the Continent</h4>
+            <p>If the pilot succeeds — and the design is built to ensure it does — the model is immediately replicable across other SADC countries with comparable industrial sectors. Scale-up proposal to development funders at Month 18.</p>
+          </div>
+        </div>
+        <div class="output-item">
+          <div class="output-icon">🧠</div>
+          <div>
+            <h4>AI-Assisted TVET as a Proven Methodology</h4>
+            <p>Published evidence base demonstrating that AI-assisted delivery meaningfully improves learning outcomes and qualification pass rates in resource-constrained TVET environments — contributing to the global knowledge base.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="scale-note">
+        <h3>Beyond the Pilot: The Case for Scale</h3>
+        <p>The 18-month pilot is designed as proof of concept, not an end in itself. Every design decision — from equipment selection to qualification alignment to AI platform architecture — is made with replication in mind. A successful pilot in South Africa and Zambia creates the evidence base, the methodology, and the institutional relationships needed to scale across the SADC region and beyond.</p>
+        <div class="scale-steps">
+          <div class="scale-step"><span>Phase 1</span> SA + Zambia pilot (200 learners)</div>
+          <div class="scale-step"><span>Phase 2</span> SADC expansion: Zimbabwe, Tanzania, Mozambique</div>
+          <div class="scale-step"><span>Phase 3</span> AfDB / GIZ scale-up financing (1,000+ learners/year)</div>
+          <div class="scale-step"><span>Phase 4</span> Open-access replication playbook for national TVET bodies</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<section id="countries">
+  <div class="container">
+    <div class="section-label">Pilot Focus</div>
+    <h2 class="section-title">Why South Africa & Zambia</h2>
+    <p class="section-body">
+      Both countries offer distinct but complementary advantages: South Africa's mature qualification infrastructure and Zambia's rapid industrial growth create an ideal dual-country pilot — one enabling certification precedent, the other scaling impact.
+    </p>
+    <div class="country-grid">
+      <div class="country-card">
+        <div class="country-header">
+          <div class="country-flag">🇿🇦</div>
+          <div>
+            <div class="country-name">South Africa</div>
+          </div>
+        </div>
+        <div class="country-body">
+          <div class="country-stat">
+            <span class="country-stat-label">Qualification body</span>
+            <span class="country-stat-value">SETA / NQF</span>
+          </div>
+          <div class="country-stat">
+            <span class="country-stat-label">Target sectors</span>
+            <span class="country-stat-value">Automotive · E&E</span>
+          </div>
+          <div class="country-stat">
+            <span class="country-stat-label">Youth unemployment</span>
+            <span class="country-stat-value">~60%</span>
+          </div>
+          <div class="country-stat">
+            <span class="country-stat-label">Active funders</span>
+            <span class="country-stat-value">GIZ, FCDO, EU</span>
+          </div>
+          <div class="country-stat">
+            <span class="country-stat-label">Strategic value</span>
+            <span class="country-stat-value">Certification precedent</span>
+          </div>
+          <div class="country-tag">NQF ↔ BTEC alignment pathway</div>
+        </div>
+      </div>
+      <div class="country-card">
+        <div class="country-header">
+          <div class="country-flag">🇿🇲</div>
+          <div>
+            <div class="country-name">Zambia</div>
+          </div>
+        </div>
+        <div class="country-body">
+          <div class="country-stat">
+            <span class="country-stat-label">Qualification body</span>
+            <span class="country-stat-value">TEVETA</span>
+          </div>
+          <div class="country-stat">
+            <span class="country-stat-label">Target sectors</span>
+            <span class="country-stat-value">Mining · Manufacturing</span>
+          </div>
+          <div class="country-stat">
+            <span class="country-stat-label">Industrial growth</span>
+            <span class="country-stat-value">Copper corridor expansion</span>
+          </div>
+          <div class="country-stat">
+            <span class="country-stat-label">Active funders</span>
+            <span class="country-stat-value">AfDB, USAID, WB</span>
+          </div>
+          <div class="country-stat">
+            <span class="country-stat-label">Strategic value</span>
+            <span class="country-stat-value">Scalable industrial demand</span>
+          </div>
+          <div class="country-tag">TEVETA ↔ SKKNI alignment pathway</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: THREE PILLARS -->
+<section id="model">
+  <div class="container">
+    <div class="section-label">Our Approach</div>
+    <h2 class="section-title">Three Pillars, One Integrated Pilot</h2>
+    <p class="section-body">
+      This initiative is not a technology transfer project. It is a co-designed system where each pillar reinforces the others — local expertise shapes how Korean infrastructure is deployed, and AI-assisted delivery makes both sustainable.
+    </p>
+    <div class="pillars" id="pillars">
+      <div class="pillar" onclick="togglePillar(0)">
+        <div class="pillar-num">01</div>
+        <h3>Smart Factory Infrastructure</h3>
+        <p>IEG training equipment deployed as a Living Lab within existing TVET institutions.</p>
+      </div>
+      <div class="pillar" onclick="togglePillar(1)">
+        <div class="pillar-num">02</div>
+        <h3>AI-Assisted Pedagogy</h3>
+        <p>Multilingual AI tutoring layer (Emotii) that adapts to learner pace and local language context.</p>
+      </div>
+      <div class="pillar" onclick="togglePillar(2)">
+        <div class="pillar-num">03</div>
+        <h3>Co-Designed Curriculum</h3>
+        <p>NQF/TEVETA-aligned curriculum built jointly with local TVET experts and industry employers.</p>
+      </div>
+      <div class="pillar-detail" id="detail-0">
+        <h4>Smart Factory Infrastructure — What Gets Deployed</h4>
+        <ul>
+          <li>IEG 3200-M Smart Factory Trainer (PLC + HMI + pneumatics integration)</li>
+          <li>IEG 3432 Electrical/Electronics workstation for industrial diagnostics</li>
+          <li>IEG 6030 Mechatronics training system with sensor integration</li>
+          <li>Hybrid power configuration (solar + grid) for load-shedding resilience</li>
+          <li>Remote monitoring dashboard for equipment health and utilisation tracking</li>
+          <li>On-site installation + 2-year maintenance agreement included</li>
+        </ul>
+      </div>
+      <div class="pillar-detail" id="detail-1">
+        <h4>AI-Assisted Pedagogy — How It Works</h4>
+        <ul>
+          <li>Emotii AI platform: multilingual content delivery (English + local language support)</li>
+          <li>Adaptive assessment engine that identifies knowledge gaps in real time</li>
+          <li>Instructor dashboard: tracks cohort progress, flags struggling learners</li>
+          <li>Offline-capable mode for low-bandwidth and unreliable connectivity environments</li>
+          <li>AI-generated simulations supplement physical equipment when unavailable</li>
+          <li>Content library co-authored with local TVET instructors during pilot phase</li>
+        </ul>
+      </div>
+      <div class="pillar-detail" id="detail-2">
+        <h4>Co-Designed Curriculum — The Partnership Process</h4>
+        <ul>
+          <li>Joint curriculum workshop: IEG technical team + local TVET experts (3-day intensive)</li>
+          <li>Industry demand mapping with manufacturing employers in each pilot country</li>
+          <li>NQF Level 4 / TEVETA Level 4 qualification pathway designed from the outset</li>
+          <li>BTEC unit mapping for international portability of qualifications</li>
+          <li>Local experts hold Co-PI status — equal decision-making authority in design</li>
+          <li>Six-month review cycle with employer satisfaction and employment rate tracking</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: PARTNERSHIP MODEL -->
+<section>
+  <div class="container">
+    <div class="section-label">Governance</div>
+    <h2 class="section-title">Co-PI Partnership Structure</h2>
+    <p class="section-body">
+      This pilot rejects the "donor-recipient" dynamic. All three parties hold equal design authority. Local TVET experts are not implementation consultants — they are co-owners of the programme from the first workshop to final evaluation.
+    </p>
+    <div class="partner-model">
+      <div class="partner-node">
+        <div class="partner-icon">🇰🇷</div>
+        <h4>IEG Co., Ltd.</h4>
+        <p>Training equipment, curriculum technical base, AI integration, Korea TVET methodology</p>
+      </div>
+      <div class="partner-arrow">⟷</div>
+      <div class="partner-node highlight">
+        <div class="partner-icon">🌍</div>
+        <h4>Local TVET Experts</h4>
+        <p>Co-PI status · NQF/TEVETA navigation · industry demand mapping · cultural adaptation</p>
+      </div>
+      <div class="partner-arrow">⟷</div>
+      <div class="partner-node">
+        <div class="partner-icon">🏛️</div>
+        <h4>TVET Institution</h4>
+        <p>Living Lab host · learner cohort · instructor capacity development · institutional endorsement</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: FINANCING -->
+<section id="financing">
+  <div class="container">
+    <div class="section-label">Development Finance</div>
+    <h2 class="section-title">Financing Pathways</h2>
+    <p class="section-body">
+      The pilot is designed to align with active funding instruments across three development finance channels. Each funder receives a tailored narrative — but the underlying programme is the same.
+    </p>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('giz')">GIZ</button>
+      <button class="tab-btn" onclick="switchTab('afdb')">AfDB</button>
+      <button class="tab-btn" onclick="switchTab('usaid')">USAID</button>
+    </div>
+
+    <div class="tab-panel active" id="tab-giz">
+      <div class="funder-card">
+        <div class="funder-header">
+          <div class="funder-name">Deutsche Gesellschaft für Internationale Zusammenarbeit</div>
+          <div class="funder-badge">Skills & Employment</div>
+        </div>
+        <div class="funder-grid">
+          <div class="funder-item">
+            <label>Relevant programmes</label>
+            <p>GIZ TVET Reform, Skills for Employment (SfE), ProFEB</p>
+          </div>
+          <div class="funder-item">
+            <label>Entry mechanism</label>
+            <p>Technical assistance grant · innovation pilot co-financing</p>
+          </div>
+          <div class="funder-item">
+            <label>Estimated pilot budget</label>
+            <p>USD 350,000 – 550,000 (18 months)</p>
+          </div>
+          <div class="funder-item">
+            <label>Approval timeline</label>
+            <p>6–9 months from concept note submission</p>
+          </div>
+        </div>
+        <div class="funder-pitch">
+          <strong>Pitch angle:</strong> This pilot delivers GIZ's TVET innovation agenda through a genuinely co-designed model — Korean technology adapted to African qualification frameworks by African experts. It generates a replicable, evidence-based methodology that GIZ can scale across the continent.
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-afdb">
+      <div class="funder-card">
+        <div class="funder-header">
+          <div class="funder-name">African Development Bank</div>
+          <div class="funder-badge">Jobs for Youth</div>
+        </div>
+        <div class="funder-grid">
+          <div class="funder-item">
+            <label>Relevant programmes</label>
+            <p>Jobs for Youth in Africa, AREF, TVET Centres of Excellence</p>
+          </div>
+          <div class="funder-item">
+            <label>Entry mechanism</label>
+            <p>Pilot project grant · AREF technical assistance window</p>
+          </div>
+          <div class="funder-item">
+            <label>Estimated pilot budget</label>
+            <p>USD 400,000 – 700,000 (18 months)</p>
+          </div>
+          <div class="funder-item">
+            <label>Approval timeline</label>
+            <p>8–12 months from full proposal submission</p>
+          </div>
+        </div>
+        <div class="funder-pitch">
+          <strong>Pitch angle:</strong> The AfDB's Jobs for Youth mandate demands demonstrated employment outcomes — not training outputs. This pilot embeds employer partnerships from day one and tracks employment rates as primary KPIs, producing the evidence AfDB needs for scale-up lending.
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="tab-usaid">
+      <div class="funder-card">
+        <div class="funder-header">
+          <div class="funder-name">U.S. Agency for International Development</div>
+          <div class="funder-badge">Workforce Development</div>
+        </div>
+        <div class="funder-grid">
+          <div class="funder-item">
+            <label>Relevant programmes</label>
+            <p>USAID Workforce Development, Prosper Africa, YALI</p>
+          </div>
+          <div class="funder-item">
+            <label>Entry mechanism</label>
+            <p>Cooperative agreement · USAID Local Partner Fund</p>
+          </div>
+          <div class="funder-item">
+            <label>Estimated pilot budget</label>
+            <p>USD 300,000 – 500,000 (18 months)</p>
+          </div>
+          <div class="funder-item">
+            <label>Approval timeline</label>
+            <p>6–10 months from application</p>
+          </div>
+        </div>
+        <div class="funder-pitch">
+          <strong>Pitch angle:</strong> USAID's Prosper Africa lens values private-sector linkage and technology-enabled scale. This pilot integrates AI-assisted learning with verifiable employment outcomes, creating a model transferable to USAID priority sectors across East and Southern Africa.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: KPIs -->
+<section>
+  <div class="container">
+    <div class="section-label">Impact Measurement</div>
+    <h2 class="section-title">Pilot KPIs</h2>
+    <p class="section-body">
+      All indicators are tracked quarterly and reported to both the development funder and co-PI partners. Data is disaggregated by gender, age, and country.
+    </p>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-num">200<span>+</span></div>
+        <div class="kpi-label">Learners enrolled across both pilot sites (Year 1)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">70<span>%</span></div>
+        <div class="kpi-label">Target employment rate within 6 months of qualification</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">40<span>%</span></div>
+        <div class="kpi-label">Female learner enrolment target</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">2</div>
+        <div class="kpi-label">Nationally recognised qualifications co-accredited (NQF + TEVETA)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">15<span>+</span></div>
+        <div class="kpi-label">Industry employers formally committed to graduate hiring pipeline</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">85<span>%</span></div>
+        <div class="kpi-label">Instructor satisfaction with AI-assisted delivery tools</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 7: ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-label">Implementation Roadmap</div>
+    <h2 class="section-title">18-Month Pilot Timeline</h2>
+    <p class="section-body">
+      The pilot is structured in three phases, each building institutional capability before the next begins. Scale-up decisions are made at the Phase 3 review, informed by employment outcome data.
+    </p>
+    <div class="timeline">
+      <div class="tl-item done">
+        <div class="tl-dot"></div>
+        <div class="tl-phase">Phase 0 · Months 1–2</div>
+        <div class="tl-title">Partnership Formation & Needs Assessment</div>
+        <div class="tl-desc">MOU signing between IEG, local TVET experts, and host institutions. Joint needs assessment and industry demand mapping. Qualification alignment workshop (NQF/TEVETA).</div>
+        <div class="tl-tags">
+          <span class="tl-tag">MOU signing</span>
+          <span class="tl-tag">Needs assessment</span>
+          <span class="tl-tag">Employer mapping</span>
+        </div>
+      </div>
+      <div class="tl-item active">
+        <div class="tl-dot"></div>
+        <div class="tl-phase">Phase 1 · Months 3–6</div>
+        <div class="tl-title">Infrastructure Deployment & Curriculum Co-Design</div>
+        <div class="tl-desc">IEG equipment installation at both Living Lab sites. 3-day co-design workshop with local experts. AI platform (Emotii) localisation and instructor onboarding. Pilot cohort recruitment.</div>
+        <div class="tl-tags">
+          <span class="tl-tag">Equipment install</span>
+          <span class="tl-tag">Curriculum workshop</span>
+          <span class="tl-tag">AI onboarding</span>
+          <span class="tl-tag">Cohort recruitment</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-phase">Phase 2 · Months 7–14</div>
+        <div class="tl-title">Training Delivery & Continuous Improvement</div>
+        <div class="tl-desc">First cohort (100 learners per site) completes 6-month programme. Monthly data review with co-PI partners. Mid-point employer satisfaction survey. Content refinement cycle.</div>
+        <div class="tl-tags">
+          <span class="tl-tag">Cohort training</span>
+          <span class="tl-tag">Monthly KPI review</span>
+          <span class="tl-tag">Employer survey</span>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-phase">Phase 3 · Months 15–18</div>
+        <div class="tl-title">Evaluation, Qualification & Scale-Up Decision</div>
+        <div class="tl-desc">Final assessment and qualification submission to SETA/TEVETA. Employment tracking of graduates. Independent evaluation report. Scale-up proposal to development funders.</div>
+        <div class="tl-tags">
+          <span class="tl-tag">Qualification submission</span>
+          <span class="tl-tag">Employment tracking</span>
+          <span class="tl-tag">Scale-up proposal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <h2>Let's Design This Together</h2>
+  <p>We are actively seeking Co-PI partners with deep TVET expertise in South Africa and Zambia. If you share the conviction that skills infrastructure can be built differently — co-owned, evidence-driven, and sustainable — we want to talk.</p>
+  <div class="cta-buttons">
+    <button class="btn-primary" onclick="window.location.href='mailto:global@ieg.co.kr?subject=Africa TVET Pilot — Partnership Inquiry'">Request a Partnership Discussion</button>
+    <button class="btn-outline" onclick="window.print()">Download as PDF</button>
+  </div>
+</div>
+
+<!-- CONTACT STRIP -->
+<div class="contact-strip" id="contactstrip">
+  <div class="contact-info">
+    <strong>IEG Co., Ltd.</strong> · Pangyo Techno Valley, Seongnam, Korea ·
+    <a href="mailto:global@ieg.co.kr" style="color: var(--teal); text-decoration: none;">global@ieg.co.kr</a>
+  </div>
+  <div class="doc-meta">
+    Confidential · For Partnership Discussion Only<br>
+    Document version: June 2026
+  </div>
+</div>
+
+<script>
+  function togglePillar(idx) {
+    const pillars = document.querySelectorAll('.pillar');
+    const details = document.querySelectorAll('.pillar-detail');
+    const clickedPillar = pillars[idx];
+    const clickedDetail = details[idx];
+    const isActive = clickedPillar.classList.contains('active');
+
+    pillars.forEach(p => p.classList.remove('active'));
+    details.forEach(d => d.classList.remove('visible'));
+
+    if (!isActive) {
+      clickedPillar.classList.add('active');
+      clickedDetail.classList.add('visible');
+      clickedDetail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  function switchTab(id) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('tab-' + id).classList.add('active');
+  }
+</script>
+</body>
+</html>
