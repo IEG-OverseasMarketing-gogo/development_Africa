@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electrical &amp; Control Practice Panel</title>
+<style>
+  :root{
+    --navy-950:#0F1E2B;
+    --navy-800:#1F3B57;
+    --navy-700:#2C4D6E;
+    --cream:#F4F1E9;
+    --panel:#FBFAF6;
+    --ink:#182430;
+    --slate:#5B6B7A;
+    --amber:#E8A33D;
+    --rust:#C0511F;
+    --teal:#1E6E5C;
+    --red:#B23A3A;
+    --line:#D9D4C6;
+    --font-display: ui-monospace, "Cascadia Code", "SFMono-Regular", "Roboto Mono", Consolas, monospace;
+    --font-body: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--cream);font-family:var(--font-body);color:var(--ink);}
+  body{padding:0 0 60px;}
+
+  .topbar{
+    background:linear-gradient(180deg,var(--navy-800),var(--navy-950));
+    color:var(--cream);
+    padding:22px 24px 18px;
+    border-bottom:3px solid var(--amber);
+  }
+  .topbar .eyebrow{
+    font-family:var(--font-display);
+    font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);
+    margin-bottom:6px;
+  }
+  .topbar h1{margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:.01em;}
+  .topbar p{margin:0;font-size:13px;color:#C9D3DC;max-width:640px;line-height:1.5;}
+
+  nav.tabs{
+    display:flex;flex-wrap:wrap;gap:8px;
+    padding:16px 24px;background:var(--navy-800);
+    border-bottom:1px solid var(--navy-700);
+  }
+  .tab-group{display:flex;flex-direction:column;gap:6px;}
+  .tab-group-label{font-family:var(--font-display);font-size:10px;color:#93A6B8;letter-spacing:.1em;text-transform:uppercase;padding-left:2px;}
+  .tab-row{display:flex;gap:6px;flex-wrap:wrap;}
+  button.tab{
+    font-family:var(--font-display);
+    background:var(--navy-700);color:#DCE5EC;border:1px solid #3A5A7C;
+    padding:8px 12px;border-radius:3px;font-size:11.5px;cursor:pointer;
+    transition:all .15s ease;white-space:nowrap;
+  }
+  button.tab:hover{background:#3A5A7C;}
+  button.tab.active{background:var(--amber);color:#241703;border-color:var(--amber);font-weight:700;}
+
+  main{max-width:920px;margin:0 auto;padding:26px 20px 0;}
+
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:26px 28px;
+    position:relative;
+    box-shadow:0 1px 0 rgba(0,0,0,.03), 0 8px 20px -12px rgba(15,30,43,.4);
+  }
+  .panel::before,.panel::after{
+    content:"";position:absolute;top:10px;width:6px;height:6px;border-radius:50%;
+    background:#CFC9B8;box-shadow:inset 0 1px 1px rgba(0,0,0,.25);
+  }
+  .panel::before{left:10px;}
+  .panel::after{right:10px;}
+
+  .ex-title{font-family:var(--font-display);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--rust);margin:0 0 4px;}
+  .ex-heading{font-size:20px;font-weight:700;margin:0 0 12px;color:var(--navy-800);}
+  .ex-goal{font-size:14px;color:var(--slate);line-height:1.6;margin:0 0 22px;padding-bottom:18px;border-bottom:1px dashed var(--line);}
+
+  .row{display:flex;gap:18px;flex-wrap:wrap;}
+  .col{flex:1;min-width:220px;}
+
+  label{display:block;font-size:12px;color:var(--slate);margin-bottom:4px;font-weight:600;}
+  input[type=number],input[type=text]{
+    width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:4px;
+    font-family:var(--font-display);font-size:14px;background:#fff;color:var(--ink);
+  }
+  input[type=number]:focus,input[type=text]:focus{outline:2px solid var(--amber);outline-offset:1px;border-color:var(--amber);}
+
+  .btn{
+    font-family:var(--font-body);font-weight:600;font-size:13.5px;
+    padding:10px 18px;border-radius:4px;border:none;cursor:pointer;
+    background:var(--navy-800);color:#fff;transition:transform .1s ease, background .15s ease;
+  }
+  .btn:hover{background:var(--navy-700);}
+  .btn:active{transform:scale(.98);}
+  .btn.primary{background:var(--rust);}
+  .btn.primary:hover{background:#A5451A;}
+  .btn.ghost{background:transparent;color:var(--navy-800);border:1px solid var(--line);}
+  .btn.ghost:hover{background:#EFEBDD;}
+  .btn-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+
+  .readout{
+    font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--navy-800);
+    background:#fff;border:1px solid var(--line);border-radius:4px;padding:14px 16px;
+    margin-top:4px;
+  }
+  .readout .unit{font-size:14px;color:var(--slate);font-weight:400;margin-left:4px;}
+
+  .feedback{
+    margin-top:16px;padding:12px 14px;border-radius:4px;font-size:14px;line-height:1.55;display:none;
+  }
+  .feedback.show{display:block;}
+  .feedback.ok{background:#E5F1EC;border:1px solid var(--teal);color:#0E4A3B;}
+  .feedback.bad{background:#F7E9E7;border:1px solid var(--red);color:#7A2323;}
+  .feedback.info{background:#FBF3E4;border:1px solid var(--amber);color:#6B4A10;}
+
+  .score{font-family:var(--font-display);font-size:12px;color:var(--slate);margin-top:14px;}
+
+  /* Indicator light — signature element */
+  .light{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-display);font-size:12px;font-weight:600;}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block;background:#999;box-shadow:0 0 0 3px rgba(0,0,0,.05) inset;}
+  .dot.green{background:var(--teal);box-shadow:0 0 8px 1px rgba(30,110,92,.6);}
+  .dot.amber{background:var(--amber);box-shadow:0 0 8px 1px rgba(232,163,61,.7);}
+  .dot.red{background:var(--red);box-shadow:0 0 8px 1px rgba(178,58,58,.6);}
+  .dot.grey{background:#B9BFC6;}
+
+  /* Sequence drill */
+  .seq-cards{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;}
+  .seq-card{
+    border:1px solid var(--line);background:#fff;border-radius:4px;padding:12px 14px;
+    font-size:13.5px;cursor:pointer;flex:1 1 150px;min-width:150px;text-align:center;
+    transition:all .12s ease;position:relative;
+  }
+  .seq-card:hover{border-color:var(--navy-700);}
+  .seq-card.picked{background:var(--navy-800);color:#fff;cursor:default;}
+  .seq-card .order-num{
+    position:absolute;top:-9px;left:-9px;width:20px;height:20px;border-radius:50%;
+    background:var(--amber);color:#241703;font-family:var(--font-display);font-size:11px;
+    display:flex;align-items:center;justify-content:center;font-weight:700;
+  }
+  .seq-card.correct{background:var(--teal);color:#fff;}
+  .seq-card.wrong{background:var(--red);color:#fff;}
+  .streak{font-family:var(--font-display);font-size:12px;color:var(--slate);margin-top:14px;}
+
+  /* Chips (sort) */
+  .chip-field{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;min-height:44px;}
+  .chip{
+    border:1px solid var(--line);background:#fff;border-radius:20px;padding:7px 14px;
+    font-size:13px;cursor:pointer;transition:all .12s ease;
+  }
+  .chip:hover{border-color:var(--navy-700);}
+  .chip.selected{background:var(--amber);border-color:var(--amber);font-weight:700;}
+  .bins{display:flex;gap:14px;margin-top:6px;}
+  .bin{
+    flex:1;border:2px dashed var(--line);border-radius:6px;padding:14px;min-height:120px;
+  }
+  .bin h4{margin:0 0 8px;font-family:var(--font-display);font-size:12px;color:var(--navy-800);text-transform:uppercase;letter-spacing:.06em;}
+  .bin .chip{display:inline-block;margin:3px;font-size:12px;cursor:default;}
+  .bin .chip.ok{background:#E5F1EC;border-color:var(--teal);}
+  .bin .chip.bad{background:#F7E9E7;border-color:var(--red);}
+
+  /* Rung SVG buttons */
+  .rung-choices{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px;}
+  .rung-choice{border:1px solid var(--line);background:#fff;border-radius:6px;padding:12px;cursor:pointer;transition:all .12s ease;}
+  .rung-choice:hover{border-color:var(--navy-700);}
+  .rung-choice.correct{border-color:var(--teal);background:#E5F1EC;}
+  .rung-choice.wrong{border-color:var(--red);background:#F7E9E7;}
+
+  /* Gauge bar */
+  .gauge{margin-top:10px;}
+  .gauge-track{position:relative;height:16px;border-radius:8px;background:#E7E3D6;overflow:hidden;border:1px solid var(--line);}
+  .gauge-fill{position:absolute;left:0;top:0;bottom:0;border-radius:8px;transition:width .4s ease, background .3s ease;}
+  .gauge-labels{display:flex;justify-content:space-between;font-family:var(--font-display);font-size:10.5px;color:var(--slate);margin-top:4px;}
+
+  footer{max-width:920px;margin:34px auto 0;padding:0 20px;font-size:12px;color:var(--slate);text-align:center;}
+
+  /* ---- 3D viewport (shared: Ex2 sequence panel, Ex4 sorting yard) ---- */
+  .viewport-3d{position:relative;height:190px;border-radius:6px;overflow:hidden;background:linear-gradient(180deg,#EAF0F3,#DCE6EA);border:1px solid var(--line);margin:14px 0;}
+  .viewport-3d canvas{display:block;width:100%;height:100%;}
+  .viewport-3d .vp-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:11px;color:var(--slate);}
+  .viewport-3d .vp-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;padding:14px;text-align:center;}
+  .viewport-3d .vp-fallback p{font-size:11px;color:var(--slate);margin:0;max-width:320px;}
+  .vp-caption{display:flex;justify-content:space-between;font-family:var(--font-display);font-size:10.5px;color:var(--slate);margin-top:-6px;margin-bottom:14px;padding:0 4px;}
+
+  @media (max-width:640px){
+    .panel{padding:20px 16px;}
+    .readout{font-size:21px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="eyebrow">Electrical &amp; Control Practice Panel</div>
+  <h1>Stage 1–2 Hands-On Drills</h1>
+  <p>Six short exercises covering Weeks 1–6: circuits, safety procedure, meter reading, sensors &amp; actuators, ladder logic, and alarm reading. Pick an exercise below.</p>
+</div>
+
+<nav class="tabs">
+  <div class="tab-group">
+    <div class="tab-group-label">Stage 1 · Electrical Fundamentals</div>
+    <div class="tab-row">
+      <button class="tab active" data-ex="ex1">W1 · Ohm's Law &amp; Circuits</button>
+      <button class="tab" data-ex="ex2">W2 · Isolation Sequence &amp; PPE</button>
+      <button class="tab" data-ex="ex3">W3 · Insulation Resistance</button>
+    </div>
+  </div>
+  <div class="tab-group">
+    <div class="tab-group-label">Stage 2 · PLC &amp; Control Basics</div>
+    <div class="tab-row">
+      <button class="tab" data-ex="ex4">W4 · Sensor / Actuator Sort</button>
+      <button class="tab" data-ex="ex5">W5 · Ladder Logic Reader</button>
+      <button class="tab" data-ex="ex6">W6 · Alarm &amp; HMI Reading</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="panel" id="stage"></div>
+</main>
+
+<footer>Electrical &amp; Control Practice Panel — offline-capable, no external dependencies. Part of the Electrical, PLC &amp; EV Fundamentals student track.</footer>
+
+<script>
+const stage = document.getElementById('stage');
+const tabs = document.querySelectorAll('.tab');
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  tabs.forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  render(t.dataset.ex);
+}));
+
+function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)];}
+
+/* ---------------- 3D helper infrastructure (shared) ---------------- */
+function loadThreeJS(callback){
+  if(window.THREE){ callback(true); return; }
+  let done = false;
+  const script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+  script.onload = ()=>{ if(!done){ done = true; callback(!!window.THREE); } };
+  script.onerror = ()=>{ if(!done){ done = true; callback(false); } };
+  document.head.appendChild(script);
+  setTimeout(()=>{ if(!done){ done = true; callback(!!window.THREE); } }, 4500);
+}
+function threeFallbackHTML(label){
+  return `<div class="vp-fallback"><span class="light"><span class="dot amber"></span>3D view unavailable</span><p>The ${label} needs an internet connection the first time it loads. The drill above still works normally without it.</p></div>`;
+}
+let seq3D = null;
+function stopSeq3D(){ if(seq3D && seq3D.raf) cancelAnimationFrame(seq3D.raf); seq3D = null; }
+let sort3D = null;
+function stopSort3D(){ if(sort3D && sort3D.raf) cancelAnimationFrame(sort3D.raf); sort3D = null; }
+
+/* ---------------- EX 1 — Ohm's Law & Circuits ---------------- */
+let ex1Score={correct:0,total:0};
+let ex1Current=null;
+
+function genOhmQuestion(){
+  const type = pick(['solveV','solveI','solveR','series','parallel']);
+  if(type==='solveV'){
+    const i=rand(1,10), r=rand(2,50);
+    return {type,prompt:`A circuit has current I = ${i}A and resistance R = ${r}Ω. What is the voltage V?`,answer:i*r,unit:'V',hint:'V = I × R'};
+  }
+  if(type==='solveI'){
+    const v=rand(6,48), r=rand(2,12);
+    const iVal = v/r;
+    return {type,prompt:`A circuit has voltage V = ${v}V and resistance R = ${r}Ω. What is the current I? (round to 2 decimals if needed)`,answer:Math.round(iVal*100)/100,unit:'A',hint:'I = V ÷ R',tolerance:0.05};
+  }
+  if(type==='solveR'){
+    const v=rand(6,48), i=rand(1,8);
+    const rVal = v/i;
+    return {type,prompt:`A circuit has voltage V = ${v}V and current I = ${i}A. What is the resistance R? (round to 2 decimals if needed)`,answer:Math.round(rVal*100)/100,unit:'Ω',hint:'R = V ÷ I',tolerance:0.05};
+  }
+  if(type==='series'){
+    const r1=rand(5,40), r2=rand(5,40);
+    return {type,prompt:`Two resistors are wired in SERIES: R1 = ${r1}Ω, R2 = ${r2}Ω. What is the total resistance?`,answer:r1+r2,unit:'Ω',hint:'Series: R_total = R1 + R2'};
+  }
+  // parallel
+  const r1=pick([10,20,30,40,60]), r2=pick([10,20,30,40,60]);
+  const rt = Math.round(((r1*r2)/(r1+r2))*100)/100;
+  return {type,prompt:`Two resistors are wired in PARALLEL: R1 = ${r1}Ω, R2 = ${r2}Ω. What is the total resistance? (round to 2 decimals)`,answer:rt,unit:'Ω',hint:'Parallel: R_total = (R1 × R2) ÷ (R1 + R2)',tolerance:0.1};
+}
+
+function renderEx1(){
+  ex1Current = genOhmQuestion();
+  stage.innerHTML = `
+    <div class="ex-title">Week 1 · Exercise 1</div>
+    <h2 class="ex-heading">Ohm's Law &amp; Circuit Practice</h2>
+    <p class="ex-goal">Every diagnostic step you'll take later — on a control panel or an EV battery — starts with reading a value and knowing whether it matches the formula. Practice solving for V, I, R, and total resistance in series/parallel circuits.</p>
+    <div id="q-prompt" style="font-size:15px;font-weight:600;color:var(--navy-800);margin-bottom:10px;">${ex1Current.prompt}</div>
+    <div class="row">
+      <div class="col">
+        <label>Your answer</label>
+        <input type="number" step="any" id="ohm-answer" placeholder="Enter a number">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn primary" id="ohm-check">Check Answer</button>
+      <button class="btn ghost" id="ohm-hint">Show Formula</button>
+      <button class="btn ghost" id="ohm-next">New Question</button>
+    </div>
+    <div class="feedback" id="ohm-fb"></div>
+    <div class="score" id="ohm-score">Score: ${ex1Score.correct} / ${ex1Score.total}</div>
+  `;
+  document.getElementById('ohm-check').onclick=()=>{
+    const val = parseFloat(document.getElementById('ohm-answer').value);
+    const fb = document.getElementById('ohm-fb');
+    ex1Score.total++;
+    const tol = ex1Current.tolerance || 0.5;
+    if(!isNaN(val) && Math.abs(val-ex1Current.answer)<=tol){
+      ex1Score.correct++;
+      fb.className='feedback show ok';
+      fb.innerHTML = `<span class="light"><span class="dot green"></span>Correct</span> — ${ex1Current.hint}. Answer: ${ex1Current.answer} ${ex1Current.unit}.`;
+    } else {
+      fb.className='feedback show bad';
+      fb.innerHTML = `<span class="light"><span class="dot red"></span>Not quite</span> — ${ex1Current.hint}. Correct answer: ${ex1Current.answer} ${ex1Current.unit}.`;
+    }
+    document.getElementById('ohm-score').textContent = `Score: ${ex1Score.correct} / ${ex1Score.total}`;
+  };
+  document.getElementById('ohm-hint').onclick=()=>{
+    const fb = document.getElementById('ohm-fb');
+    fb.className='feedback show info';
+    fb.innerHTML = `<strong>Formula:</strong> ${ex1Current.hint}`;
+  };
+  document.getElementById('ohm-next').onclick=renderEx1;
+}
+
+/* ---------------- EX 2 — Isolation Sequence + PPE ---------------- */
+const seqSteps = [
+  "Power OFF",
+  "Put on insulated gloves",
+  "Disconnect the isolation point",
+  "Wait for stored energy to discharge",
+  "Confirm 0V with a meter"
+];
+let seqPicked = [];
+let seqOrder = [];
+let seqStreak = 0;
+
+const ppePool = [
+  {text:"Gloves have a small tear near the thumb.", answer:"replace"},
+  {text:"Gloves passed the air-inflation test with no leaks.", answer:"usable"},
+  {text:"Gloves were last inspected 2 months ago, within the replacement cycle.", answer:"usable"},
+  {text:"Gloves are past their marked replacement date.", answer:"replace"},
+  {text:"Gloves look clean and show no visible damage.", answer:"usable"},
+];
+let ppeCurrent = null;
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function renderEx2(){
+  seqPicked=[];
+  seqOrder = shuffle(seqSteps.map((s,i)=>({text:s,correctIndex:i})));
+  ppeCurrent = pick(ppePool);
+  stage.innerHTML = `
+    <div class="ex-title">Week 2 · Exercise 2</div>
+    <h2 class="ex-heading">Electrical Isolation Sequence &amp; PPE Check</h2>
+    <p class="ex-goal">Before touching a live circuit, there's a sequence you follow every time. Click the 5 cards below in what you believe is the correct order.</p>
+    <div class="viewport-3d" id="seq-3d"><div class="vp-loading">Loading 3D panel…</div></div>
+    <div class="seq-cards" id="seq-cards"></div>
+    <div class="feedback" id="seq-fb"></div>
+    <div class="streak" id="seq-streak">Flawless runs in a row: ${seqStreak} / 3</div>
+    <div class="btn-row"><button class="btn ghost" id="seq-reset">Shuffle &amp; Retry</button></div>
+
+    <div style="margin-top:30px;padding-top:22px;border-top:1px dashed var(--line);">
+      <h3 style="margin:0 0 8px;font-size:15px;color:var(--navy-800);">Quick Check — PPE Condition</h3>
+      <p id="ppe-statement" style="font-size:14px;margin-bottom:12px;">${ppeCurrent.text}</p>
+      <div class="btn-row">
+        <button class="btn" id="ppe-usable">Usable</button>
+        <button class="btn" id="ppe-replace">Replace</button>
+      </div>
+      <div class="feedback" id="ppe-fb"></div>
+    </div>
+  `;
+  const cardsEl = document.getElementById('seq-cards');
+  seqOrder.forEach((item,idx)=>{
+    const card = document.createElement('div');
+    card.className='seq-card';
+    card.textContent = item.text;
+    card.onclick = ()=>{
+      if(card.classList.contains('picked')) return;
+      seqPicked.push(item);
+      const num = document.createElement('span');
+      num.className='order-num';
+      num.textContent = seqPicked.length;
+      card.appendChild(num);
+      card.classList.add('picked');
+      pulseSeqPedestal(idx);
+      if(seqPicked.length===5) evaluateSeq();
+    };
+    cardsEl.appendChild(card);
+  });
+  document.getElementById('seq-reset').onclick = renderEx2;
+
+  document.getElementById('ppe-usable').onclick=()=>checkPPE('usable');
+  document.getElementById('ppe-replace').onclick=()=>checkPPE('replace');
+
+  stopSeq3D();
+  initSeq3D(seqOrder);
+}
+
+/* ---------------- Ex2: 3D sequence panel ---------------- */
+function initSeq3D(orderSnapshot){
+  const container = document.getElementById('seq-3d');
+  if(!container) return;
+  loadThreeJS((ok)=>{
+    if(!document.getElementById('seq-3d')) return; // navigated away while loading
+    if(!ok){ container.innerHTML = threeFallbackHTML('sequence panel'); return; }
+    buildSeq3D(container, orderSnapshot);
+  });
+}
+
+function buildSeq3D(container, orderSnapshot){
+  container.innerHTML = '';
+  const width = container.clientWidth || 600;
+  const height = container.clientHeight || 190;
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xEAF0F3);
+  const camera = new THREE.PerspectiveCamera(35, width/height, 0.1, 50);
+  camera.position.set(0, 2.3, 5.2);
+  camera.lookAt(0, 0.5, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
+  container.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+  const dir = new THREE.DirectionalLight(0xffffff, 0.45);
+  dir.position.set(3, 5, 3);
+  scene.add(dir);
+
+  const shapeMakers = [
+    ()=>new THREE.BoxGeometry(0.4,0.4,0.15),           // power switch
+    ()=>new THREE.SphereGeometry(0.22,16,16),           // gloves
+    ()=>new THREE.CylinderGeometry(0.16,0.16,0.45,14),  // disconnect
+    ()=>new THREE.TorusGeometry(0.2,0.07,10,20),        // wait
+    ()=>new THREE.BoxGeometry(0.4,0.3,0.1),             // meter
+  ];
+
+  const pedestals = [];
+  const n = orderSnapshot.length;
+  orderSnapshot.forEach((item, i)=>{
+    const x = (i - (n-1)/2) * 1.05;
+    const base = new THREE.Mesh(new THREE.CylinderGeometry(0.28,0.32,0.18,16), new THREE.MeshStandardMaterial({ color: 0xDCE6EA }));
+    base.position.set(x, 0.09, 0);
+    scene.add(base);
+    const icon = new THREE.Mesh(shapeMakers[item.correctIndex](), new THREE.MeshStandardMaterial({ color: 0xB9BFC6 }));
+    icon.position.set(x, 0.5, 0);
+    scene.add(icon);
+    pedestals.push(icon);
+  });
+
+  seq3D = { renderer, scene, camera, raf: null, pedestals };
+  function tick(){
+    if(!seq3D) return;
+    seq3D.pedestals.forEach(p=>{ p.rotation.y += 0.012; });
+    renderer.render(scene, camera);
+    seq3D.raf = requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+function pulseSeqPedestal(domIdx){
+  if(!seq3D || !seq3D.pedestals[domIdx]) return;
+  seq3D.pedestals[domIdx].material.color.setHex(0xE8A33D);
+}
+
+function colorSeqPedestal(domIdx, correct){
+  if(!seq3D || !seq3D.pedestals[domIdx]) return;
+  seq3D.pedestals[domIdx].material.color.setHex(correct ? 0x1E6E5C : 0xB23A3A);
+}
+
+function evaluateSeq(){
+  const cards = document.querySelectorAll('#seq-cards .seq-card');
+  let allCorrect = true;
+  cards.forEach((card,domIdx)=>{
+    const item = seqOrder[domIdx];
+    const pickedPos = seqPicked.indexOf(item);
+    const isCorrect = pickedPos === item.correctIndex;
+    if(isCorrect){
+      card.classList.add('correct');
+    } else {
+      card.classList.add('wrong');
+      allCorrect=false;
+    }
+    colorSeqPedestal(domIdx, isCorrect);
+  });
+  const fb = document.getElementById('seq-fb');
+  fb.classList.add('show');
+  if(allCorrect){
+    seqStreak++;
+    fb.className='feedback show ok';
+    fb.innerHTML = `<span class="light"><span class="dot green"></span>Correct order!</span> Power OFF → Gloves on → Disconnect → Wait → Confirm 0V.`;
+  } else {
+    seqStreak = 0;
+    fb.className='feedback show bad';
+    fb.innerHTML = `<span class="light"><span class="dot red"></span>Not quite the right order.</span> Correct order: ${seqSteps.map((s,i)=>`${i+1}. ${s}`).join(' · ')}`;
+  }
+  document.getElementById('seq-streak').textContent = `Flawless runs in a row: ${seqStreak} / 3` + (seqStreak>=3 ? '  — nice, that is the habit you want!' : '');
+}
+
+function checkPPE(choice){
+  const fb = document.getElementById('ppe-fb');
+  fb.classList.add('show');
+  if(choice===ppeCurrent.answer){
+    fb.className='feedback show ok';
+    fb.innerHTML = `<span class="light"><span class="dot green"></span>Correct.</span>`;
+  } else {
+    fb.className='feedback show bad';
+    fb.innerHTML = `<span class="light"><span class="dot red"></span>Not quite.</span> Correct answer: ${ppeCurrent.answer==='usable'?'Usable':'Replace'}.`;
+  }
+}
+
+/* ---------------- EX 3 — Insulation Resistance Judgment ---------------- */
+let ir3Score={correct:0,total:0};
+let ir3Current=null;
+
+function genIRQuestion(){
+  const voltage = pick([200,400,600,800]);
+  const threshold = voltage * 100; // 100 Ω per volt, in Ω
+  const thresholdK = threshold/1000;
+  // reading: sometimes clearly above, sometimes near/below
+  const scenario = pick(['clearlyNormal','clearlyNormal','borderline','suspect']);
+  let readingK;
+  if(scenario==='clearlyNormal') readingK = thresholdK * rand(4,10);
+  else if(scenario==='borderline') readingK = thresholdK * (0.85+Math.random()*0.3);
+  else readingK = thresholdK * (0.2+Math.random()*0.5);
+  readingK = Math.round(readingK*10)/10;
+  const isNormal = readingK >= thresholdK;
+  return {voltage,thresholdK,readingK,isNormal};
+}
+
+function renderEx3(){
+  ir3Current = genIRQuestion();
+  stage.innerHTML = `
+    <div class="ex-title">Week 3 · Exercise 3</div>
+    <h2 class="ex-heading">Insulation Resistance — Normal or Suspect?</h2>
+    <p class="ex-goal">Rule of thumb: minimum acceptable resistance is 100Ω per volt of system voltage. Compare the reading to the threshold and judge.</p>
+    <div class="row">
+      <div class="col">
+        <label>System voltage</label>
+        <div class="readout">${ir3Current.voltage}<span class="unit">V</span></div>
+      </div>
+      <div class="col">
+        <label>Measured insulation resistance</label>
+        <div class="readout">${ir3Current.readingK}<span class="unit">kΩ</span></div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" id="ir-normal">Normal</button>
+      <button class="btn" id="ir-suspect">Suspect</button>
+      <button class="btn ghost" id="ir-show-threshold">Show Threshold</button>
+    </div>
+    <div class="feedback" id="ir-fb"></div>
+    <div class="score" id="ir-score">Score: ${ir3Score.correct} / ${ir3Score.total}</div>
+    <div class="btn-row"><button class="btn ghost" id="ir-next">New Reading</button></div>
+  `;
+  const judge = (choice)=>{
+    ir3Score.total++;
+    const correctChoice = ir3Current.isNormal ? 'normal':'suspect';
+    const fb=document.getElementById('ir-fb');
+    fb.classList.add('show');
+    if(choice===correctChoice){
+      ir3Score.correct++;
+      fb.className='feedback show ok';
+      fb.innerHTML=`<span class="light"><span class="dot green"></span>Correct.</span> Threshold = ${ir3Current.voltage} × 100Ω = ${ir3Current.thresholdK}kΩ. Reading ${ir3Current.readingK}kΩ is ${correctChoice==='normal'?'at or above':'below'} that.`;
+    } else {
+      fb.className='feedback show bad';
+      fb.innerHTML=`<span class="light"><span class="dot red"></span>Not quite.</span> Threshold = ${ir3Current.voltage} × 100Ω = ${ir3Current.thresholdK}kΩ. Reading ${ir3Current.readingK}kΩ is ${correctChoice==='normal'?'at or above':'below'} that, so it's <strong>${correctChoice}</strong>.`;
+    }
+    document.getElementById('ir-score').textContent = `Score: ${ir3Score.correct} / ${ir3Score.total}`;
+  };
+  document.getElementById('ir-normal').onclick=()=>judge('normal');
+  document.getElementById('ir-suspect').onclick=()=>judge('suspect');
+  document.getElementById('ir-show-threshold').onclick=()=>{
+    const fb=document.getElementById('ir-fb');
+    fb.className='feedback show info';
+    fb.innerHTML=`Threshold = system voltage × 100Ω/V = ${ir3Current.voltage} × 100 = ${ir3Current.thresholdK}kΩ.`;
+  };
+  document.getElementById('ir-next').onclick=renderEx3;
+}
+
+/* ---------------- EX 4 — Sensor / Actuator Sort ---------------- */
+const devicePool = [
+  {name:"Photoelectric sensor", type:"sensor"},
+  {name:"Solenoid valve", type:"actuator"},
+  {name:"Temperature probe", type:"sensor"},
+  {name:"DC motor", type:"actuator"},
+  {name:"Limit switch", type:"sensor"},
+  {name:"Hydraulic pump", type:"actuator"},
+  {name:"Proximity sensor", type:"sensor"},
+  {name:"Conveyor motor", type:"actuator"},
+  {name:"Pressure sensor", type:"sensor"},
+  {name:"Pneumatic clamp", type:"actuator"},
+];
+let ex4Selected=null;
+let ex4Remaining=[];
+let ex4Score={correct:0,total:0};
+
+function renderEx4(){
+  ex4Remaining = shuffle(devicePool);
+  ex4Score={correct:0,total:0};
+  stage.innerHTML = `
+    <div class="ex-title">Week 4 · Exercise 4</div>
+    <h2 class="ex-heading">Sensor or Actuator?</h2>
+    <p class="ex-goal">Sensor = detects a condition and turns it into a signal. Actuator = takes a command and produces physical action. Click a device below, then click the correct bin.</p>
+    <div class="viewport-3d" id="sort-3d"><div class="vp-loading">Loading 3D yard…</div></div>
+    <div class="vp-caption"><span>◀ Sensor Zone</span><span>Actuator Zone ▶</span></div>
+    <div class="chip-field" id="chip-field"></div>
+    <div class="bins">
+      <div class="bin" id="bin-sensor"><h4>Sensor</h4></div>
+      <div class="bin" id="bin-actuator"><h4>Actuator</h4></div>
+    </div>
+    <div class="feedback" id="ex4-fb"></div>
+    <div class="score" id="ex4-score">Sorted: 0 / ${devicePool.length} · Correct: 0</div>
+    <div class="btn-row"><button class="btn ghost" id="ex4-reset">Reshuffle</button></div>
+
+    <div style="margin-top:28px;padding-top:20px;border-top:1px dashed var(--line);">
+      <h3 style="margin:0 0 8px;font-size:15px;color:var(--navy-800);">Trace a Loop</h3>
+      <p style="font-size:13.5px;color:var(--slate);margin-bottom:12px;">A simple example: a cooling fan turns on once the temperature sensor crosses 40°C, and turns off again below it.</p>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px;">
+        <span class="chip" style="cursor:default;">Temperature Sensor</span>
+        <span style="font-family:var(--font-display);color:var(--slate);">→</span>
+        <span class="chip" style="cursor:default;border-color:var(--rust);color:var(--rust);font-weight:700;">Controller: is temp &gt; 40°C?</span>
+        <span style="font-family:var(--font-display);color:var(--slate);">→</span>
+        <span class="chip" style="cursor:default;border-color:var(--teal);color:var(--teal);font-weight:700;">Fan (Actuator)</span>
+      </div>
+      <p style="font-size:13.5px;font-weight:600;color:var(--navy-800);margin-bottom:8px;">In this loop, what is the controller's decision rule?</p>
+      <div class="btn-row">
+        <button class="btn ghost" data-loop="a">Turn the fan on always, no condition</button>
+        <button class="btn ghost" data-loop="b">Turn the fan on only when temperature &gt; 40°C</button>
+      </div>
+      <div class="feedback" id="loop-fb"></div>
+    </div>
+  `;
+  const field = document.getElementById('chip-field');
+  ex4Remaining.forEach(d=>{
+    const chip=document.createElement('div');
+    chip.className='chip';
+    chip.textContent=d.name;
+    chip.onclick=()=>{
+      document.querySelectorAll('#chip-field .chip').forEach(c=>c.classList.remove('selected'));
+      chip.classList.add('selected');
+      ex4Selected=d;
+    };
+    field.appendChild(chip);
+  });
+  const place=(guess)=>{
+    if(!ex4Selected) return;
+    ex4Score.total++;
+    const correct = ex4Selected.type===guess;
+    if(correct) ex4Score.correct++;
+    const bin = document.getElementById(guess==='sensor'?'bin-sensor':'bin-actuator');
+    const chip=document.createElement('span');
+    chip.className='chip '+(correct?'ok':'bad');
+    chip.textContent=ex4Selected.name + (correct?' ✓':' ✕ ('+ex4Selected.type+')');
+    bin.appendChild(chip);
+    spawnSortItem(guess, correct);
+    // remove from field
+    document.querySelectorAll('#chip-field .chip').forEach(c=>{if(c.textContent===ex4Selected.name) c.remove();});
+    document.getElementById('ex4-score').textContent = `Sorted: ${ex4Score.total} / ${devicePool.length} · Correct: ${ex4Score.correct}`;
+    ex4Selected=null;
+  };
+  document.getElementById('bin-sensor').addEventListener('click',()=>place('sensor'));
+  document.getElementById('bin-actuator').addEventListener('click',()=>place('actuator'));
+  document.getElementById('ex4-reset').onclick=renderEx4;
+
+  document.querySelectorAll('[data-loop]').forEach(b=>b.onclick=()=>{
+    const fb=document.getElementById('loop-fb');
+    fb.classList.add('show');
+    if(b.dataset.loop==='b'){
+      fb.className='feedback show ok';
+      fb.innerHTML='<span class="light"><span class="dot green"></span>Correct.</span> The controller only commands the actuator once its condition is met — that\'s the decision step in the loop.';
+    } else {
+      fb.className='feedback show bad';
+      fb.innerHTML='<span class="light"><span class="dot red"></span>Not quite.</span> The controller checks a condition first (temperature &gt; 40°C) — it doesn\'t run the actuator unconditionally.';
+    }
+  });
+
+  stopSort3D();
+  initSort3D();
+}
+
+/* ---------------- Ex4: 3D sorting yard ---------------- */
+function initSort3D(){
+  const container = document.getElementById('sort-3d');
+  if(!container) return;
+  loadThreeJS((ok)=>{
+    if(!document.getElementById('sort-3d')) return; // navigated away while loading
+    if(!ok){ container.innerHTML = threeFallbackHTML('sorting yard'); return; }
+    buildSort3D(container);
+  });
+}
+
+function buildSort3D(container){
+  container.innerHTML = '';
+  const width = container.clientWidth || 600;
+  const height = container.clientHeight || 190;
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xEAF0F3);
+  const camera = new THREE.PerspectiveCamera(38, width/height, 0.1, 50);
+  camera.position.set(0, 2.6, 4.6);
+  camera.lookAt(0, 0.5, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
+  container.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+  const dir = new THREE.DirectionalLight(0xffffff, 0.4);
+  dir.position.set(3, 5, 3);
+  scene.add(dir);
+
+  const sensorPlat = new THREE.Mesh(new THREE.BoxGeometry(1.5,0.15,1.4), new THREE.MeshStandardMaterial({ color: 0xE7F2EF }));
+  sensorPlat.position.set(-1.05, 0, 0);
+  scene.add(sensorPlat);
+  const actuatorPlat = new THREE.Mesh(new THREE.BoxGeometry(1.5,0.15,1.4), new THREE.MeshStandardMaterial({ color: 0xFBEDE4 }));
+  actuatorPlat.position.set(1.05, 0, 0);
+  scene.add(actuatorPlat);
+
+  sort3D = { renderer, scene, camera, raf: null, zoneCounts: { sensor:0, actuator:0 }, animating: [] };
+  function tick(){
+    if(!sort3D) return;
+    sort3D.animating.forEach(a=>{
+      a.mesh.position.y -= 0.14;
+      if(a.mesh.position.y < a.targetY) a.mesh.position.y = a.targetY;
+    });
+    sort3D.animating = sort3D.animating.filter(a=>a.mesh.position.y > a.targetY);
+    renderer.render(scene, camera);
+    sort3D.raf = requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+function spawnSortItem(zone, correct){
+  if(!sort3D) return;
+  const count = sort3D.zoneCounts[zone]++;
+  const x = (zone==='sensor' ? -1.05 : 1.05) + (Math.random()-0.5)*0.5;
+  const z = (Math.random()-0.5)*0.5;
+  const targetY = 0.09 + count*0.16;
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(0.22,0.15,0.22), new THREE.MeshStandardMaterial({ color: correct?0x1E6E5C:0xB23A3A }));
+  mesh.position.set(x, 2.0, z);
+  sort3D.scene.add(mesh);
+  sort3D.animating.push({ mesh, targetY });
+}
+
+/* ---------------- EX 5 — Ladder Logic Rung Reader ---------------- */
+const rungQuestions = [
+  {rule:"Turn on the pump only if the tank sensor AND the start button are both active.", answer:"series"},
+  {rule:"Turn on the alarm if the door sensor is open OR the pressure sensor is high.", answer:"parallel"},
+  {rule:"Turn on the conveyor only if the safety guard AND the operator switch are both active.", answer:"series"},
+  {rule:"Turn on the warning light if the high-temperature sensor OR the low-oil sensor is active.", answer:"parallel"},
+  {rule:"Turn on the fan only if the enable switch AND the temperature sensor are both active.", answer:"series"},
+  {rule:"Turn on the sprinkler if the smoke sensor OR the manual pull station is active.", answer:"parallel"},
+];
+let ex5Mode = 'recognize';
+let ex5RecognizeScore={correct:0,total:0};
+let ex5BuildScore={correct:0,total:0};
+let ex5RecognizeCurrent=null;
+let ex5BuildCurrent=null;
+
+function rungSVG(kind){
+  // kind: 'series' | 'parallel' | 'single'
+  if(kind==='single'){
+    return `<svg width="200" height="70" viewBox="0 0 200 70">
+      <line x1="10" y1="35" x2="190" y2="35" stroke="#1F3B57" stroke-width="2"/>
+      <line x1="70" y1="20" x2="70" y2="50" stroke="#1F3B57" stroke-width="3"/>
+      <line x1="85" y1="20" x2="85" y2="50" stroke="#1F3B57" stroke-width="3"/>
+      <circle cx="160" cy="35" r="10" fill="none" stroke="#C0511F" stroke-width="2.5"/>
+    </svg>`;
+  }
+  if(kind==='series'){
+    return `<svg width="200" height="70" viewBox="0 0 200 70">
+      <line x1="10" y1="35" x2="190" y2="35" stroke="#1F3B57" stroke-width="2"/>
+      <line x1="55" y1="20" x2="55" y2="50" stroke="#1F3B57" stroke-width="3"/>
+      <line x1="70" y1="20" x2="70" y2="50" stroke="#1F3B57" stroke-width="3"/>
+      <line x1="105" y1="20" x2="105" y2="50" stroke="#1F3B57" stroke-width="3"/>
+      <line x1="120" y1="20" x2="120" y2="50" stroke="#1F3B57" stroke-width="3"/>
+      <circle cx="165" cy="35" r="10" fill="none" stroke="#C0511F" stroke-width="2.5"/>
+    </svg>`;
+  }
+  // parallel
+  return `<svg width="200" height="80" viewBox="0 0 200 80">
+    <line x1="10" y1="25" x2="30" y2="25" stroke="#1F3B57" stroke-width="2"/>
+    <line x1="30" y1="10" x2="30" y2="55" stroke="#1F3B57" stroke-width="2"/>
+    <line x1="30" y1="18" x2="130" y2="18" stroke="#1F3B57" stroke-width="2"/>
+    <line x1="30" y1="47" x2="130" y2="47" stroke="#1F3B57" stroke-width="2"/>
+    <line x1="70" y1="8" x2="70" y2="28" stroke="#1F3B57" stroke-width="3"/>
+    <line x1="82" y1="8" x2="82" y2="28" stroke="#1F3B57" stroke-width="3"/>
+    <line x1="70" y1="37" x2="70" y2="57" stroke="#1F3B57" stroke-width="3"/>
+    <line x1="82" y1="37" x2="82" y2="57" stroke="#1F3B57" stroke-width="3"/>
+    <line x1="130" y1="10" x2="130" y2="55" stroke="#1F3B57" stroke-width="2"/>
+    <line x1="130" y1="25" x2="150" y2="25" stroke="#1F3B57" stroke-width="2"/>
+    <circle cx="165" cy="25" r="10" fill="none" stroke="#C0511F" stroke-width="2.5"/>
+  </svg>`;
+}
+
+function renderEx5(){
+  stage.innerHTML = `
+    <div class="ex-title">Week 5 · Exercise 5</div>
+    <h2 class="ex-heading">Ladder Logic Rung Reader</h2>
+    <p class="ex-goal">Contacts in <strong>series</strong> = AND. Contacts in <strong>parallel</strong> = OR. Start in Recognize mode, then try Build mode to construct a rung yourself.</p>
+    <div class="btn-row" style="margin-top:0;">
+      <button class="btn ${ex5Mode==='recognize'?'primary':'ghost'}" id="mode-recognize">Recognize Mode</button>
+      <button class="btn ${ex5Mode==='build'?'primary':'ghost'}" id="mode-build">Build Mode</button>
+    </div>
+    <div id="ex5-body" style="margin-top:18px;"></div>
+  `;
+  document.getElementById('mode-recognize').onclick=()=>{ex5Mode='recognize';renderEx5();};
+  document.getElementById('mode-build').onclick=()=>{ex5Mode='build';renderEx5();};
+  if(ex5Mode==='recognize') renderEx5Recognize(); else renderEx5Build();
+}
+
+function renderEx5Recognize(){
+  ex5RecognizeCurrent = pick(rungQuestions);
+  const choices = shuffle(['series','parallel']);
+  const body = document.getElementById('ex5-body');
+  body.innerHTML = `
+    <div style="font-size:13px;color:var(--slate);margin-bottom:8px;">Read the rule, then pick the rung that matches it.</div>
+    <div style="font-size:15px;font-weight:600;color:var(--navy-800);margin-bottom:6px;">Rule:</div>
+    <div style="font-size:14.5px;margin-bottom:16px;">${ex5RecognizeCurrent.rule}</div>
+    <div class="rung-choices" id="rung-choices"></div>
+    <div class="feedback" id="ex5-fb"></div>
+    <div class="score" id="ex5-score">Recognize Score: ${ex5RecognizeScore.correct} / ${ex5RecognizeScore.total}</div>
+    <div class="btn-row"><button class="btn ghost" id="ex5-next">New Rule</button></div>
+  `;
+  const wrap = document.getElementById('rung-choices');
+  choices.forEach(kind=>{
+    const div = document.createElement('div');
+    div.className='rung-choice';
+    div.innerHTML = rungSVG(kind) + `<div style="text-align:center;font-family:var(--font-display);font-size:11px;color:var(--slate);margin-top:4px;text-transform:uppercase;">${kind}</div>`;
+    div.onclick=()=>{
+      ex5RecognizeScore.total++;
+      const fb=document.getElementById('ex5-fb');
+      fb.classList.add('show');
+      if(kind===ex5RecognizeCurrent.answer){
+        ex5RecognizeScore.correct++;
+        div.classList.add('correct');
+        fb.className='feedback show ok';
+        fb.innerHTML=`<span class="light"><span class="dot green"></span>Correct.</span> This rule uses ${ex5RecognizeCurrent.answer==='series'?'AND (series contacts)':'OR (parallel contacts)'}.`;
+      } else {
+        div.classList.add('wrong');
+        fb.className='feedback show bad';
+        fb.innerHTML=`<span class="light"><span class="dot red"></span>Not quite.</span> This rule actually uses ${ex5RecognizeCurrent.answer==='series'?'AND (series contacts)':'OR (parallel contacts)'}.`;
+      }
+      document.getElementById('ex5-score').textContent = `Recognize Score: ${ex5RecognizeScore.correct} / ${ex5RecognizeScore.total}`;
+    };
+    wrap.appendChild(div);
+  });
+  document.getElementById('ex5-next').onclick=renderEx5Recognize;
+}
+
+function renderEx5Build(){
+  ex5BuildCurrent = pick(rungQuestions);
+  const body = document.getElementById('ex5-body');
+  body.innerHTML = `
+    <div style="font-size:13px;color:var(--slate);margin-bottom:8px;">Read the rule, then construct the rung yourself — no picture to choose from this time.</div>
+    <div style="font-size:15px;font-weight:600;color:var(--navy-800);margin-bottom:6px;">Rule:</div>
+    <div style="font-size:14.5px;margin-bottom:16px;">${ex5BuildCurrent.rule}</div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px;">
+      <span class="chip" style="cursor:default;">Contact 1</span>
+      <span class="chip" style="cursor:default;">Contact 2</span>
+    </div>
+    <div style="font-size:13px;font-weight:600;color:var(--navy-800);margin-bottom:8px;">Arrange them:</div>
+    <div class="btn-row">
+      <button class="btn ghost" id="arrange-series">Series (AND)</button>
+      <button class="btn ghost" id="arrange-parallel">Parallel (OR)</button>
+    </div>
+    <div id="build-render" style="margin-top:16px;"></div>
+    <div class="feedback" id="ex5b-fb"></div>
+    <div class="score" id="ex5b-score">Build Score: ${ex5BuildScore.correct} / ${ex5BuildScore.total}</div>
+    <div class="btn-row"><button class="btn ghost" id="ex5b-next">New Rule</button></div>
+  `;
+  document.getElementById('arrange-series').onclick=()=>buildRung('series');
+  document.getElementById('arrange-parallel').onclick=()=>buildRung('parallel');
+  document.getElementById('ex5b-next').onclick=renderEx5Build;
+}
+
+function buildRung(kind){
+  document.getElementById('build-render').innerHTML = `<div class="rung-choice" style="display:inline-block;">${rungSVG(kind)}<div style="text-align:center;font-family:var(--font-display);font-size:11px;color:var(--slate);margin-top:4px;text-transform:uppercase;">${kind}</div></div>`;
+  ex5BuildScore.total++;
+  const fb=document.getElementById('ex5b-fb');
+  fb.classList.add('show');
+  if(kind===ex5BuildCurrent.answer){
+    ex5BuildScore.correct++;
+    fb.className='feedback show ok';
+    fb.innerHTML=`<span class="light"><span class="dot green"></span>Correct build.</span> This rule needs ${ex5BuildCurrent.answer==='series'?'AND (series)':'OR (parallel)'}.`;
+  } else {
+    fb.className='feedback show bad';
+    fb.innerHTML=`<span class="light"><span class="dot red"></span>Not quite.</span> This rule actually needs ${ex5BuildCurrent.answer==='series'?'AND (series)':'OR (parallel)'} — try rebuilding it.`;
+  }
+  document.getElementById('ex5b-score').textContent = `Build Score: ${ex5BuildScore.correct} / ${ex5BuildScore.total}`;
+}
+
+/* ---------------- EX 6 — Alarm / HMI Reading ---------------- */
+let ex6Score={correct:0,total:0};
+let ex6Current=null;
+
+function genAlarmQuestion(){
+  const val = rand(15,95);
+  let verdict, colorClass, response;
+  if(val<60){verdict='normal';colorClass='green';response='continue';}
+  else if(val<75){verdict='warning';colorClass='amber';response='monitor';}
+  else {verdict='danger';colorClass='red';response='estop';}
+  return {val,verdict,colorClass,response};
+}
+
+function renderEx6(){
+  ex6Current = genAlarmQuestion();
+  const pct = Math.min(100, ex6Current.val);
+  const fillColor = ex6Current.val<60 ? '#1E6E5C' : ex6Current.val<75 ? '#E8A33D' : '#B23A3A';
+  stage.innerHTML = `
+    <div class="ex-title">Week 6 · Exercise 6</div>
+    <h2 class="ex-heading">Read the Gauge — What's the Verdict?</h2>
+    <p class="ex-goal">Battery temperature gauge, no colour banner shown. Read the number, decide Normal / Warning / Danger, then choose the matching response.</p>
+    <label>Battery Temperature</label>
+    <div class="readout">${ex6Current.val}<span class="unit">°C</span></div>
+    <div class="gauge">
+      <div class="gauge-track"><div class="gauge-fill" style="width:${pct}%;background:${fillColor};"></div></div>
+      <div class="gauge-labels"><span>0</span><span>60 (warning)</span><span>75 (danger)</span><span>100</span></div>
+    </div>
+    <div style="margin-top:18px;font-size:13px;font-weight:600;color:var(--navy-800);">Step 1 — Classify:</div>
+    <div class="btn-row">
+      <button class="btn" data-v="normal">Normal</button>
+      <button class="btn" data-v="warning">Warning</button>
+      <button class="btn" data-v="danger">Danger</button>
+    </div>
+    <div style="margin-top:14px;font-size:13px;font-weight:600;color:var(--navy-800);">Step 2 — Choose the response:</div>
+    <div class="btn-row">
+      <button class="btn ghost" data-r="continue">Continue</button>
+      <button class="btn ghost" data-r="monitor">Flag &amp; Monitor</button>
+      <button class="btn ghost" data-r="estop">E-stop &amp; Report</button>
+    </div>
+    <div class="feedback" id="ex6-fb"></div>
+    <div class="score" id="ex6-score">Score: ${ex6Score.correct} / ${ex6Score.total}</div>
+    <div class="btn-row"><button class="btn ghost" id="ex6-next">New Reading</button></div>
+  `;
+  let classifyChoice=null, responseChoice=null;
+  document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('[data-v]').forEach(x=>x.style.outline='none');
+    b.style.outline='2px solid #1F3B57';
+    classifyChoice=b.dataset.v;
+    tryEvaluate();
+  });
+  document.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('[data-r]').forEach(x=>x.style.outline='none');
+    b.style.outline='2px solid #1F3B57';
+    responseChoice=b.dataset.r;
+    tryEvaluate();
+  });
+  function tryEvaluate(){
+    if(!classifyChoice || !responseChoice) return;
+    ex6Score.total++;
+    const fb=document.getElementById('ex6-fb');
+    fb.classList.add('show');
+    const bothCorrect = classifyChoice===ex6Current.verdict && responseChoice===ex6Current.response;
+    if(bothCorrect){
+      ex6Score.correct++;
+      fb.className='feedback show ok';
+      fb.innerHTML=`<span class="light"><span class="dot ${ex6Current.colorClass}"></span>Correct.</span> ${ex6Current.val}°C is <strong>${ex6Current.verdict}</strong> → <strong>${labelResponse(ex6Current.response)}</strong>.`;
+    } else {
+      fb.className='feedback show bad';
+      fb.innerHTML=`<span class="light"><span class="dot ${ex6Current.colorClass}"></span>Not quite.</span> ${ex6Current.val}°C is actually <strong>${ex6Current.verdict}</strong> → correct response is <strong>${labelResponse(ex6Current.response)}</strong>.`;
+    }
+    document.getElementById('ex6-score').textContent = `Score: ${ex6Score.correct} / ${ex6Score.total}`;
+  }
+  function labelResponse(r){return r==='continue'?'Continue':r==='monitor'?'Flag & Monitor':'E-stop & Report';}
+  document.getElementById('ex6-next').onclick=renderEx6;
+}
+
+/* ---------------- Router ---------------- */
+function render(ex){
+  stopSeq3D();
+  stopSort3D();
+  if(ex==='ex1') renderEx1();
+  else if(ex==='ex2') renderEx2();
+  else if(ex==='ex3') renderEx3();
+  else if(ex==='ex4') renderEx4();
+  else if(ex==='ex5') renderEx5();
+  else if(ex==='ex6') renderEx6();
+}
+
+// deep-link support: #ex3 etc.
+const hashEx = window.location.hash.replace('#','');
+if(['ex1','ex2','ex3','ex4','ex5','ex6'].includes(hashEx)){
+  tabs.forEach(t=>t.classList.toggle('active', t.dataset.ex===hashEx));
+  render(hashEx);
+} else {
+  render('ex1');
+}
+</script>
+</body>
+</html>
