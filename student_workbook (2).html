@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Workbook — Electrical, PLC &amp; EV Fundamentals</title>
+<style>
+  :root{
+    --navy-950:#0F1E2B; --navy-800:#1F3B57; --navy-700:#2C4D6E;
+    --cream:#F4F1E9; --panel:#FBFAF6; --ink:#182430; --slate:#5B6B7A;
+    --amber:#E8A33D; --rust:#C0511F; --teal:#1E6E5C; --red:#B23A3A; --line:#D9D4C6;
+    --font-display: ui-monospace, "Cascadia Code", "SFMono-Regular", "Roboto Mono", Consolas, monospace;
+    --font-body: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--cream);font-family:var(--font-body);color:var(--ink);}
+
+  .cover{background:linear-gradient(180deg,var(--navy-800),var(--navy-950));color:#fff;padding:60px 24px 50px;text-align:center;}
+  .cover .eyebrow{font-family:var(--font-display);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;}
+  .cover h1{font-size:34px;margin:0 0 10px;font-weight:800;}
+  .cover p{font-size:14px;color:#C9D3DC;max-width:520px;margin:0 auto;line-height:1.6;}
+  .cover .name-line{margin-top:30px;display:inline-block;border-top:1px solid #4A6684;padding-top:8px;font-family:var(--font-display);font-size:12px;color:#C9D3DC;min-width:260px;}
+
+  nav.toc{max-width:760px;margin:-30px auto 0;background:#fff;border:1px solid var(--line);border-radius:8px;padding:22px 26px;box-shadow:0 10px 30px -18px rgba(15,30,43,.5);position:relative;z-index:2;}
+  nav.toc h2{font-size:13px;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.08em;color:var(--rust);margin:0 0 14px;}
+  nav.toc ol{margin:0;padding-left:20px;columns:2;column-gap:28px;font-size:13.5px;line-height:2;}
+  nav.toc a{color:var(--navy-800);text-decoration:none;}
+  nav.toc a:hover{text-decoration:underline;}
+
+  main{max-width:760px;margin:0 auto;padding:40px 20px 80px;}
+
+  .stage-divider{margin:50px 0 24px;padding-bottom:10px;border-bottom:2px solid var(--navy-800);}
+  .stage-divider .eyebrow{font-family:var(--font-display);font-size:11px;color:var(--rust);text-transform:uppercase;letter-spacing:.1em;}
+  .stage-divider h2{margin:4px 0 0;font-size:22px;color:var(--navy-800);}
+  .stage-divider p{margin:6px 0 0;font-size:13.5px;color:var(--slate);}
+
+  .week{background:#fff;border:1px solid var(--line);border-radius:8px;padding:26px 28px;margin-bottom:22px;position:relative;scroll-margin-top:20px;}
+  .week::before,.week::after{content:"";position:absolute;top:10px;width:6px;height:6px;border-radius:50%;background:#CFC9B8;}
+  .week::before{left:10px;} .week::after{right:10px;}
+  .week .wk-label{font-family:var(--font-display);font-size:11px;color:var(--teal);text-transform:uppercase;letter-spacing:.08em;margin:0 0 4px;}
+  .week h3{margin:0 0 12px;font-size:19px;color:var(--navy-800);}
+  .goal-box{background:#FBF3E4;border:1px solid var(--amber);border-radius:5px;padding:12px 14px;font-size:13.5px;margin-bottom:18px;}
+  .goal-box b{color:#6B4A10;}
+
+  .section-label{font-family:var(--font-display);font-size:11px;color:var(--navy-800);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 8px;font-weight:700;}
+  .week p{font-size:14px;line-height:1.65;margin:0 0 10px;}
+  .week ul{margin:0 0 10px;padding-left:20px;font-size:14px;line-height:1.65;}
+
+  .try-it{background:#E7F2EF;border-left:4px solid var(--teal);border-radius:4px;padding:12px 16px;margin:10px 0;font-size:13.5px;}
+  .try-it a{color:var(--teal);font-weight:700;text-decoration:none;border-bottom:1px dotted var(--teal);}
+  .try-it a:hover{opacity:.8;}
+
+  .check{border:1px solid var(--line);border-radius:5px;padding:12px 14px;margin:8px 0;}
+  .check .q{font-size:13.5px;font-weight:600;margin-bottom:6px;}
+  .writeline{border-bottom:1px dashed var(--slate);height:22px;margin-bottom:6px;}
+  .reveal-btn{font-family:var(--font-display);font-size:11px;background:none;border:1px solid var(--line);border-radius:4px;padding:5px 10px;cursor:pointer;color:var(--navy-800);}
+  .reveal-btn:hover{background:#EFEBDD;}
+  .answer{display:none;font-size:13px;color:var(--slate);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);}
+  .answer.show{display:block;}
+
+  .reflect{background:#FBEDE4;border-left:4px solid var(--rust);border-radius:4px;padding:12px 16px;margin-top:14px;}
+  .reflect .q{font-size:13.5px;font-weight:600;color:#7A3A1A;margin-bottom:8px;}
+  textarea{width:100%;min-height:70px;border:1px solid var(--line);border-radius:4px;padding:8px 10px;font-family:var(--font-body);font-size:13.5px;resize:vertical;}
+
+  .checklist{background:var(--navy-800);color:#fff;border-radius:8px;padding:26px 28px;margin-top:40px;}
+  .checklist h2{margin:0 0 14px;font-size:18px;}
+  .checklist ul{padding-left:20px;font-size:13.5px;line-height:1.8;color:#DCE5EC;}
+
+  .top-link{display:inline-block;margin-top:12px;font-size:11px;font-family:var(--font-display);color:var(--slate);text-decoration:none;}
+  @media (max-width:600px){ .week{padding:20px 18px;} nav.toc ol{columns:1;} }
+</style>
+</head>
+<body>
+
+<div class="cover" id="top">
+  <div class="eyebrow">Student Training Track</div>
+  <h1>Electrical, PLC &amp; EV Fundamentals</h1>
+  <p>Your workbook for all 11 weeks. Read the key ideas, try the linked activity, check your understanding, and reflect. Keep this open next to the two practice tools.</p>
+  <div class="name-line">Name: _______________________&nbsp;&nbsp;&nbsp; Cohort: _______________</div>
+</div>
+
+<nav class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#w1">Week 1 — Circuit Basics</a></li>
+    <li><a href="#w2">Week 2 — Safety Procedure &amp; PPE</a></li>
+    <li><a href="#w3">Week 3 — Insulation Resistance</a></li>
+    <li><a href="#w4">Week 4 — Sensors &amp; Actuators</a></li>
+    <li><a href="#w5">Week 5 — Ladder Logic</a></li>
+    <li><a href="#w6">Week 6 — Alarms, Interlocks &amp; HMI</a></li>
+    <li><a href="#w7">Week 7 — Capstone: Inspection Station</a></li>
+    <li><a href="#w8">Week 8 — EV System Overview</a></li>
+    <li><a href="#w9">Week 9 — SOC &amp; SOH</a></li>
+    <li><a href="#w10">Week 10 — AC/DC Charging</a></li>
+    <li><a href="#w11">Week 11 — Integrated Review</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ============ STAGE 1 ============ -->
+<div class="stage-divider">
+  <div class="eyebrow">Stage 1</div>
+  <h2>Electrical &amp; Electronics Fundamentals</h2>
+  <p>Everything you measure later — on a control panel or an EV battery — starts here: voltage, current, resistance, and the safe way to work with them.</p>
+</div>
+
+<section class="week" id="w1">
+  <div class="wk-label">Week 1</div>
+  <h3>Circuit Basics: Ohm's Law &amp; Series/Parallel Circuits</h3>
+  <div class="goal-box"><b>Goal:</b> Be able to calculate voltage, current, or resistance in any simple circuit, and know the difference between series and parallel wiring.</div>
+
+  <div class="section-label">Key Concepts</div>
+  <p>Every circuit runs on three connected quantities: <b>voltage (V)</b>, <b>current (I)</b>, and <b>resistance (R)</b>. Ohm's Law ties them together: <b>V = I × R</b>. If you know any two, you can always find the third.</p>
+  <ul>
+    <li>In a <b>series</b> circuit, current is the same everywhere; voltage divides across each component.</li>
+    <li>In a <b>parallel</b> circuit, voltage is the same across every branch; current divides between branches.</li>
+  </ul>
+
+  <div class="try-it">🔧 <b>Try it:</b> Open the <a href="electrical_control_simulator.html#ex1" target="_blank">Electrical &amp; Control Practice Panel — Exercise 1</a> and solve at least 6 practice problems.</div>
+
+  <div class="section-label">Check Your Understanding</div>
+  <div class="check"><div class="q">1. If V = 24V and R = 6Ω, what is I?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">I = V ÷ R = 24 ÷ 6 = 4A</div></div>
+  <div class="check"><div class="q">2. Two 20Ω resistors are wired in parallel. What is the total resistance?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">R_total = (20×20)/(20+20) = 400/40 = 10Ω</div></div>
+
+  <div class="reflect"><div class="q">Reflect</div>
+    <p style="font-size:12.5px;color:#7A3A1A;margin:0 0 8px;">Where might you already see series or parallel wiring in daily life (lights, phone chargers, etc.)?</p>
+    <textarea placeholder="Write your thoughts here..."></textarea>
+  </div>
+  <a class="top-link" href="#top">↑ Back to contents</a>
+</section>
+
+<section class="week" id="w2">
+  <div class="wk-label">Week 2</div>
+  <h3>Electrical Safety Procedure &amp; Protective Equipment</h3>
+  <div class="goal-box"><b>Goal:</b> Know the 5-step isolation sequence from memory, and be able to judge whether protective equipment is safe to use.</div>
+
+  <div class="section-label">Key Concepts</div>
+  <p>Before touching a live circuit, follow the same sequence every time: <b>power off → gloves on → disconnect the isolation point → wait for stored energy to discharge → confirm 0V with a meter.</b></p>
+  <ul>
+    <li>The waiting step matters because components like capacitors can hold energy even after power is cut.</li>
+    <li>Protective gloves must be inspected before use and replaced on a fixed schedule.</li>
+  </ul>
+
+  <div class="try-it">🔧 <b>Try it:</b> Open <a href="electrical_control_simulator.html#ex2" target="_blank">Exercise 2 — Isolation Sequence &amp; PPE</a> and get 3 flawless runs in a row. Watch the small 3D panel above the cards light up as you pick each step.</div>
+
+  <div class="section-label">Check Your Understanding</div>
+  <div class="check"><div class="q">1. Why is the "wait" step included even if the circuit looks off?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">Stored energy (e.g., in capacitors) can remain even after power is cut — skipping the wait risks shock.</div></div>
+  <div class="check"><div class="q">2. What confirms a circuit is truly safe to touch?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">A meter reading of 0V — not just "looking" off.</div></div>
+
+  <div class="reflect"><div class="q">Reflect</div>
+    <p style="font-size:12.5px;color:#7A3A1A;margin:0 0 8px;">Have you seen a safety shortcut taken anywhere — at school, home, or work? What happened, or what could have happened?</p>
+    <textarea placeholder="Write your thoughts here..."></textarea>
+  </div>
+  <a class="top-link" href="#top">↑ Back to contents</a>
+</section>
+
+<section class="week" id="w3">
+  <div class="wk-label">Week 3</div>
+  <h3>Reading a Meter: Insulation Resistance</h3>
+  <div class="goal-box"><b>Goal:</b> Read a measured value, compare it to a threshold, and judge normal vs. suspect — a pattern you'll use for the rest of this program.</div>
+
+  <div class="section-label">Key Concepts</div>
+  <p>An insulation resistance tester measures how well an insulator blocks current. A common rule of thumb: minimum acceptable resistance is <b>100Ω per volt</b> of system voltage.</p>
+  <ul>
+    <li>A number alone means nothing — you always need a reference (threshold) to compare it to.</li>
+    <li>A reading close to or below the threshold is a warning sign, even if it isn't proof of failure.</li>
+  </ul>
+
+  <div class="try-it">🔧 <b>Try it:</b> Open <a href="electrical_control_simulator.html#ex3" target="_blank">Exercise 3 — Insulation Resistance Judgment</a> and answer at least 6 readings.</div>
+
+  <div class="section-label">Check Your Understanding</div>
+  <div class="check"><div class="q">1. At 400V, what is the minimum acceptable insulation resistance?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">400 × 100Ω = 40,000Ω = 40kΩ</div></div>
+  <div class="check"><div class="q">2. Should a borderline reading be treated as pass or suspect?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">Suspect — re-check rather than assuming a pass.</div></div>
+
+  <div class="reflect"><div class="q">Reflect</div>
+    <p style="font-size:12.5px;color:#7A3A1A;margin:0 0 8px;">"Measure → compare → judge" — where else might this pattern be useful outside electrical work?</p>
+    <textarea placeholder="Write your thoughts here..."></textarea>
+  </div>
+  <a class="top-link" href="#top">↑ Back to contents</a>
+</section>
+
+<!-- ============ STAGE 2 ============ -->
+<div class="stage-divider">
+  <div class="eyebrow">Stage 2</div>
+  <h2>PLC &amp; Control Basics</h2>
+  <p>Automated systems run on a loop: sense → decide → act. This stage teaches you to name the parts of that loop, read the logic behind it, and practice the judgment it demands.</p>
+</div>
+
+<section class="week" id="w4">
+  <div class="wk-label">Week 4</div>
+  <h3>Sensors, Actuators &amp; Control Basics</h3>
+  <div class="goal-box"><b>Goal:</b> Correctly identify sensors vs. actuators, and describe a simple control loop end to end.</div>
+
+  <div class="section-label">Key Concepts</div>
+  <ul>
+    <li><b>Sensor</b> = detects a condition and turns it into a signal.</li>
+    <li><b>Actuator</b> = takes a command and produces physical action.</li>
+    <li><b>Controller</b> = reads sensor signals, applies logic, and commands actuators.</li>
+  </ul>
+
+  <div class="try-it">🔧 <b>Try it:</b> Open <a href="electrical_control_simulator.html#ex4" target="_blank">Exercise 4 — Sensor or Actuator?</a>, sort all 10 devices — watch them drop into the 3D sorting yard above — then try the "Trace a Loop" check question at the bottom of the page.</div>
+
+  <div class="section-label">Check Your Understanding</div>
+  <div class="check"><div class="q">1. Is a push-button a sensor or an actuator?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">A sensor — it turns a human action into a signal a controller can read.</div></div>
+
+  <div class="reflect"><div class="q">Reflect</div>
+    <p style="font-size:12.5px;color:#7A3A1A;margin:0 0 8px;">Describe one sense → decide → act loop you've noticed in daily life (not a factory).</p>
+    <textarea placeholder="Write your thoughts here..."></textarea>
+  </div>
+  <a class="top-link" href="#top">↑ Back to contents</a>
+</section>
+
+<section class="week" id="w5">
+  <div class="wk-label">Week 5</div>
+  <h3>Introduction to Ladder Logic</h3>
+  <div class="goal-box"><b>Goal:</b> Read a basic ladder logic rung and tell whether it represents an AND or an OR condition.</div>
+
+  <div class="section-label">Key Concepts</div>
+  <ul>
+    <li>Ladder logic shows control decisions as horizontal "rungs."</li>
+    <li>Contacts in <b>series</b> = AND. Contacts in <b>parallel</b> = OR.</li>
+    <li>Reading left to right tells you exactly what must be true for the output to turn on.</li>
+  </ul>
+
+  <div class="try-it">🔧 <b>Try it:</b> Open <a href="electrical_control_simulator.html#ex5" target="_blank">Exercise 5 — Ladder Logic Rung Reader</a>. Start in <b>Recognize Mode</b> to pick the matching rung, then switch to <b>Build Mode</b> and construct a rung yourself.</div>
+
+  <div class="section-label">Check Your Understanding</div>
+  <div class="check"><div class="q">1. "Turn on the fan if EITHER the temperature sensor OR the manual switch is active" — series or parallel?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">Parallel (OR).</div></div>
+
+  <div class="reflect"><div class="q">Reflect</div>
+    <p style="font-size:12.5px;color:#7A3A1A;margin:0 0 8px;">Write one AND rule and one OR rule of your own, based on a machine or system you know.</p>
+    <textarea placeholder="Write your thoughts here..."></textarea>
+  </div>
+  <a class="top-link" href="#top">↑ Back to contents</a>
+</section>
+
+<section class="week" id="w6">
+  <div class="wk-label">Week 6</div>
+  <h3>Alarms, Interlocks &amp; Reading an HMI</h3>
+  <div class="goal-box"><b>Goal:</b> Correctly classify a monitored value as normal/warning/danger and choose a matching response.</div>
+
+  <div class="section-label">Key Concepts</div>
+  <ul>
+    <li><b>Alarm</b> = a signal that a value has crossed a threshold.</li>
+    <li><b>Interlock</b> = a safety condition that prevents an action until satisfied.</li>
+    <li>Read colour <i>and</i> the number together — never colour alone.</li>
+  </ul>
+
+  <div class="try-it">🔧 <b>Try it:</b> Open <a href="electrical_control_simulator.html#ex6" target="_blank">Exercise 6 — Alarm &amp; HMI Reading</a> and complete at least 5 readings.</div>
+
+  <div class="section-label">Check Your Understanding</div>
+  <div class="check"><div class="q">1. Why can't you rely on colour alone when reading a screen?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">Colour tells you the category; the number tells you how close to the edge you are. You need both.</div></div>
+
+  <div class="reflect"><div class="q">Reflect</div>
+    <p style="font-size:12.5px;color:#7A3A1A;margin:0 0 8px;">Why might a designer choose an interlock instead of just an alarm?</p>
+    <textarea placeholder="Write your thoughts here..."></textarea>
+  </div>
+  <a class="top-link" href="#top">↑ Back to contents</a>
+</section>
+
+<section class="week" id="w7">
+  <div class="wk-label">Week 7 · Capstone</div>
+  <h3>Battery-Pack Assembly &amp; Inspection Station</h3>
+  <div class="goal-box"><b>Goal:</b> Run the full sense → judge → respond loop yourself, across all 6 scenarios, with reasoned (not guessed) responses.</div>
+
+  <div class="section-label">Key Concepts</div>
+  <p>Today's tool combines everything from Weeks 4–6: four live values, a status banner, and four possible responses — Continue / E-stop &amp; Report / Rework / Flag &amp; Monitor.</p>
+
+  <div class="try-it">🔧 <b>Try it:</b> Open the <a href="ev_fundamentals_digital_twin.html#capstone" target="_blank">EV Fundamentals Digital Twin — Inspection Station</a>. Drag the 3D view to look around the station, then work through all 6 scenarios. (No internet on this device? The tool automatically switches to gauges-only — everything still works.)</div>
+
+  <div class="section-label">Check Your Understanding</div>
+  <div class="check"><div class="q">1. In the Sensor Glitch scenario, why is "Flag &amp; Monitor" correct instead of an immediate stop?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">An unstable signal calls for monitoring and troubleshooting first — it isn't automatically proof of a hard fault.</div></div>
+
+  <div class="reflect"><div class="q">Reflect</div>
+    <p style="font-size:12.5px;color:#7A3A1A;margin:0 0 8px;">Which scenario was hardest to judge, and what made it hard?</p>
+    <textarea placeholder="Write your thoughts here..."></textarea>
+  </div>
+  <a class="top-link" href="#top">↑ Back to contents</a>
+</section>
+
+<!-- ============ STAGE 3 ============ -->
+<div class="stage-divider">
+  <div class="eyebrow">Stage 3</div>
+  <h2>EV Fundamentals</h2>
+  <p>Apply the measuring and control-logic skills from Stages 1–2 to a real EV, at a conceptual level. No scan tool or live vehicle needed.</p>
+</div>
+
+<section class="week" id="w8">
+  <div class="wk-label">Week 8</div>
+  <h3>EV System Overview</h3>
+  <div class="goal-box"><b>Goal:</b> Point to a diagram and name the four core EV systems and what each does.</div>
+
+  <div class="section-label">Key Concepts</div>
+  <ul>
+    <li><b>Battery</b> — stores energy.</li>
+    <li><b>Motor &amp; Inverter</b> — convert stored energy into motion.</li>
+    <li><b>Charging system</b> — puts energy back in.</li>
+    <li><b>BMS</b> — monitors and protects the whole battery.</li>
+  </ul>
+
+  <div class="try-it">🔧 <b>Try it:</b> Open the <a href="ev_fundamentals_digital_twin.html#map" target="_blank">EV Fundamentals Digital Twin — System Map</a>. Drag to look around the 3D vehicle and click all four coloured markers. (No internet on this device? It automatically switches to a 2D diagram — same four systems, same quiz.)</div>
+
+  <div class="section-label">Check Your Understanding</div>
+  <div class="check"><div class="q">1. Which of the four systems acts as the "controller" in the sensor-controller-actuator loop?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">The BMS (Battery Management System).</div></div>
+
+  <div class="reflect"><div class="q">Reflect</div>
+    <p style="font-size:12.5px;color:#7A3A1A;margin:0 0 8px;">Which of the four systems would you be most interested to learn more about, and why?</p>
+    <textarea placeholder="Write your thoughts here..."></textarea>
+  </div>
+  <a class="top-link" href="#top">↑ Back to contents</a>
+</section>
+
+<section class="week" id="w9">
+  <div class="wk-label">Week 9</div>
+  <h3>Battery SOC &amp; SOH Concepts</h3>
+  <div class="goal-box"><b>Goal:</b> Explain the difference between SOC and SOH, and why a battery can show "100% charged" but still have reduced real capacity.</div>
+
+  <div class="section-label">Key Concepts</div>
+  <ul>
+    <li><b>SOC</b> (State of Charge) = how full the battery is right now.</li>
+    <li><b>SOH</b> (State of Health) = how much capacity it has left compared to new.</li>
+    <li>Dashboard SOC is an estimate, not a direct measurement, so it can drift.</li>
+  </ul>
+
+  <div class="try-it">🔧 <b>Try it:</b> Open the <a href="ev_fundamentals_digital_twin.html#soc" target="_blank">EV Fundamentals Digital Twin — SOC/SOH Lab</a>, try both presets, then answer the Concept Check quiz below the sliders.</div>
+
+  <div class="section-label">Check Your Understanding</div>
+  <div class="check"><div class="q">1. If SOC = 100% and SOH = 70%, roughly what percentage of a new battery's real capacity are you getting?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">About 70% (100% × 70% = 70%).</div></div>
+
+  <div class="reflect"><div class="q">Reflect</div>
+    <p style="font-size:12.5px;color:#7A3A1A;margin:0 0 8px;">How would you explain SOC vs. SOH to a friend who has never studied this?</p>
+    <textarea placeholder="Write your thoughts here..."></textarea>
+  </div>
+  <a class="top-link" href="#top">↑ Back to contents</a>
+</section>
+
+<section class="week" id="w10">
+  <div class="wk-label">Week 10</div>
+  <h3>AC/DC Charging Basics</h3>
+  <div class="goal-box"><b>Goal:</b> Explain the structural difference between AC and DC fast charging, and reason about whether a charging fault is likely vehicle-side or charger-side.</div>
+
+  <div class="section-label">Key Concepts</div>
+  <ul>
+    <li><b>AC charging:</b> the vehicle's own On-Board Charger (OBC) converts AC to DC before it reaches the battery.</li>
+    <li><b>DC fast charging:</b> the charger has already converted to DC and supplies it directly, bypassing the OBC.</li>
+    <li>A fault that repeats across multiple chargers points to the vehicle; a fault that only happens on one charger points to the charger.</li>
+  </ul>
+
+  <div class="try-it">🔧 <b>Try it:</b> Open the <a href="ev_fundamentals_digital_twin.html#charge" target="_blank">EV Fundamentals Digital Twin — Charging Flow</a>. Toggle between AC and DC, complete the "Sequence the AC Power Flow" drill, then answer a few rounds of the Fault Classification Quiz.</div>
+
+  <div class="section-label">Check Your Understanding</div>
+  <div class="check"><div class="q">1. Why is DC fast charging generally quicker than AC charging?</div><div class="writeline"></div>
+    <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Show Answer</button>
+    <div class="answer">It skips the vehicle's own AC-to-DC conversion step and delivers already-converted power directly.</div></div>
+
+  <div class="reflect"><div class="q">Reflect</div>
+    <p style="font-size:12.5px;color:#7A3A1A;margin:0 0 8px;">How does this connect back to the sensor/controller loop from Stage 2?</p>
+    <textarea placeholder="Write your thoughts here..."></textarea>
+  </div>
+  <a class="top-link" href="#top">↑ Back to contents</a>
+</section>
+
+<section class="week" id="w11">
+  <div class="wk-label">Week 11</div>
+  <h3>Integrated Review &amp; Completion</h3>
+  <div class="goal-box"><b>Goal:</b> Connect all three stages into one thread: measure → compare → judge → act.</div>
+
+  <div class="section-label">Key Concepts</div>
+  <p>Stage 1 taught you to measure and judge against a reference. Stage 2 taught you the sensor-controller-actuator loop. Stage 3 applied both to a real EV. The pattern is the same throughout.</p>
+
+  <div class="try-it">🔧 <b>Try it:</b> Open the <a href="ev_fundamentals_digital_twin.html#review" target="_blank">EV Fundamentals Digital Twin — Integrated Review</a> and answer at least 8 mixed questions, then revisit the Week 7 capstone once more with a partner.</div>
+
+  <div class="section-label">Check Your Understanding</div>
+  <div class="check"><div class="q">1. In your own words, describe the measure → compare → judge → act loop.</div>
+    <div class="writeline"></div><div class="writeline"></div></div>
+
+  <div class="reflect"><div class="q">Reflect</div>
+    <p style="font-size:12.5px;color:#7A3A1A;margin:0 0 8px;">Which stage did you find most useful, and what would you like to go deeper on next?</p>
+    <textarea placeholder="Write your thoughts here..."></textarea>
+  </div>
+  <a class="top-link" href="#top">↑ Back to contents</a>
+</section>
+
+<div class="checklist">
+  <h2>Completion Checklist</h2>
+  <ul>
+    <li>☐ Can state Ohm's Law and solve basic series/parallel problems by hand.</li>
+    <li>☐ Can recite the electrical isolation sequence and explain why each step matters.</li>
+    <li>☐ Can read a measured value against a threshold and justify a normal/suspect judgment.</li>
+    <li>☐ Can distinguish a sensor from an actuator and read a simple ladder logic rung.</li>
+    <li>☐ Completed the Week 7 capstone with reasoned responses.</li>
+    <li>☐ Can describe the four core EV systems and the difference between SOC and SOH.</li>
+  </ul>
+</div>
+
+</main>
+</body>
+</html>
