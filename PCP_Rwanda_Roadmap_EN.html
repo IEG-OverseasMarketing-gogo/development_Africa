@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNIDO PCP Rwanda Partnership Roadmap · IEG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;900&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-950:#081426;
+    --navy-900:#0c1c33;
+    --navy-800:#12294d;
+    --navy-700:#1a3763;
+    --steel:#8798ad;
+    --steel-dim:#5c6c82;
+    --paper:#eef2f7;
+    --amber:#e8a33d;
+    --amber-soft:#f0be74;
+    --amber-dim:#a86d1f;
+    --line:rgba(238,242,247,0.12);
+    --line-strong:rgba(238,242,247,0.22);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html,body{
+    background:var(--navy-950);
+    color:var(--paper);
+    font-family:'Noto Sans KR',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  body{
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(232,163,61,0.07), transparent 40%),
+      radial-gradient(circle at 88% 92%, rgba(26,55,99,0.5), transparent 45%);
+  }
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,4vw,56px);}
+
+  /* ---------- Header ---------- */
+  header.hero{
+    position:relative;
+    padding:clamp(48px,8vw,88px) 0 clamp(40px,6vw,64px);
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .schematic-grid{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:56px 56px;
+    mask-image:linear-gradient(to bottom, black, transparent 85%);
+    opacity:.6;
+    pointer-events:none;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--amber);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:1px;background:var(--amber);
+  }
+  h1.title{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:900;
+    font-size:clamp(34px,6.4vw,64px);
+    line-height:1.02;
+    letter-spacing:.005em;
+    color:var(--paper);
+    max-width:14ch;
+    text-transform:uppercase;
+  }
+  h1.title span{color:var(--amber);}
+  .subtitle{
+    margin-top:20px;
+    font-size:clamp(15px,1.7vw,18px);
+    color:var(--steel);
+    max-width:56ch;
+    line-height:1.7;
+    font-weight:400;
+  }
+  .meta-row{
+    display:flex;flex-wrap:wrap;gap:28px;
+    margin-top:36px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    color:var(--steel-dim);
+  }
+  .meta-row div span{color:var(--paper);}
+  .meta-row div{border-left:2px solid var(--amber-dim);padding-left:10px;}
+
+  /* ---------- Timeline section ---------- */
+  section.timeline{padding:clamp(56px,8vw,96px) 0 40px;position:relative;}
+  .timeline-head{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    margin-bottom:56px;flex-wrap:wrap;gap:16px;
+  }
+  .timeline-head h2{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:700;
+    font-size:clamp(22px,3vw,30px);
+    text-transform:uppercase;
+    letter-spacing:.02em;
+  }
+  .timeline-head p{
+    font-size:13px;color:var(--steel-dim);
+    font-family:'JetBrains Mono',monospace;
+  }
+
+  /* the rail */
+  .rail-track{
+    position:relative;
+    padding-top:6px;
+  }
+  .rail-line-wrap{
+    position:relative;
+    height:64px;
+    margin-bottom:8px;
+  }
+  svg.rail{width:100%;height:64px;display:block;overflow:visible;}
+  .rail-path{
+    fill:none;
+    stroke:var(--line-strong);
+    stroke-width:2;
+  }
+  .rail-pulse{
+    fill:none;
+    stroke:var(--amber);
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-dasharray:6 14;
+    animation:flow 3.2s linear infinite;
+    filter:drop-shadow(0 0 4px rgba(232,163,61,0.6));
+  }
+  @keyframes flow{ to{ stroke-dashoffset:-200; } }
+
+  .stations{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+  }
+
+  .station-marker{
+    position:absolute;
+    top:22px;
+    width:18px;height:18px;
+    border-radius:50%;
+    background:var(--navy-950);
+    border:2px solid var(--amber);
+    box-shadow:0 0 0 4px var(--navy-950), 0 0 14px rgba(232,163,61,.5);
+  }
+  .station-marker::after{
+    content:"";
+    position:absolute;inset:4px;
+    border-radius:50%;
+    background:var(--amber);
+  }
+
+  .phase-card{
+    background:linear-gradient(180deg, var(--navy-800), var(--navy-900));
+    border:1px solid var(--line);
+    border-top:2px solid var(--amber-dim);
+    border-radius:4px;
+    padding:26px 22px 24px;
+    display:flex;flex-direction:column;
+    min-height:100%;
+    transition:transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+    opacity:0;
+    transform:translateY(18px);
+  }
+  .phase-card.in{opacity:1;transform:translateY(0);}
+  .phase-card:hover{
+    transform:translateY(-6px);
+    border-top-color:var(--amber);
+    box-shadow:0 18px 34px -18px rgba(0,0,0,.6);
+  }
+
+  .phase-index{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:900;
+    font-size:15px;
+    color:var(--amber);
+    letter-spacing:.08em;
+    font-variant-numeric:tabular-nums;
+  }
+  .phase-time{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    color:var(--steel-dim);
+    margin-top:4px;
+    letter-spacing:.02em;
+  }
+  .phase-name{
+    font-size:19px;
+    font-weight:700;
+    color:var(--paper);
+    margin-top:14px;
+    line-height:1.35;
+  }
+  .phase-duration-bar{
+    margin-top:14px;
+    height:4px;width:100%;
+    background:rgba(238,242,247,.08);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .phase-duration-fill{height:100%;background:linear-gradient(90deg,var(--amber-dim),var(--amber));}
+
+  .phase-desc{
+    margin-top:16px;
+    font-size:13.5px;
+    line-height:1.75;
+    color:var(--steel);
+    flex-grow:1;
+  }
+  .phase-desc ul{list-style:none;}
+  .phase-desc li{
+    position:relative;
+    padding-left:14px;
+    margin-bottom:8px;
+  }
+  .phase-desc li::before{
+    content:"";
+    position:absolute;left:0;top:8px;
+    width:5px;height:5px;
+    background:var(--amber-dim);
+  }
+
+  .phase-tag{
+    margin-top:18px;
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.05em;
+    color:var(--amber-soft);
+    background:rgba(232,163,61,.08);
+    border:1px solid rgba(232,163,61,.25);
+    padding:5px 10px;
+    align-self:flex-start;
+    text-transform:uppercase;
+  }
+
+  /* ---------- Priority link strip ---------- */
+  section.priorities{
+    padding:56px 0 72px;
+    border-top:1px solid var(--line);
+    margin-top:40px;
+  }
+  .priorities h3{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-size:18px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.04em;
+    color:var(--steel);
+    margin-bottom:24px;
+  }
+  .pill-row{display:flex;flex-wrap:wrap;gap:12px;}
+  .pill{
+    display:flex;align-items:center;gap:10px;
+    border:1px solid var(--line);
+    background:var(--navy-800);
+    padding:10px 16px;
+    border-radius:999px;
+    font-size:12.5px;
+    color:var(--steel);
+  }
+  .pill b{color:var(--paper);font-weight:600;}
+  .pill .dot{width:6px;height:6px;border-radius:50%;background:var(--amber);flex-shrink:0;}
+
+  footer{
+    padding:28px 0 44px;
+    border-top:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;color:var(--steel-dim);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+
+  .card-marker{display:none;}
+
+  @media (max-width:880px){
+    .stations{grid-template-columns:1fr;gap:0;}
+    .rail-line-wrap{display:none;}
+    .stations{position:relative;padding-left:26px;}
+    .stations::before{
+      content:"";
+      position:absolute;left:8px;top:6px;bottom:6px;
+      width:2px;
+      background:linear-gradient(var(--amber-dim), var(--amber));
+    }
+    .phase-card{margin-bottom:20px;position:relative;}
+    .card-marker{
+      display:block;
+      position:absolute;left:-26px;top:26px;
+      width:18px;height:18px;border-radius:50%;
+      background:var(--navy-950);
+      border:2px solid var(--amber);
+      box-shadow:0 0 0 4px var(--navy-950), 0 0 14px rgba(232,163,61,.5);
+    }
+    .card-marker::after{
+      content:"";position:absolute;inset:4px;
+      border-radius:50%;background:var(--amber);
+    }
+    .phase-card:last-child{margin-bottom:0;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .rail-pulse{animation:none;}
+    .phase-card{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="schematic-grid"></div>
+    <div class="eyebrow">Concept Note · Execution Timeline</div>
+    <h1 class="title">UNIDO PCP RWANDA<br><span>PARTNERSHIP ROADMAP</span></h1>
+    <p class="subtitle">Industry 4.0 collaboration for Rwanda through smart-factory and automation TVET infrastructure —
+      a four-phase path from initial engagement to nationwide scale-up.</p>
+    <div class="meta-row">
+      <div>PARTNER — <span>IEG Co., Ltd. / UNIDO PCP Rwanda</span></div>
+      <div>SCOPE — <span>Smart Factory · Automation TVET · Green Processing</span></div>
+      <div>MODEL — <span>ODA / PPP-linked</span></div>
+    </div>
+  </header>
+
+  <section class="timeline">
+    <div class="timeline-head">
+      <h2>Execution Timeline</h2>
+      <p>4 PHASES / 2026.10 — 2027.12+</p>
+    </div>
+
+    <div class="rail-track">
+      <div class="rail-line-wrap">
+        <svg class="rail" viewBox="0 0 1000 64" preserveAspectRatio="none">
+          <line class="rail-path" x1="60" y1="12" x2="940" y2="12"/>
+          <line class="rail-pulse" x1="60" y1="12" x2="940" y2="12"/>
+        </svg>
+        <div class="station-marker" style="left:6.5%;"></div>
+        <div class="station-marker" style="left:31.2%;"></div>
+        <div class="station-marker" style="left:56%;"></div>
+        <div class="station-marker" style="left:80.8%;"></div>
+      </div>
+
+      <div class="stations">
+
+        <article class="phase-card" data-fill="20">
+          <div class="card-marker"></div>
+          <div class="phase-index">PHASE 01</div>
+          <div class="phase-time">Oct — Nov 2026 · 2 months</div>
+          <div class="phase-name">Initial Engagement</div>
+          <div class="phase-duration-bar"><div class="phase-duration-fill" style="width:20%"></div></div>
+          <div class="phase-desc">
+            <ul>
+              <li>Introduce IEG's capabilities to the UNIDO Rwanda office and relevant ministries (Education, Industry)</li>
+              <li>Discuss alignment with PCP priority areas (Industry 4.0 / green processing)</li>
+              <li>Preliminary screening of candidate local TVET institutions</li>
+            </ul>
+          </div>
+          <div class="phase-tag">Deliverable · Confirmed intent to collaborate</div>
+        </article>
+
+        <article class="phase-card" data-fill="45">
+          <div class="card-marker"></div>
+          <div class="phase-index">PHASE 02</div>
+          <div class="phase-time">Dec 2026 — Feb 2027 · 3 months</div>
+          <div class="phase-name">Pilot Design</div>
+          <div class="phase-duration-bar"><div class="phase-duration-fill" style="width:45%"></div></div>
+          <div class="phase-desc">
+            <ul>
+              <li>Design a small-group pilot at 1–2 TVET institutions</li>
+              <li>Select a smart-factory or agro-processing automation trainer</li>
+              <li>Draft a joint proposal</li>
+            </ul>
+          </div>
+          <div class="phase-tag">Deliverable · Pilot design document</div>
+        </article>
+
+        <article class="phase-card" data-fill="75">
+          <div class="card-marker"></div>
+          <div class="phase-index">PHASE 03</div>
+          <div class="phase-time">Mar — Aug 2027 · 6 months</div>
+          <div class="phase-name">Funding Alignment</div>
+          <div class="phase-duration-bar"><div class="phase-duration-fill" style="width:75%"></div></div>
+          <div class="phase-desc">
+            <ul>
+              <li>Map ODA / PPP funding structures</li>
+              <li>Review available channels such as KOICA and EDCF</li>
+              <li>Develop the formal project proposal and PDM</li>
+            </ul>
+          </div>
+          <div class="phase-tag">Deliverable · Proposal &amp; PDM</div>
+        </article>
+
+        <article class="phase-card" data-fill="100">
+          <div class="card-marker"></div>
+          <div class="phase-index">PHASE 04</div>
+          <div class="phase-time">Sep 2027 — · Ongoing</div>
+          <div class="phase-name">Scale-Up</div>
+          <div class="phase-duration-bar"><div class="phase-duration-fill" style="width:100%"></div></div>
+          <div class="phase-desc">
+            <ul>
+              <li>Expand nationwide based on pilot results</li>
+              <li>Deepen Train-the-Trainer (TTT) programs and qualification-framework linkages</li>
+              <li>Establish as a reference case for expansion into other African markets</li>
+            </ul>
+          </div>
+          <div class="phase-tag">Deliverable · Scale-up roadmap</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="priorities">
+    <h3>Alignment with PCP Priority Areas</h3>
+    <div class="pill-row">
+      <div class="pill"><span class="dot"></span><b>Skills for Industry 4.0</b> — Semiconductor &amp; smart-factory trainers + Train-the-Trainer</div>
+      <div class="pill"><span class="dot"></span><b>Industrial Diversification &amp; Upgrading</b> — Digital-twin EV &amp; smart-factory simulators</div>
+      <div class="pill"><span class="dot"></span><b>Green Transition · Agro-processing</b> — Automated food-processing training package</div>
+    </div>
+  </section>
+
+  <footer>
+    <span>IEG Co., Ltd. · Global Business Division</span>
+    <span>Concept Note — UNIDO PCP Rwanda</span>
+  </footer>
+</div>
+
+<script>
+  const cards = document.querySelectorAll('.phase-card');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('in'), i*90);
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:.2});
+  cards.forEach(c=>io.observe(c));
+</script>
+
+</body>
+</html>
