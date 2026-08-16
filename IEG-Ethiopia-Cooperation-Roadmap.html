@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IEG × Ethiopia MoLS — Cooperation Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1C2B39;
+    --ink-soft:#3E5163;
+    --paper:#F6F4EE;
+    --paper-raise:#FFFFFF;
+    --green:#1F6F4A;
+    --gold:#C9962B;
+    --rust:#8B3A2B;
+    --line:#D8D2C4;
+    --line-soft:#E7E2D5;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.55;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 28px;}
+  h1,h2,h3{font-family:'Fraunces', serif;font-weight:600;margin:0;letter-spacing:-0.01em;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  /* ---------- Header ---------- */
+  header{
+    padding:64px 0 44px;
+    border-bottom:1px solid var(--line);
+  }
+  header .eyebrow{margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+  header .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--green);}
+  header h1{font-size:clamp(32px,5vw,52px);line-height:1.05;color:var(--ink);}
+  header h1 em{font-style:italic;color:var(--green);}
+  header p.lede{
+    max-width:620px;
+    margin-top:18px;
+    font-size:17px;
+    color:var(--ink-soft);
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:28px;
+    margin-top:34px;
+    padding-top:22px;
+    border-top:1px dashed var(--line);
+  }
+  .meta-item .k{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-soft);}
+  .meta-item .v{font-size:15px;margin-top:4px;font-weight:500;}
+
+  /* ---------- Section shell ---------- */
+  section{padding:56px 0;}
+  section.divider-top{border-top:1px solid var(--line);}
+  .section-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:30px;gap:20px;flex-wrap:wrap;}
+  .section-head h2{font-size:clamp(24px,3vw,32px);}
+  .section-head .tag{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-soft);}
+
+  /* ---------- Agenda pillars ---------- */
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .pillar{background:var(--paper-raise);padding:26px 24px;}
+  .pillar .num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--green);margin-bottom:12px;}
+  .pillar h3{font-size:18px;margin-bottom:12px;}
+  .pillar ul{margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-soft);}
+  .pillar li{margin-bottom:8px;}
+  .pillar li:last-child{margin-bottom:0;}
+
+  /* ---------- Two tracks ---------- */
+  .tracks{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .track{
+    background:var(--paper-raise);
+    border:1px solid var(--line);
+    border-top:3px solid var(--green);
+    padding:26px 24px;
+  }
+  .track.ev{border-top-color:var(--green);}
+  .track.ag{border-top-color:var(--gold);}
+  .track .label{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--ink-soft);margin-bottom:8px;}
+  .track h3{font-size:20px;margin-bottom:10px;}
+  .track p{font-size:14.5px;color:var(--ink-soft);margin:0 0 12px;}
+  .track .kit{font-size:13px;color:var(--ink);background:var(--paper);border:1px solid var(--line-soft);display:inline-block;padding:3px 10px;border-radius:20px;margin:0 6px 6px 0;}
+
+  /* ---------- Roadmap / route ---------- */
+  .route{position:relative;margin-top:20px;}
+  .route-line{
+    position:absolute;
+    left:15px; top:0; bottom:0;
+    width:2px;
+    background-image:repeating-linear-gradient(to bottom, var(--gold) 0, var(--gold) 10px, transparent 10px, transparent 18px);
+  }
+  .phase{position:relative;padding:0 0 44px 52px;}
+  .phase:last-child{padding-bottom:0;}
+  .phase .node{
+    position:absolute;left:0;top:2px;
+    width:32px;height:32px;border-radius:50%;
+    background:var(--paper-raise);
+    border:2px solid var(--green);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;color:var(--green);
+    z-index:2;
+  }
+  .phase.milestone .node{background:var(--green);color:var(--paper-raise);}
+  .phase .when{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--rust);margin-bottom:6px;}
+  .phase h3{font-size:19px;margin-bottom:8px;}
+  .phase p{font-size:14.5px;color:var(--ink-soft);margin:0 0 10px;max-width:640px;}
+  .phase .owners{display:flex;gap:8px;flex-wrap:wrap;}
+  .phase .owners span{
+    font-size:12px;font-family:'IBM Plex Mono',monospace;
+    border:1px solid var(--line);padding:3px 9px;border-radius:3px;color:var(--ink-soft);
+  }
+
+  /* ---------- Next step callout ---------- */
+  .callout{
+    background:var(--ink);
+    color:var(--paper);
+    padding:40px 36px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .callout .eyebrow{color:var(--gold);}
+  .callout h2{color:var(--paper-raise);font-size:26px;margin-top:10px;max-width:480px;}
+  .callout p{color:#C7D1D9;font-size:14.5px;margin-top:10px;max-width:480px;}
+  .channels{display:flex;gap:12px;flex-wrap:wrap;}
+  .channel{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    border:1px solid rgba(255,255,255,0.25);
+    padding:10px 16px;
+    color:var(--paper-raise);
+    white-space:nowrap;
+  }
+
+  footer{padding:30px 0 50px;font-size:12.5px;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  @media (max-width:720px){
+    .pillars{grid-template-columns:1fr;}
+    .tracks{grid-template-columns:1fr;}
+    .callout{flex-direction:column;align-items:flex-start;}
+  }
+
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.show{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow"><span class="dot"></span>IEG CO., LTD. — GLOBAL BUSINESS DIVISION</div>
+    <h1>Cooperation Roadmap<br><em>IEG × Ethiopia</em>, TVET &amp; Green Mobility</h1>
+    <p class="lede">A proposed path from an initial discovery call to a piloted, ministry-backed vocational training partnership — anchored in Ethiopia's EV and digital agriculture priorities and IEG's practical training equipment.</p>
+    <div class="meta-row">
+      <div class="meta-item"><div class="k">Prepared for</div><div class="v">Ayele Gizachew, Ministry of Labour &amp; Skills network</div></div>
+      <div class="meta-item"><div class="k">Prepared by</div><div class="v">Kelly Cho, IEG Co., Ltd.</div></div>
+      <div class="meta-item"><div class="k">Proposed channel</div><div class="v">MS Teams or WhatsApp</div></div>
+      <div class="meta-item"><div class="k">Status</div><div class="v">Draft for discussion</div></div>
+    </div>
+  </header>
+
+  <section class="reveal">
+    <div class="section-head">
+      <h2>Meeting agenda, three pillars</h2>
+      <div class="tag">01 — framing</div>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="num">A</div>
+        <h3>Ethiopia's training priorities</h3>
+        <ul>
+          <li>National TVET demand and priority trades</li>
+          <li>EV maintenance &amp; assembly center needs, driven by Ethiopia's environmental policy</li>
+          <li>Digital agriculture training, given agriculture's role as a pillar of the economy</li>
+        </ul>
+      </div>
+      <div class="pillar">
+        <div class="num">B</div>
+        <h3>IEG capability match</h3>
+        <ul>
+          <li>Overview of IEG Co., Ltd. and its cooperation model</li>
+          <li>Hands-on equipment: EV, smart factory testbed, hydraulic/pneumatic trainers, AI-based curriculum</li>
+          <li>Mapping equipment against Ethiopian TVET curriculum standards</li>
+        </ul>
+      </div>
+      <div class="pillar">
+        <div class="num">C</div>
+        <h3>Roadmap &amp; network</h3>
+        <ul>
+          <li>Leveraging Ayele's network at the Ministry of Labour and Skills</li>
+          <li>Shared experience with AU and German-government-backed Skills Initiative for Africa (SIFA)</li>
+          <li>Defining the next concrete step together</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="divider-top reveal">
+    <div class="section-head">
+      <h2>Two priority training tracks</h2>
+      <div class="tag">02 — scope</div>
+    </div>
+    <div class="tracks">
+      <div class="track ev">
+        <div class="label">Track 1</div>
+        <h3>EV Maintenance &amp; Assembly</h3>
+        <p>Responds directly to Ethiopia's environmental policy push toward electric mobility — a technician pipeline for EV maintenance and light assembly.</p>
+        <span class="kit">EV diagnostic simulator</span>
+        <span class="kit">Battery &amp; PLC trainer</span>
+        <span class="kit">TTT (train-the-trainer) module</span>
+      </div>
+      <div class="track ag">
+        <div class="label">Track 2</div>
+        <h3>Digital Agriculture Training</h3>
+        <p>Builds digital and automation literacy into Ethiopia's core economic sector, using IEG's AI-based curriculum framework adapted for agricultural applications.</p>
+        <span class="kit">AI-enabled curriculum</span>
+        <span class="kit">Smart sensing &amp; controls basics</span>
+        <span class="kit">Trainer certification path</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="divider-top reveal">
+    <div class="section-head">
+      <h2>Proposed roadmap</h2>
+      <div class="tag">03 — sequence</div>
+    </div>
+    <div class="route">
+      <div class="route-line"></div>
+
+      <div class="phase milestone">
+        <div class="node">0</div>
+        <div class="when">Week 1</div>
+        <h3>Discovery Call</h3>
+        <p>Introductory session on MS Teams or WhatsApp, per Ayele's preference. Align on Ethiopia's training priorities and introduce IEG's capabilities and cooperation model.</p>
+        <div class="owners"><span>IEG — Kelly Cho</span><span>Ayele Gizachew</span></div>
+      </div>
+
+      <div class="phase">
+        <div class="node">1</div>
+        <div class="when">Weeks 2–4</div>
+        <h3>Needs Assessment &amp; Curriculum Mapping</h3>
+        <p>Detail Ethiopia's EV and digital agriculture training requirements; map IEG's equipment portfolio against Ministry of Labour and Skills curriculum standards; scope a candidate pilot institution.</p>
+        <div class="owners"><span>Joint working session</span></div>
+      </div>
+
+      <div class="phase">
+        <div class="node">2</div>
+        <div class="when">Months 2–3</div>
+        <h3>Pilot Program Design</h3>
+        <p>Co-design a pilot combining an EV technician track and a digital agriculture module. Define equipment list, curriculum content, and trainer certification plan.</p>
+        <div class="owners"><span>Pilot TVET institution</span><span>IEG technical team</span></div>
+      </div>
+
+      <div class="phase milestone">
+        <div class="node">3</div>
+        <div class="when">Months 3–4</div>
+        <h3>Partnership Formalization</h3>
+        <p>Draft an MOU with the relevant Ethiopian institution or ministry counterpart. Explore co-financing through AU and Skills Initiative for Africa (SIFA) channels, and confirm an implementation timeline.</p>
+        <div class="owners"><span>Ministry of Labour and Skills</span><span>IEG leadership</span></div>
+      </div>
+
+      <div class="phase">
+        <div class="node">4</div>
+        <div class="when">Month 5+</div>
+        <h3>Scale &amp; Network Expansion</h3>
+        <p>Extend the pilot to additional TVET centers through the Ministry network; share lessons from IEG's other AU-aligned and SIFA-adjacent engagements; set a recurring cadence to review the roadmap together.</p>
+        <div class="owners"><span>Ministry network</span><span>AU / SIFA partners</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="reveal" style="padding-top:0;">
+    <div class="callout">
+      <div>
+        <div class="eyebrow">Immediate next step</div>
+        <h2>Confirm a date for the discovery call</h2>
+        <p>Ayele proposed MS Teams or WhatsApp — happy to go with whichever is easiest. Suggest a few time windows and IEG will align.</p>
+      </div>
+      <div class="channels">
+        <div class="channel">MS Teams</div>
+        <div class="channel">WhatsApp</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>IEG Co., Ltd. — Global Business Division · Seongnam Techno Valley, Jungwon-gu</div>
+    <div>Contact: kellycho824@ieg.kr</div>
+  </footer>
+</div>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+  }, {threshold:0.1});
+  els.forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
