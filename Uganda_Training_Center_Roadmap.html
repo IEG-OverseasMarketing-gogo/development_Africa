@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Uganda Automation &amp; E-Commerce Fulfillment Training Center — Strategic Roadmap</title>
+<style>
+  :root{
+    --navy:#1B2A4A;
+    --navy-light:#2E4272;
+    --pistachio:#9CB380;
+    --pistachio-light:#EAF0E2;
+    --grey:#F2F2F0;
+    --text:#222222;
+    --muted:#5b5b5b;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:"Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
+    color:var(--text);
+    background:#fff;
+    line-height:1.6;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:48px 32px 80px;}
+
+  .kicker{
+    color:var(--pistachio);
+    font-weight:700;
+    letter-spacing:.08em;
+    font-size:.78rem;
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  h1.title{
+    color:var(--navy);
+    font-size:2.3rem;
+    margin:0 0 6px;
+    font-weight:800;
+  }
+  h2.subtitle{
+    color:var(--navy);
+    font-size:1.25rem;
+    font-weight:700;
+    margin:0 0 22px;
+  }
+  .meta{
+    color:var(--muted);
+    font-style:italic;
+    font-size:.92rem;
+    margin:2px 0;
+  }
+  .meta-block{margin-bottom:34px;}
+
+  h1.section{
+    color:var(--navy);
+    font-size:1.4rem;
+    font-weight:800;
+    margin:44px 0 14px;
+    padding-bottom:8px;
+    border-bottom:3px solid var(--pistachio);
+  }
+  h2.phase{
+    color:var(--navy);
+    font-size:1.12rem;
+    font-weight:700;
+    margin:30px 0 10px;
+  }
+  p{margin:0 0 14px;}
+  ul{margin:0 0 14px;padding-left:22px;}
+  li{margin-bottom:8px;}
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:8px 0 22px;
+    font-size:.93rem;
+  }
+  thead th{
+    background:var(--navy);
+    color:#fff;
+    text-align:left;
+    padding:10px 14px;
+    font-weight:700;
+  }
+  tbody td{
+    padding:10px 14px;
+    border-bottom:1px solid #e2e2e2;
+    vertical-align:top;
+  }
+  tbody tr:nth-child(even){background:var(--grey);}
+
+  .callout{
+    background:var(--pistachio-light);
+    border-left:4px solid var(--pistachio);
+    padding:14px 18px;
+    border-radius:4px;
+    margin:0 0 20px;
+  }
+  .badge{
+    display:inline-block;
+    background:var(--navy);
+    color:#fff;
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.04em;
+    padding:3px 10px;
+    border-radius:12px;
+    margin-right:8px;
+  }
+  .phase-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:30px 0 10px;
+  }
+  .phase-header h2{margin:0;}
+
+  /* Stat cards */
+  .stat-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin:18px 0 26px;
+  }
+  .stat-card{
+    background:var(--navy);
+    color:#fff;
+    border-radius:10px;
+    padding:18px 16px;
+    text-align:left;
+    flex:1 1 200px;
+  }
+  .stat-card .num{
+    font-size:1.6rem;
+    font-weight:800;
+    color:var(--pistachio);
+    line-height:1.1;
+    margin-bottom:6px;
+  }
+  .stat-card .lbl{
+    font-size:.78rem;
+    line-height:1.35;
+    opacity:.9;
+  }
+
+  /* Timeline */
+  .timeline{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin:20px 0 30px;
+    position:relative;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    top:26px;
+    left:6%;
+    right:6%;
+    height:3px;
+    background:var(--pistachio);
+    z-index:0;
+  }
+  .tl-item{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    flex:1 1 180px;
+  }
+  .tl-dot{
+    width:52px;height:52px;
+    border-radius:50%;
+    background:var(--navy);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;
+    font-size:1.05rem;
+    margin:0 auto 10px;
+    border:4px solid var(--pistachio-light);
+  }
+  .tl-item h3{
+    color:var(--navy);
+    font-size:.92rem;
+    margin:0 0 4px;
+  }
+  .tl-item p{
+    color:var(--muted);
+    font-size:.78rem;
+    margin:0;
+  }
+
+  /* Bar comparison */
+  .bar-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:12px;
+  }
+  .bar-label{
+    width:230px;
+    flex-shrink:0;
+    font-size:.85rem;
+    color:var(--text);
+  }
+  .bar-track{
+    flex:1;
+    background:var(--grey);
+    border-radius:6px;
+    height:22px;
+    overflow:hidden;
+  }
+  .bar-fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--navy),var(--pistachio));
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    padding-right:8px;
+  }
+  .bar-fill span{
+    color:#fff;
+    font-size:.72rem;
+    font-weight:700;
+  }
+
+  @media (max-width:700px){
+    .stat-card{flex:1 1 45%;}
+    .tl-item{flex:1 1 45%;}
+    .timeline::before{display:none;}
+    .bar-label{width:150px;font-size:.78rem;}
+    .bar-row{flex-wrap:wrap;}
+  }
+
+  footer{
+    margin-top:56px;
+    padding-top:18px;
+    border-top:1px solid #e2e2e2;
+    color:var(--muted);
+    font-size:.82rem;
+  }
+
+  @media print{
+    body{background:#fff;}
+    .wrap{padding:0;max-width:100%;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="meta-block">
+    <div class="kicker">IEG Co., Ltd. &nbsp;|&nbsp; Overseas Marketing &amp; Business Development</div>
+    <h1 class="title">Strategic Roadmap</h1>
+    <h2 class="subtitle">Uganda Automation &amp; E-Commerce Fulfillment Training Center</h2>
+    <p class="meta">Prepared for: Niwamanya Gilbert (I.M.I.E.) — Kampala, Uganda</p>
+    <p class="meta">Prepared by: Kelly Cho, IEG Co., Ltd. &nbsp;|&nbsp; August 2026</p>
+  </div>
+
+  <h1 class="section">1. Executive Summary</h1>
+  <p>Gilbert already holds two of the three ingredients a training business needs: land in Kampala and a stated intent to serve PLC and robotics trainees. What he is missing is a market thesis that turns "a classroom with equipment" into a business with paying customers and a growth curve.</p>
+  <p>Uganda's e-commerce sector is growing 15–20% year-on-year, but the sector's biggest bottleneck is not demand — it is fulfillment. Warehousing, sortation, packaging, and last-mile operations across Uganda (and the wider East African Community) are chronically short of workers who understand automated material handling. That gap is exactly what a PLC/mechatronics and conveyor-automation training center can fill, if it is positioned correctly from day one.</p>
+  <div class="callout">
+    <strong>The recommendation:</strong> build the center not as a generic "PLC training room," but as Uganda's first <strong>Industrial &amp; E-Commerce Fulfillment Automation Training Center</strong> — training the technicians that e-commerce warehouses, 3PL operators, and FMCG/beverage distributors will need as they automate. IEG supplies the training equipment and curriculum from Phase 1, and DX Labeler™ is introduced in Phase 3 once the center has institutional or corporate clients who need real product/parcel labeling and traceability.
+  </div>
+
+  <h1 class="section">2. Uganda E-Commerce &amp; Logistics Market Snapshot (2026)</h1>
+
+  <div class="stat-grid">
+    <div class="stat-card"><div class="num">$82M</div><div class="lbl">E-commerce revenue (2025), +15–20% YoY</div></div>
+    <div class="stat-card"><div class="num">$1.5B</div><div class="lbl">Estimated total e-commerce market size, 2026</div></div>
+    <div class="stat-card"><div class="num">#2</div><div class="lbl">Projected rank in East Africa, after Kenya</div></div>
+    <div class="stat-card"><div class="num">73.5%</div><div class="lbl">Of Ugandans are under age 30 — trainable workforce</div></div>
+  </div>
+
+  <table>
+    <thead><tr><th style="width:38%">Indicator</th><th>Data Point</th></tr></thead>
+    <tbody>
+      <tr><td>E-commerce revenue (2025)</td><td>~US$82M, up 15–20% YoY; 2026 growth projected at 10–15%</td></tr>
+      <tr><td>Digital commerce transaction value</td><td>US$0.93B (2024) → projected US$1.27B by 2028 (8.1% CAGR)</td></tr>
+      <tr><td>Broader e-commerce market size estimate (2026)</td><td>~US$1.5B, with mobile money as the dominant payment method</td></tr>
+      <tr><td>Regional position</td><td>Expected to become East Africa's 2nd-largest online market after Kenya</td></tr>
+      <tr><td>Dominant storefront platform</td><td>WooCommerce (~63–70% share) — fragmented, mostly small/SME sellers</td></tr>
+      <tr><td>Core structural bottleneck</td><td>Warehousing, last-mile delivery, inventory management, and skilled labor shortages</td></tr>
+      <tr><td>Warehousing hubs</td><td>Kampala Industrial &amp; Business Park, Jinja, Gulu — fulfillment centers growing fastest</td></tr>
+      <tr><td>Population profile</td><td>73.5% of Ugandans under age 30 — large, young, trainable workforce</td></tr>
+    </tbody>
+  </table>
+  <p>The takeaway for Gilbert's business plan: Uganda does not lack e-commerce demand — it lacks trained people and automated infrastructure to fulfill it. Multiple industry sources cite "lack of skilled labor" and "gaps in warehousing, last-mile delivery, and inventory management" as the single biggest constraint on regional e-commerce growth, more so than consumer demand itself.</p>
+
+  <h1 class="section">3. Strategic Positioning: Why This Wins</h1>
+  <ul>
+    <li><strong>Two revenue lines, not one.</strong> (1) TVET-style tuition from students/interns learning PLC, mechatronics, and conveyor automation; (2) corporate contracts with e-commerce/3PL/FMCG warehouses that need staff upskilled or small automation cells built — exactly the "conveyor prototype for a beverage company" Gilbert already proposed.</li>
+    <li><strong>The beverage-conveyor idea is the proof-of-concept, not a side project.</strong> A small bottling/conveyor demonstration cell doubles as (a) a teaching rig for PLC trainees and (b) a live sales demo Gilbert can show to FMCG and fulfillment-center prospects.</li>
+    <li><strong>First-mover niche.</strong> No competitor in Kampala is currently marketing PLC/automation training specifically toward the e-commerce and logistics sector — most TVET centers train generic industrial maintenance skills with no sector story attached.</li>
+    <li><strong>Donor and government tailwind.</strong> Uganda's Ministry of ICT has an active National E-Commerce Strategy, and BTVET reform funding (KOICA, GIZ, World Bank) regularly supports exactly this kind of skills-training infrastructure — a channel IEG has used successfully elsewhere (KOICA Philippines, Kazakhstan Kia Kostanay precedents).</li>
+  </ul>
+
+  <h1 class="section">4. Business Model Concept</h1>
+  <table>
+    <thead><tr><th style="width:22%">Revenue Stream</th><th style="width:33%">Customer</th><th>How It Works</th></tr></thead>
+    <tbody>
+      <tr><td>Skills tuition</td><td>TVET graduates, job-seekers</td><td>Paid short courses: PLC basics, mechatronics, conveyor/sortation automation</td></tr>
+      <tr><td>Corporate upskilling contracts</td><td>E-commerce 3PLs, FMCG distributors, beverage companies</td><td>On-site or center-based training for existing warehouse/maintenance staff</td></tr>
+      <tr><td>Equipment demo &amp; integration consulting</td><td>SMEs automating a single line (e.g., bottling, sortation)</td><td>Small automation cells designed and built using the same trainer rigs</td></tr>
+      <tr><td>Donor/government-funded cohorts</td><td>Ministry of ICT, BTVET, KOICA/GIZ programs</td><td>Grant-funded batches of trainees; recurring institutional revenue</td></tr>
+      <tr><td>DX Labeler™ integration (Phase 3+)</td><td>Corporate clients needing product/parcel traceability</td><td>IEG's patented labeling system added once clients need real labeling/tracking lines</td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="section">5. Phased Roadmap &amp; Timeline</h1>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot">1</div>
+      <h3>Validate &amp; Position</h3>
+      <p>Months 1–3</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">2</div>
+      <h3>Build &amp; Equip</h3>
+      <p>Months 4–9</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">3</div>
+      <h3>Launch &amp; Partner</h3>
+      <p>Months 10–18</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">4</div>
+      <h3>Scale</h3>
+      <p>Months 19–30+</p>
+    </div>
+  </div>
+
+  <div class="phase-header"><span class="badge">Phase 1</span><h2>Months 1–3: Validate &amp; Position</h2></div>
+  <table>
+    <thead><tr><th style="width:50%">Action Item</th><th style="width:20%">Owner</th><th>Output</th></tr></thead>
+    <tbody>
+      <tr><td>Confirm site readiness (land survey, power supply, floor space, access road)</td><td>Gilbert</td><td>Site brief for equipment sizing</td></tr>
+      <tr><td>Interview 3–5 e-commerce/logistics operators in Kampala (Jumia Uganda, Boxleo-type 3PLs, FMCG distributors) on their skills gaps</td><td>Gilbert</td><td>Validated demand list + 2–3 informal partner leads</td></tr>
+      <tr><td>Draft training center concept note: name, positioning ("Automation for E-Commerce &amp; Logistics"), target trainee/corporate mix</td><td>IEG + Gilbert</td><td>1-page concept note</td></tr>
+      <tr><td>IEG prepares equipment shortlist and budget tiers (starter vs. full lab)</td><td>Kelly Cho / IEG</td><td>Equipment &amp; pricing proposal</td></tr>
+    </tbody>
+  </table>
+
+  <div class="phase-header"><span class="badge">Phase 2</span><h2>Months 4–9: Build &amp; Equip</h2></div>
+  <table>
+    <thead><tr><th style="width:50%">Action Item</th><th style="width:20%">Owner</th><th>Output</th></tr></thead>
+    <tbody>
+      <tr><td>Finalize facility layout (classroom + demo cell for conveyor/bottling line)</td><td>Gilbert</td><td>Facility floor plan</td></tr>
+      <tr><td>Procure and install core trainers: PLC/mechatronics trainer, conveyor/sortation demo cell, basic electric machine trainer</td><td>IEG (supply) + Gilbert (site)</td><td>Operational training lab</td></tr>
+      <tr><td>IEG delivers instructor certification / train-the-trainer program</td><td>IEG</td><td>Certified local instructor(s)</td></tr>
+      <tr><td>Build curriculum: Module 1 PLC basics, Module 2 conveyor/sortation automation, Module 3 maintenance &amp; troubleshooting</td><td>IEG + Gilbert</td><td>Course curriculum, English + local language</td></tr>
+      <tr><td>Register center with Uganda BTVET / relevant trade authority</td><td>Gilbert</td><td>Formal accreditation status</td></tr>
+    </tbody>
+  </table>
+
+  <div class="phase-header"><span class="badge">Phase 3</span><h2>Months 10–18: Launch &amp; Partner</h2></div>
+  <table>
+    <thead><tr><th style="width:50%">Action Item</th><th style="width:20%">Owner</th><th>Output</th></tr></thead>
+    <tbody>
+      <tr><td>Launch first paid cohort (target 15–25 trainees)</td><td>Gilbert</td><td>First tuition revenue</td></tr>
+      <tr><td>Pitch conveyor demo cell to 2–3 FMCG/beverage and e-commerce warehouse prospects as a live proof-of-concept</td><td>Gilbert (with IEG sales support)</td><td>First corporate upskilling contract</td></tr>
+      <tr><td>Apply for one donor-funded cohort (KOICA, GIZ, or Ministry of ICT digital-skills program)</td><td>Gilbert + IEG</td><td>Grant-funded trainee batch</td></tr>
+      <tr><td>Introduce DX Labeler™ as an add-on module once a corporate client needs product/parcel traceability</td><td>IEG</td><td>First DX Labeler pilot line</td></tr>
+    </tbody>
+  </table>
+
+  <div class="phase-header"><span class="badge">Phase 4</span><h2>Months 19–30+: Scale</h2></div>
+  <table>
+    <thead><tr><th style="width:50%">Action Item</th><th style="width:20%">Owner</th><th>Output</th></tr></thead>
+    <tbody>
+      <tr><td>Expand to a second training track (robotics / smart factory systems) as trainee demand grows</td><td>Gilbert + IEG</td><td>Broadened course catalog</td></tr>
+      <tr><td>Formalize referral partnerships with 2–3 logistics/e-commerce operators (guaranteed hiring pipeline for graduates)</td><td>Gilbert</td><td>Signed MOUs</td></tr>
+      <tr><td>Scale DX Labeler™ deployments across corporate clients; explore East African Community (EAC) cross-border trainee intake</td><td>IEG + Gilbert</td><td>Recurring equipment &amp; licensing revenue</td></tr>
+      <tr><td>Evaluate second site or mobile training unit for regional hubs (Jinja, Gulu)</td><td>Gilbert</td><td>Expansion feasibility study</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="phase" style="margin-top:0;">Revenue Ramp by Phase (illustrative)</h2>
+  <div class="bar-row">
+    <div class="bar-label">Phase 1 — Validation</div>
+    <div class="bar-track"><div class="bar-fill" style="width:8%"><span></span></div></div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Phase 2 — Build &amp; Equip</div>
+    <div class="bar-track"><div class="bar-fill" style="width:20%"><span></span></div></div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Phase 3 — Launch &amp; Partner</div>
+    <div class="bar-track"><div class="bar-fill" style="width:58%"><span>Tuition + first corporate contract</span></div></div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Phase 4 — Scale</div>
+    <div class="bar-track"><div class="bar-fill" style="width:100%"><span>+ DX Labeler™ licensing revenue</span></div></div>
+  </div>
+
+  <h1 class="section">6. IEG Product Mapping</h1>
+  <table>
+    <thead><tr><th style="width:26%">Roadmap Phase</th><th style="width:34%">IEG Product</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td>Phase 2 (Build &amp; Equip)</td><td>IEG 3430 / 3432 PLC &amp; Mechatronics Trainer</td><td>Core teaching rig for PLC fundamentals</td></tr>
+      <tr><td>Phase 2 (Build &amp; Equip)</td><td>IEG 4000 / 4100 Pneumatic/Hydraulic Trainer</td><td>Conveyor &amp; sortation-adjacent automation skills</td></tr>
+      <tr><td>Phase 2–3 (Demo cell)</td><td>IEG 6030 Electric Machine Trainer</td><td>Motor/drive maintenance skills for warehouse equipment</td></tr>
+      <tr><td>Phase 3–4 (Scale)</td><td>IEG 6050 Smart Factory System</td><td>Advanced automation track as the center matures</td></tr>
+      <tr><td>Phase 3–4 (Corporate clients)</td><td>DX Labeler™ (Patent No. 10-2702062)</td><td>Introduced once a client needs product/parcel labeling and traceability</td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="section">7. Key Partnerships to Pursue</h1>
+  <ul>
+    <li>Jumia Uganda and other e-commerce platforms — potential corporate training clients and hiring partners for graduates.</li>
+    <li>3PL / fulfillment operators active in East Africa (e.g., Boxleo-type courier &amp; fulfillment firms) — corporate upskilling prospects.</li>
+    <li>Kampala Industrial &amp; Business Park — site adjacency and manufacturer relationships.</li>
+    <li>Uganda Ministry of ICT (National E-Commerce Strategy) and BTVET authorities — accreditation and possible co-funding.</li>
+    <li>KOICA / GIZ / World Bank skills-development programs — donor-funded cohort revenue (IEG has direct precedent managing this type of program).</li>
+  </ul>
+
+  <h1 class="section">8. Risks &amp; Mitigations</h1>
+  <table>
+    <thead><tr><th style="width:42%">Risk</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td>Trainee demand slower than projected</td><td>Start with a small paid pilot cohort before committing to full equipment spend</td></tr>
+      <tr><td>Power/infrastructure reliability at the Kampala site</td><td>Confirm backup power (generator/solar) during Phase 1 site survey</td></tr>
+      <tr><td>Corporate clients slow to adopt automation training</td><td>Lead with the free/low-cost conveyor demo as a sales tool, not a hard pitch</td></tr>
+      <tr><td>Equipment financing constraints</td><td>Phase equipment purchases (starter tier first); explore donor co-funding for Phase 2</td></tr>
+      <tr><td>Competing informally-trained labor undercutting price</td><td>Differentiate on accreditation + corporate hiring pipeline, not price</td></tr>
+    </tbody>
+  </table>
+
+  <h1 class="section">9. Immediate Next Steps (Next 30 Days)</h1>
+  <ul>
+    <li><strong>Gilbert:</strong> Share site details (size, power, access) and complete 3–5 informal interviews with local e-commerce/logistics operators.</li>
+    <li><strong>Gilbert:</strong> Confirm target trainee profile — TVET graduates, unemployed youth, or existing warehouse staff.</li>
+    <li><strong>IEG:</strong> Prepare a starter-tier equipment and pricing proposal (IEG 3430/3432 + small conveyor demo cell) sized to a Phase-1 pilot budget.</li>
+    <li><strong>IEG:</strong> Draft the one-page concept note positioning the center as "Automation for E-Commerce &amp; Logistics" for Gilbert to use in partner and donor conversations.</li>
+  </ul>
+
+  <footer>IEG Co., Ltd. — Overseas Marketing &amp; Business Development &nbsp;|&nbsp; Prepared August 2026 &nbsp;|&nbsp; Internal strategic use</footer>
+
+</div>
+</body>
+</html>
