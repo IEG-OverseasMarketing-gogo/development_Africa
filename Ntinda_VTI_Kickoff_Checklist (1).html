@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ntinda VTI — Kickoff Meeting Checklist</title>
+<style>
+  :root{
+    --ink:#1a1f2b;
+    --sub:#5b6472;
+    --line:#e3e6ea;
+    --accent:#1e5f74;
+    --accent-soft:#e8f1f3;
+    --bg:#fafbfc;
+    --card:#ffffff;
+    --done:#2f8f5b;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+    padding:32px 16px 80px;
+  }
+  .wrap{max-width:720px;margin:0 auto;}
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:700;
+    margin-bottom:8px;
+  }
+  h1{font-size:22px;margin:0 0 14px;line-height:1.35;}
+  .meta{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    font-size:14px;
+    color:var(--sub);
+    margin-bottom:18px;
+  }
+  .meta b{color:var(--ink);}
+  .progress-bar-wrap{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:24px;
+    position:sticky;
+    top:12px;
+    z-index:10;
+  }
+  .progress-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .progress-track{
+    height:8px;
+    background:var(--accent-soft);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--accent);
+    width:0%;
+    transition:width .25s ease;
+  }
+  section{margin-bottom:22px;}
+  .section-title{
+    font-size:14px;
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:10px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--line);
+  }
+  label.item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px 12px;
+    margin-bottom:8px;
+    font-size:14px;
+    cursor:pointer;
+    transition:background .15s, border-color .15s;
+  }
+  label.item:hover{border-color:var(--accent);}
+  label.item.checked{
+    background:var(--accent-soft);
+    border-color:var(--accent);
+  }
+  label.item.checked span.txt{
+    color:var(--sub);
+    text-decoration:line-through;
+  }
+  input[type=checkbox]{
+    margin-top:2px;
+    width:16px;height:16px;
+    accent-color:var(--accent);
+    flex-shrink:0;
+  }
+  .footnote{
+    font-size:12px;
+    color:var(--sub);
+    margin-top:6px;
+  }
+  .actions{
+    position:sticky;
+    bottom:0;
+    background:linear-gradient(to top, var(--bg) 70%, transparent);
+    padding-top:18px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  button{
+    font-family:inherit;
+    font-size:14px;
+    font-weight:600;
+    padding:10px 16px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--ink);
+    cursor:pointer;
+  }
+  button.primary{
+    background:var(--accent);
+    color:#fff;
+    border-color:var(--accent);
+  }
+  button.ghost{color:var(--sub);}
+  button:active{transform:translateY(1px);}
+  .saved-tag{
+    font-size:12px;
+    color:var(--done);
+    font-weight:600;
+    margin-left:4px;
+    opacity:0;
+    transition:opacity .3s;
+  }
+  .saved-tag.show{opacity:1;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">IEG · Global Business Division</div>
+  <h1>Ntinda VTI EV Training Program — Kickoff Meeting Checklist</h1>
+  <div class="meta">
+    <b>Attendees:</b> Ntinda VTI (Uganda) / Gilbert and relevant staff<br>
+    <b>Purpose:</b> Final confirmation of setup, roles, schedule, and certification terms before the 12-week program begins
+  </div>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span id="progressText">0 / 0 confirmed</span>
+      <span class="saved-tag" id="savedTag">✓ saved on this device</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div id="checklist"></div>
+
+  <div class="actions">
+    <button class="primary" id="emailBtn">📧 Email me the results</button>
+    <button id="downloadBtn">⬇ Download summary (.txt)</button>
+    <button class="ghost" id="resetBtn">Reset all</button>
+  </div>
+  <p class="footnote">Checked items are saved automatically in this browser (localStorage) and will still be here next time you open this page on this device. They are not shared with anyone else automatically — use "Email me the results" to send yourself a copy.</p>
+</div>
+
+<script>
+const DATA = [
+  { title: "01 Environment Readiness", items: [
+    "All 10 participants assigned to fixed workstations",
+    "Chrome or Edge browser installed and up to date on each PC",
+    "Headsets tested and working on every machine (test live via screen share)",
+    "Workbook and simulator files saved in the same local folder path on each PC",
+    "Coordinator demonstrates the file-saving procedure live"
+  ]},
+  { title: "02 Role Assignment", items: [
+    "Local coordinator name confirmed",
+    "Rotating peer leader list and weekly rotation schedule confirmed",
+    "Backup facilitators identified besides Gilbert",
+    "First point of contact for technical issues designated"
+  ]},
+  { title: "03 Schedule Confirmation", items: [
+    "Confirm Wednesday works, or agree on an alternate weekday",
+    "Full 12-week calendar drafted (holidays and academic schedule accounted for)",
+    "Start date (Aug 19) and end date confirmed",
+    "Capstone/review sessions (90–120 min) marked separately on the calendar"
+  ]},
+  { title: "04 Certification Requirements", items: [
+    "Method for sharing the Progress Tracker agreed (e.g. Google Sheet)",
+    "Completion criteria reconfirmed: full attendance + adapted lesson plans + Progress Tracker entry",
+    "Verbally reconfirmed: IEG corporate certificate, not a nationally accredited qualification"
+  ]},
+  { title: "05 Escalation Channel", items: [
+    "Contact channel for technical issues confirmed (email, WhatsApp, etc.)",
+    "Expected response time (SLA) agreed"
+  ]},
+  { title: "06 Post-Meeting Follow-Up", items: [
+    "Send meeting summary email (schedule, roles, readiness, certification terms)",
+    "Assign owner and deadline to each action item",
+    "Set next check-in date"
+  ]}
+];
+
+const STORAGE_KEY = "ntinda_vti_kickoff_checklist_v1";
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){ return {}; }
+}
+function saveState(state){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const tag = document.getElementById("savedTag");
+    tag.classList.add("show");
+    clearTimeout(window.__savedTimeout);
+    window.__savedTimeout = setTimeout(()=>tag.classList.remove("show"), 1500);
+  }catch(e){}
+}
+
+let state = loadState();
+
+function render(){
+  const container = document.getElementById("checklist");
+  container.innerHTML = "";
+  let total = 0, checked = 0;
+
+  DATA.forEach((section, sIdx) => {
+    const sec = document.createElement("section");
+    const h = document.createElement("div");
+    h.className = "section-title";
+    h.textContent = section.title;
+    sec.appendChild(h);
+
+    section.items.forEach((text, iIdx) => {
+      total++;
+      const key = sIdx + "-" + iIdx;
+      const isChecked = !!state[key];
+      if(isChecked) checked++;
+
+      const lbl = document.createElement("label");
+      lbl.className = "item" + (isChecked ? " checked" : "");
+      lbl.innerHTML = `<input type="checkbox" ${isChecked ? "checked" : ""}> <span class="txt"></span>`;
+      lbl.querySelector(".txt").textContent = text;
+
+      lbl.querySelector("input").addEventListener("change", (e) => {
+        state[key] = e.target.checked;
+        saveState(state);
+        render();
+      });
+
+      sec.appendChild(lbl);
+    });
+    container.appendChild(sec);
+  });
+
+  document.getElementById("progressText").textContent = `${checked} / ${total} confirmed`;
+  document.getElementById("progressFill").style.width = total ? (checked/total*100)+"%" : "0%";
+}
+
+function buildSummary(){
+  const lines = [];
+  lines.push("Ntinda VTI EV Training Program — Kickoff Meeting Checklist");
+  lines.push("Attendees: Ntinda VTI (Uganda) / Gilbert and relevant staff");
+  lines.push("Date generated: " + new Date().toLocaleString());
+  lines.push("");
+  let total=0, checked=0;
+  DATA.forEach((section, sIdx) => {
+    lines.push(section.title);
+    section.items.forEach((text, iIdx) => {
+      total++;
+      const key = sIdx + "-" + iIdx;
+      const done = !!state[key];
+      if(done) checked++;
+      lines.push(`  [${done ? "x" : " "}] ${text}`);
+    });
+    lines.push("");
+  });
+  lines.unshift(`Progress: ${checked} / ${total} confirmed`, "");
+  return lines.join("\n");
+}
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  if(confirm("Reset all checked items?")){
+    state = {};
+    saveState(state);
+    render();
+  }
+});
+
+document.getElementById("downloadBtn").addEventListener("click", () => {
+  const text = buildSummary();
+  const blob = new Blob([text], {type:"text/plain"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "Ntinda_VTI_Kickoff_Checklist_Summary.txt";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+document.getElementById("emailBtn").addEventListener("click", () => {
+  const subject = encodeURIComponent("Ntinda VTI Kickoff Checklist — Results");
+  const body = encodeURIComponent(buildSummary());
+  window.location.href = `mailto:kellycho824@ieg.kr?subject=${subject}&body=${body}`;
+});
+
+render();
+</script>
+</body>
+</html>
