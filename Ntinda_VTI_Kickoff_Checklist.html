@@ -2,317 +2,327 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ntinda VTI — Kickoff Meeting Checklist</title>
 <style>
   :root{
-    --ink:#1c2321;
-    --paper:#eef0ec;
-    --panel:#ffffff;
-    --line:#c7cdc4;
-    --accent:#2e6f5e;
-    --accent-soft:#dcece6;
-    --amber:#b5772f;
-    --mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
-    --sans: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    --ink:#1a1f2b;
+    --sub:#5b6472;
+    --line:#e3e6ea;
+    --accent:#1e5f74;
+    --accent-soft:#e8f1f3;
+    --bg:#fafbfc;
+    --card:#ffffff;
+    --done:#2f8f5b;
   }
   *{box-sizing:border-box;}
   body{
     margin:0;
-    background:var(--paper);
+    background:var(--bg);
     color:var(--ink);
-    font-family:var(--sans);
-    padding:2.5rem 1.25rem 5rem;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5;
+    padding:32px 16px 80px;
   }
-  .wrap{max-width:760px;margin:0 auto;}
-
-  header{
-    border-bottom:2px solid var(--ink);
-    padding-bottom:1.25rem;
-    margin-bottom:2rem;
-  }
+  .wrap{max-width:720px;margin:0 auto;}
   .eyebrow{
-    font-family:var(--mono);
-    font-size:0.72rem;
-    letter-spacing:0.12em;
+    font-size:12px;
+    letter-spacing:.08em;
     text-transform:uppercase;
     color:var(--accent);
-    margin-bottom:0.5rem;
+    font-weight:700;
+    margin-bottom:8px;
   }
-  h1{
-    font-size:1.65rem;
-    margin:0 0 0.5rem;
-    letter-spacing:-0.01em;
-  }
+  h1{font-size:22px;margin:0 0 14px;line-height:1.35;}
   .meta{
-    font-size:0.88rem;
-    color:#556058;
-    line-height:1.6;
-  }
-  .meta b{color:var(--ink);}
-
-  .progress-bar-outer{
-    margin-top:1.25rem;
-    height:6px;
-    background:var(--line);
-    border-radius:99px;
-    overflow:hidden;
-  }
-  .progress-bar-inner{
-    height:100%;
-    width:0%;
-    background:var(--accent);
-    transition:width 0.35s ease;
-  }
-  .progress-label{
-    font-family:var(--mono);
-    font-size:0.75rem;
-    color:#556058;
-    margin-top:0.4rem;
-  }
-
-  section.group{
-    background:var(--panel);
+    background:var(--card);
     border:1px solid var(--line);
     border-radius:10px;
-    margin-bottom:1.1rem;
-    overflow:hidden;
+    padding:14px 16px;
+    font-size:14px;
+    color:var(--sub);
+    margin-bottom:18px;
   }
-  .group-head{
-    display:flex;
-    align-items:baseline;
-    gap:0.6rem;
-    padding:0.85rem 1.1rem;
-    background:var(--accent-soft);
-    border-bottom:1px solid var(--line);
+  .meta b{color:var(--ink);}
+  .progress-bar-wrap{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:24px;
+    position:sticky;
+    top:12px;
+    z-index:10;
   }
-  .group-num{
-    font-family:var(--mono);
-    font-size:0.78rem;
-    color:var(--accent);
-    font-weight:600;
-  }
-  .group-title{
-    font-size:0.95rem;
-    font-weight:600;
-  }
-  .group-count{
-    margin-left:auto;
-    font-family:var(--mono);
-    font-size:0.72rem;
-    color:#556058;
-  }
-
-  ul{list-style:none;margin:0;padding:0;}
-  li{
-    border-bottom:1px solid #edeee9;
-  }
-  li:last-child{border-bottom:none;}
-  label{
-    display:flex;
-    align-items:flex-start;
-    gap:0.7rem;
-    padding:0.75rem 1.1rem;
-    cursor:pointer;
-    font-size:0.9rem;
-    line-height:1.45;
-  }
-  label:hover{background:#f7f8f5;}
-  input[type=checkbox]{
-    appearance:none;
-    -webkit-appearance:none;
-    width:18px;
-    height:18px;
-    min-width:18px;
-    margin-top:0.1rem;
-    border:1.5px solid #99a396;
-    border-radius:4px;
-    position:relative;
-    cursor:pointer;
-    background:#fff;
-  }
-  input[type=checkbox]:checked{
-    background:var(--accent);
-    border-color:var(--accent);
-  }
-  input[type=checkbox]:checked::after{
-    content:"";
-    position:absolute;
-    left:5px;
-    top:1px;
-    width:5px;
-    height:9px;
-    border:solid white;
-    border-width:0 2px 2px 0;
-    transform:rotate(45deg);
-  }
-  span.item-text.done{
-    text-decoration:line-through;
-    color:#8a9188;
-  }
-
-  footer{
-    margin-top:2rem;
-    border-top:1px dashed var(--line);
-    padding-top:1.25rem;
-    font-family:var(--mono);
-    font-size:0.75rem;
-    color:#7a837a;
+  .progress-label{
     display:flex;
     justify-content:space-between;
-    flex-wrap:wrap;
-    gap:0.5rem;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:8px;
   }
-  .reset-btn{
-    font-family:var(--mono);
-    font-size:0.72rem;
-    color:var(--amber);
-    background:none;
-    border:1px solid var(--amber);
+  .progress-track{
+    height:8px;
+    background:var(--accent-soft);
     border-radius:6px;
-    padding:0.3rem 0.7rem;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--accent);
+    width:0%;
+    transition:width .25s ease;
+  }
+  section{margin-bottom:22px;}
+  .section-title{
+    font-size:14px;
+    font-weight:700;
+    color:var(--accent);
+    margin-bottom:10px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--line);
+  }
+  label.item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:10px 12px;
+    margin-bottom:8px;
+    font-size:14px;
+    cursor:pointer;
+    transition:background .15s, border-color .15s;
+  }
+  label.item:hover{border-color:var(--accent);}
+  label.item.checked{
+    background:var(--accent-soft);
+    border-color:var(--accent);
+  }
+  label.item.checked span.txt{
+    color:var(--sub);
+    text-decoration:line-through;
+  }
+  input[type=checkbox]{
+    margin-top:2px;
+    width:16px;height:16px;
+    accent-color:var(--accent);
+    flex-shrink:0;
+  }
+  .footnote{
+    font-size:12px;
+    color:var(--sub);
+    margin-top:6px;
+  }
+  .actions{
+    position:sticky;
+    bottom:0;
+    background:linear-gradient(to top, var(--bg) 70%, transparent);
+    padding-top:18px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  button{
+    font-family:inherit;
+    font-size:14px;
+    font-weight:600;
+    padding:10px 16px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--ink);
     cursor:pointer;
   }
-  .reset-btn:hover{background:#fbf0e4;}
+  button.primary{
+    background:var(--accent);
+    color:#fff;
+    border-color:var(--accent);
+  }
+  button.ghost{color:var(--sub);}
+  button:active{transform:translateY(1px);}
+  .saved-tag{
+    font-size:12px;
+    color:var(--done);
+    font-weight:600;
+    margin-left:4px;
+    opacity:0;
+    transition:opacity .3s;
+  }
+  .saved-tag.show{opacity:1;}
 </style>
 </head>
 <body>
 <div class="wrap">
+  <div class="eyebrow">IEG · Global Business Division</div>
+  <h1>Ntinda VTI EV Training Program — Kickoff Meeting Checklist</h1>
+  <div class="meta">
+    <b>Attendees:</b> Ntinda VTI (Uganda) / Gilbert and relevant staff<br>
+    <b>Purpose:</b> Final confirmation of setup, roles, schedule, and certification terms before the 12-week program begins
+  </div>
 
-  <header>
-    <div class="eyebrow">IEG · Global Business Division</div>
-    <h1>Ntinda VTI EV Training Program — Kickoff Meeting Checklist</h1>
-    <div class="meta">
-      <b>Attendees:</b> Ntinda VTI (Uganda) / Gilbert and relevant staff<br>
-      <b>Purpose:</b> Final confirmation of setup, roles, schedule, and certification terms before the 12-week program begins
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span id="progressText">0 / 0 confirmed</span>
+      <span class="saved-tag" id="savedTag">✓ saved on this device</span>
     </div>
-    <div class="progress-bar-outer"><div class="progress-bar-inner" id="bar"></div></div>
-    <div class="progress-label" id="progress-label">0 / 0 confirmed</div>
-  </header>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
 
-  <section class="group">
-    <div class="group-head">
-      <span class="group-num">01</span>
-      <span class="group-title">Environment Readiness</span>
-      <span class="group-count" data-count></span>
-    </div>
-    <ul>
-      <li><label><input type="checkbox"><span class="item-text">All 10 participants assigned to fixed workstations</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Chrome or Edge browser installed and up to date on each PC</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Headsets tested and working on every machine (test live via screen share)</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Workbook and simulator files saved in the same local folder path on each PC</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Coordinator demonstrates the file-saving procedure live</span></label></li>
-    </ul>
-  </section>
+  <div id="checklist"></div>
 
-  <section class="group">
-    <div class="group-head">
-      <span class="group-num">02</span>
-      <span class="group-title">Role Assignment</span>
-      <span class="group-count" data-count></span>
-    </div>
-    <ul>
-      <li><label><input type="checkbox"><span class="item-text">Local coordinator name confirmed</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Rotating peer leader list and weekly rotation schedule confirmed</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Backup facilitators identified besides Gilbert</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">First point of contact for technical issues designated</span></label></li>
-    </ul>
-  </section>
-
-  <section class="group">
-    <div class="group-head">
-      <span class="group-num">03</span>
-      <span class="group-title">Schedule Confirmation</span>
-      <span class="group-count" data-count></span>
-    </div>
-    <ul>
-      <li><label><input type="checkbox"><span class="item-text">Confirm Wednesday works, or agree on an alternate weekday</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Full 12-week calendar drafted (holidays and academic schedule accounted for)</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Start date (Aug 19) and end date confirmed</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Capstone/review sessions (90–120 min) marked separately on the calendar</span></label></li>
-    </ul>
-  </section>
-
-  <section class="group">
-    <div class="group-head">
-      <span class="group-num">04</span>
-      <span class="group-title">Certification Requirements</span>
-      <span class="group-count" data-count></span>
-    </div>
-    <ul>
-      <li><label><input type="checkbox"><span class="item-text">Method for sharing the Progress Tracker agreed (e.g. Google Sheet)</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Completion criteria reconfirmed: full attendance + adapted lesson plans + Progress Tracker entry</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Verbally reconfirmed: IEG corporate certificate, not a nationally accredited qualification</span></label></li>
-    </ul>
-  </section>
-
-  <section class="group">
-    <div class="group-head">
-      <span class="group-num">05</span>
-      <span class="group-title">Escalation Channel</span>
-      <span class="group-count" data-count></span>
-    </div>
-    <ul>
-      <li><label><input type="checkbox"><span class="item-text">Contact channel for technical issues confirmed (email, WhatsApp, etc.)</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Expected response time (SLA) agreed</span></label></li>
-    </ul>
-  </section>
-
-  <section class="group">
-    <div class="group-head">
-      <span class="group-num">06</span>
-      <span class="group-title">Post-Meeting Follow-Up</span>
-      <span class="group-count" data-count></span>
-    </div>
-    <ul>
-      <li><label><input type="checkbox"><span class="item-text">Send meeting summary email (schedule, roles, readiness, certification terms)</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Assign owner and deadline to each action item</span></label></li>
-      <li><label><input type="checkbox"><span class="item-text">Set next check-in date</span></label></li>
-    </ul>
-  </section>
-
-  <footer>
-    <span>Checked items are session-only and reset on reload.</span>
-    <button class="reset-btn" id="reset">Reset all</button>
-  </footer>
-
+  <div class="actions">
+    <button class="primary" id="emailBtn">📧 Email me the results</button>
+    <button id="downloadBtn">⬇ Download summary (.txt)</button>
+    <button class="ghost" id="resetBtn">Reset all</button>
+  </div>
+  <p class="footnote">Checked items are saved automatically in this browser (localStorage) and will still be here next time you open this page on this device. They are not shared with anyone else automatically — use "Email me the results" to send yourself a copy.</p>
 </div>
 
 <script>
-  const boxes = Array.from(document.querySelectorAll('input[type=checkbox]'));
-  const bar = document.getElementById('bar');
-  const progressLabel = document.getElementById('progress-label');
-  const groups = document.querySelectorAll('section.group');
+const DATA = [
+  { title: "01 Environment Readiness", items: [
+    "All 10 participants assigned to fixed workstations",
+    "Chrome or Edge browser installed and up to date on each PC",
+    "Headsets tested and working on every machine (test live via screen share)",
+    "Workbook and simulator files saved in the same local folder path on each PC",
+    "Coordinator demonstrates the file-saving procedure live"
+  ]},
+  { title: "02 Role Assignment", items: [
+    "Local coordinator name confirmed",
+    "Rotating peer leader list and weekly rotation schedule confirmed",
+    "Backup facilitators identified besides Gilbert",
+    "First point of contact for technical issues designated"
+  ]},
+  { title: "03 Schedule Confirmation", items: [
+    "Confirm Wednesday works, or agree on an alternate weekday",
+    "Full 12-week calendar drafted (holidays and academic schedule accounted for)",
+    "Start date (Aug 19) and end date confirmed",
+    "Capstone/review sessions (90–120 min) marked separately on the calendar"
+  ]},
+  { title: "04 Certification Requirements", items: [
+    "Method for sharing the Progress Tracker agreed (e.g. Google Sheet)",
+    "Completion criteria reconfirmed: full attendance + adapted lesson plans + Progress Tracker entry",
+    "Verbally reconfirmed: IEG corporate certificate, not a nationally accredited qualification"
+  ]},
+  { title: "05 Escalation Channel", items: [
+    "Contact channel for technical issues confirmed (email, WhatsApp, etc.)",
+    "Expected response time (SLA) agreed"
+  ]},
+  { title: "06 Post-Meeting Follow-Up", items: [
+    "Send meeting summary email (schedule, roles, readiness, certification terms)",
+    "Assign owner and deadline to each action item",
+    "Set next check-in date"
+  ]}
+];
 
-  function update(){
-    const total = boxes.length;
-    const checked = boxes.filter(b => b.checked).length;
-    bar.style.width = (total ? (checked/total*100) : 0) + '%';
-    progressLabel.textContent = checked + ' / ' + total + ' confirmed';
+const STORAGE_KEY = "ntinda_vti_kickoff_checklist_v1";
 
-    groups.forEach(g => {
-      const gBoxes = g.querySelectorAll('input[type=checkbox]');
-      const gChecked = Array.from(gBoxes).filter(b => b.checked).length;
-      g.querySelector('[data-count]').textContent = gChecked + '/' + gBoxes.length;
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){ return {}; }
+}
+function saveState(state){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const tag = document.getElementById("savedTag");
+    tag.classList.add("show");
+    clearTimeout(window.__savedTimeout);
+    window.__savedTimeout = setTimeout(()=>tag.classList.remove("show"), 1500);
+  }catch(e){}
+}
+
+let state = loadState();
+
+function render(){
+  const container = document.getElementById("checklist");
+  container.innerHTML = "";
+  let total = 0, checked = 0;
+
+  DATA.forEach((section, sIdx) => {
+    const sec = document.createElement("section");
+    const h = document.createElement("div");
+    h.className = "section-title";
+    h.textContent = section.title;
+    sec.appendChild(h);
+
+    section.items.forEach((text, iIdx) => {
+      total++;
+      const key = sIdx + "-" + iIdx;
+      const isChecked = !!state[key];
+      if(isChecked) checked++;
+
+      const lbl = document.createElement("label");
+      lbl.className = "item" + (isChecked ? " checked" : "");
+      lbl.innerHTML = `<input type="checkbox" ${isChecked ? "checked" : ""}> <span class="txt"></span>`;
+      lbl.querySelector(".txt").textContent = text;
+
+      lbl.querySelector("input").addEventListener("change", (e) => {
+        state[key] = e.target.checked;
+        saveState(state);
+        render();
+      });
+
+      sec.appendChild(lbl);
     });
+    container.appendChild(sec);
+  });
+
+  document.getElementById("progressText").textContent = `${checked} / ${total} confirmed`;
+  document.getElementById("progressFill").style.width = total ? (checked/total*100)+"%" : "0%";
+}
+
+function buildSummary(){
+  const lines = [];
+  lines.push("Ntinda VTI EV Training Program — Kickoff Meeting Checklist");
+  lines.push("Attendees: Ntinda VTI (Uganda) / Gilbert and relevant staff");
+  lines.push("Date generated: " + new Date().toLocaleString());
+  lines.push("");
+  let total=0, checked=0;
+  DATA.forEach((section, sIdx) => {
+    lines.push(section.title);
+    section.items.forEach((text, iIdx) => {
+      total++;
+      const key = sIdx + "-" + iIdx;
+      const done = !!state[key];
+      if(done) checked++;
+      lines.push(`  [${done ? "x" : " "}] ${text}`);
+    });
+    lines.push("");
+  });
+  lines.unshift(`Progress: ${checked} / ${total} confirmed`, "");
+  return lines.join("\n");
+}
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  if(confirm("Reset all checked items?")){
+    state = {};
+    saveState(state);
+    render();
   }
+});
 
-  boxes.forEach(b => {
-    b.addEventListener('change', () => {
-      const span = b.closest('label').querySelector('.item-text');
-      span.classList.toggle('done', b.checked);
-      update();
-    });
-  });
+document.getElementById("downloadBtn").addEventListener("click", () => {
+  const text = buildSummary();
+  const blob = new Blob([text], {type:"text/plain"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "Ntinda_VTI_Kickoff_Checklist_Summary.txt";
+  a.click();
+  URL.revokeObjectURL(url);
+});
 
-  document.getElementById('reset').addEventListener('click', () => {
-    boxes.forEach(b => {
-      b.checked = false;
-      b.closest('label').querySelector('.item-text').classList.remove('done');
-    });
-    update();
-  });
+document.getElementById("emailBtn").addEventListener("click", () => {
+  const subject = encodeURIComponent("Ntinda VTI Kickoff Checklist — Results");
+  const body = encodeURIComponent(buildSummary());
+  window.location.href = `mailto:kellycho824@ieg.kr?subject=${subject}&body=${body}`;
+});
 
-  update();
+render();
 </script>
 </body>
 </html>
