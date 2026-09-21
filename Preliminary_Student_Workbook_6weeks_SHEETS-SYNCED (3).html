@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICE Fundamentals Preliminary Workbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #eef6fb; --panel: #ffffff; --panel2: #eaf5fb; --border: #bfe0f0; --border2: #94c9e3;
+  --accent: #3b82f6; --amber: #f59e0b; --green: #22c55e; --text: #0f2436; --muted: #2f4a63; --muted2: #43617d;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-weight: 500; background: #87CEEB; color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 14px; line-height: 1.55; }
+.wrap { max-width: 900px; margin: 0 auto; padding: 32px 20px 80px; }
+
+.hero { background: linear-gradient(135deg, #1a2f42, #0f2436); border-radius: 14px; padding: 30px 26px; color: #fff; margin-bottom: 20px; }
+.hero-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: .1em; color: #93c5fd; font-weight: 700; margin-bottom: 8px; }
+.hero-title { font-size: 24px; font-weight: 800; margin-bottom: 10px; }
+.hero-sub { font-size: 13px; color: #b9c9d8; line-height: 1.7; }
+.hero-sub b { color: #fff; }
+
+.save-indicator { position: fixed; top: 14px; right: 14px; z-index: 100; background: var(--green); color: white; padding: 6px 14px; border-radius: 16px; font-size: 11px; font-family: 'IBM Plex Mono', monospace; font-weight: 700; opacity: 0; transition: opacity .3s; pointer-events: none; }
+.save-indicator.show { opacity: 1; }
+
+.week-nav { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+.week-nav-btn { padding: 9px 16px; border-radius: 8px; border: 1.5px solid var(--border2); background: var(--panel); color: var(--muted); font-weight: 700; font-size: 12.5px; cursor: pointer; font-family: 'IBM Plex Mono', monospace; }
+.week-nav-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+.week-section { display: none; }
+.week-section.active { display: block; }
+
+.week-header { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 16px; }
+.week-header-title { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+.week-header-goal { font-size: 12.5px; color: var(--muted2); font-style: italic; }
+
+.day-card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.day-card-title { font-size: 15px; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+
+.field-group { margin-bottom: 16px; }
+.field-group:last-child { margin-bottom: 0; }
+.field-label { display: block; font-size: 11.5px; font-weight: 700; color: var(--muted); margin-bottom: 6px; font-family: 'IBM Plex Mono', monospace; letter-spacing: .02em; }
+.field-group textarea {
+  width: 100%; padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--border2);
+  font-family: 'Noto Sans KR', sans-serif; font-size: 13px; color: var(--text); background: var(--panel2);
+  min-height: 50px; resize: vertical;
+}
+.field-group textarea:focus { outline: none; border-color: var(--accent); background: white; }
+
+.term-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.term-row:last-child { margin-bottom: 0; }
+.term-name { font-size: 12px; font-weight: 700; color: var(--muted); min-width: 130px; flex-shrink: 0; }
+.term-row textarea { min-height: 34px; }
+
+.written-q { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); }
+.written-q:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.written-q-text { font-size: 12.5px; font-weight: 700; margin-bottom: 6px; }
+.written-q textarea { min-height: 36px; }
+
+.week-checkin { background: #fff7ed; border: 1px solid #fed7aa; border-radius: 12px; padding: 18px 20px; margin-bottom: 16px; }
+.week-checkin-title { font-size: 14px; font-weight: 800; color: #9a3412; margin-bottom: 10px; }
+.confidence-row { display: flex; gap: 6px; margin-bottom: 12px; }
+.conf-btn { flex: 1; padding: 9px; text-align: center; border-radius: 6px; border: 1.5px solid #fed7aa; background: white; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 12px; }
+.conf-btn.selected { background: var(--amber); border-color: var(--amber); color: white; }
+
+.final-panel { background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 12px; padding: 20px; margin-top: 4px; }
+.final-panel-title { font-size: 15px; font-weight: 800; color: #3730a3; margin-bottom: 12px; }
+
+.toolbar { display: flex; gap: 10px; margin-top: 20px; }
+.tool-btn { flex: 1; padding: 12px; border-radius: 9px; border: none; background: var(--accent); color: white; font-weight: 800; font-size: 13px; cursor: pointer; }
+.tool-btn.secondary { background: var(--panel); color: var(--muted); border: 1px solid var(--border2); }
+
+.name-modal-overlay { position: fixed; inset: 0; background: rgba(15,36,54,.72); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.name-modal-box { background: white; border-radius: 14px; padding: 26px 24px; max-width: 380px; width: 100%; }
+.name-modal-box h3 { font-size: 16px; margin-bottom: 8px; }
+.name-modal-box p { font-size: 12.5px; color: var(--muted2); margin-bottom: 14px; line-height: 1.6; }
+.name-modal-box input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1.5px solid var(--border2); font-size: 14px; margin-bottom: 12px; }
+.name-modal-box button { width: 100%; padding: 11px; border-radius: 8px; border: none; background: var(--accent); color: white; font-weight: 800; font-size: 13px; cursor: pointer; }
+
+.sync-indicator { position: fixed; top: 14px; left: 14px; z-index: 100; background: var(--muted2); color: white; padding: 5px 12px; border-radius: 16px; font-size: 10.5px; font-family: 'IBM Plex Mono', monospace; font-weight: 700; opacity: 0; transition: opacity .3s; pointer-events: none; }
+.sync-indicator.show-ok { opacity: 1; background: var(--green); }
+.sync-indicator.show-fail { opacity: 1; background: #ef4444; }
+@media print {
+  .no-print { display: none !important; }
+  .week-section { display: block !important; }
+  body { background: white; }
+}
+</style>
+</head>
+<body>
+<div class="save-indicator" id="saveIndicator">✓ Saved</div>
+<div class="sync-indicator" id="syncIndicator">☁ Syncing...</div>
+
+<div class="name-modal-overlay" id="nameModalOverlay">
+  <div class="name-modal-box">
+    <h3>👋 Before you start</h3>
+    <p>Please enter your name exactly as your instructor knows you. This lets your instructor see your progress and attendance for this course — your written answers themselves are only saved on this device.</p>
+    <input type="text" id="nameModalInput" placeholder="e.g. Kwame Mensah" />
+    <button onclick="submitStudentName()">Start Workbook</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-eyebrow">📓 STUDENT WORKBOOK</div>
+    <div class="hero-title">ICE Fundamentals Preliminary Track — Workbook</div>
+    <div class="hero-sub">
+      <b>Why you're doing this:</b> this 6-week track builds the ICE-diagnostic-technician baseline that Week 1 of the 12-week EV Diagnosis &amp; Repair program assumes you already have — including circuit fundamentals, electromagnetism, and basic mechanical concepts.<br><br>
+      <b>Where you'll be when you finish:</b> ready to begin Week 1 of the 12-week program, which then takes you to solid <b>Blue-level</b> judgment (Weeks 1-8) and supervised <b>Orange-level</b> competence (Weeks 9-12 OJT). Full independent <b>Red-level</b> authorization comes later through your employer.<br><br>
+      Your answers here are saved automatically in this browser as you type. This workbook has no answer key on purpose — check your answers with your instructor.
+    </div>
+  </div>
+
+  <div class="week-nav no-print" id="weekNav"></div>
+
+  <div id="weeksContainer"></div>
+
+  <div class="final-panel">
+    <div class="final-panel-title">🎯 Final Readiness Reflection (Before Week 1 of the 12-Week Program)</div>
+    <div class="field-group">
+      <label class="field-label">WHICH OF THE 4 BRIDGE WEEKS FELT MOST SOLID?</label>
+      <textarea id="final-1" onblur="saveField('final-1')"></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">WHICH FELT LEAST SOLID, AND WHAT SPECIFICALLY WAS HARD?</label>
+      <textarea id="final-2" onblur="saveField('final-2')"></textarea>
+    </div>
+    <div class="field-group">
+      <label class="field-label">AM I READY TO START WEEK 1 OF THE 12-WEEK PROGRAM, OR SHOULD I REPEAT A WEEK FIRST?</label>
+      <textarea id="final-3" onblur="saveField('final-3')"></textarea>
+    </div>
+  </div>
+
+  <div class="toolbar no-print">
+    <button class="tool-btn" onclick="window.print()">🖨 Print / Save as PDF</button>
+    <button class="tool-btn secondary" onclick="clearAllData()">🗑 Clear All My Answers</button>
+  </div>
+
+</div>
+
+<script>
+const WORKBOOK_DATA = [{"num": 1, "letter": "B1", "title": "Vehicle Systems & Shop Fundamentals", "goal": "Goal: build the baseline every later week assumes — how a vehicle's systems fit together, general shop safety, reading documentation, and basic electrical math.", "days": [{"d": 1, "icon": "🔧", "title": "How a Vehicle Works — the Big Systems Picture", "theoryTerms": ["ECU"], "writtenQuestions": ["What is the ECU?", "What's the first question a technician should ask about any symptom?"]}, {"d": 2, "icon": "🧰", "title": "Hand Tools & General Shop Safety", "theoryTerms": ["Jack stand"], "writtenQuestions": ["What's the difference between a jack and a jack stand?", "What footwear is appropriate in the shop?"]}, {"d": 3, "icon": "📖", "title": "Reading a Service Manual & Technical Documentation", "theoryTerms": ["Specification (spec)"], "writtenQuestions": ["What is a 'spec' in a service manual?", "If your memory and the manual disagree on a value, which do you trust?"]}, {"d": 4, "icon": "⚡", "title": "Basic Electrical Fundamentals — Voltage, Current, Resistance", "theoryTerms": ["Ohm's Law"], "writtenQuestions": ["What does Ohm's Law state?", "What is resistance measured in?", "If resistance increases and voltage stays the same, what happens to current?"]}, {"d": 5, "icon": "📋", "title": "Week B1 Wrap-Up — Systems & Safety Review", "theoryTerms": [], "writtenQuestions": ["Which system diagnoses \"loss of power when accelerating\"?", "What must support a vehicle before someone works underneath it?", "V = I × R is known as:"]}]}, {"num": 2, "letter": "B2", "title": "Circuit & Electromagnetic Fundamentals", "goal": "Goal: extend Week B1's Ohm's Law into real circuit configurations, and build the electromagnetism, rectification, transformer, and thermistor knowledge that EV power electronics and sensor systems are built on.", "days": [{"d": 1, "icon": "🔀", "title": "Series & Parallel Circuits", "theoryTerms": ["Series circuit", "Parallel circuit"], "writtenQuestions": ["In a series circuit, what stays the same throughout?", "In a parallel circuit, what stays the same across each branch?", "How do you find total resistance in a series circuit?"]}, {"d": 2, "icon": "🧲", "title": "Fundamentals of Electromagnetism", "theoryTerms": ["Electromagnet", "Induction"], "writtenQuestions": ["What creates a magnetic field around a wire?", "What is induction?", "Why does a relay use a small electromagnet?"]}, {"d": 3, "icon": "⚡", "title": "Diode Rectifiers", "theoryTerms": ["Diode", "Rectifier"], "writtenQuestions": ["What does a diode do?", "What is rectification?", "Where in a vehicle would you find a rectifier?"]}, {"d": 4, "icon": "🔻", "title": "Step-Up / Step-Down Transformers", "theoryTerms": ["Step-up transformer", "Step-down transformer"], "writtenQuestions": ["What do the two coils in a transformer share to transfer energy?", "What does a step-up transformer do to voltage?", "Why don't transformers work with constant DC?"]}, {"d": 5, "icon": "🌡️", "title": "Thermistors & Week B2 Wrap-Up", "theoryTerms": ["Thermistor", "NTC"], "writtenQuestions": ["What does NTC stand for?", "As temperature rises, what happens to an NTC thermistor's resistance?", "How does the ECU use a thermistor's resistance?"]}]}, {"num": 3, "letter": "B3", "title": "Basic Diagnostic Reasoning", "goal": "Goal: build the symptom→cause→verify thinking pattern that every later diagnostic week in the main program assumes you already have.", "days": [{"d": 1, "icon": "🧭", "title": "What Is Diagnosis? Symptom → Cause → Verify", "theoryTerms": ["Low-cost check"], "writtenQuestions": ["What is the first step in the diagnostic process?", "Why test low-cost causes first?"]}, {"d": 2, "icon": "🔌", "title": "Using a Multimeter Safely (12V Practice)", "theoryTerms": ["Parallel connection"], "writtenQuestions": ["How should a multimeter be connected to measure voltage?", "Why start on the highest range if unsure of the expected value?"]}, {"d": 3, "icon": "🧾", "title": "Reading OBD-II / DTC Codes (ICE-Level Introduction)", "theoryTerms": ["DTC"], "writtenQuestions": ["What does a DTC tell you?", "What does a 'P' prefix generally indicate?"]}, {"d": 4, "icon": "🔩", "title": "Basic Mechanical Fault-Finding Practice", "theoryTerms": [], "writtenQuestions": ["What's a valid low-cost first check for a mechanical rattle?", "Why compare to a 'known-good' reference?"]}, {"d": 5, "icon": "📋", "title": "Week B2 Wrap-Up — Diagnostic Reasoning Review", "theoryTerms": [], "writtenQuestions": ["What are the 4 steps of the diagnostic pattern, in order?", "Does a DTC code alone tell you the root cause?"]}]}, {"num": 4, "letter": "B4", "title": "Automotive Mechanical Fundamentals", "goal": "Goal: build the core mechanical concepts (gear ratio, torque vs. power, cooling/heat management) that apply to every vehicle drivetrain and thermal system, ICE or EV.", "days": [{"d": 1, "icon": "⚙️", "title": "Gear Ratio Fundamentals", "theoryTerms": ["Gear ratio"], "writtenQuestions": ["What does a high gear ratio provide?", "Do EVs use gear ratios?", "What happens to output speed with a low gear ratio (overdrive)?"]}, {"d": 2, "icon": "💪", "title": "Torque vs. Power", "theoryTerms": ["Torque", "Power"], "writtenQuestions": ["What is torque?", "How is power related to torque?", "Why do EVs often feel quick off the line?"]}, {"d": 3, "icon": "🌡️", "title": "ICE Cooling System & Heat Management", "theoryTerms": ["Thermostat", "Radiator"], "writtenQuestions": ["What does the thermostat control?", "What keeps coolant circulating while the engine runs?", "Name one possible cause of engine overheating."]}, {"d": 4, "icon": "🧩", "title": "Applying Mechanical Concepts Together", "theoryTerms": [], "writtenQuestions": ["What two mechanical factors combine to raise overheating risk when towing uphill?", "What should never be ignored when reasoning through a mechanical scenario?"]}, {"d": 5, "icon": "📋", "title": "Week B4 Wrap-Up — Mechanical Fundamentals Review", "theoryTerms": [], "writtenQuestions": ["Which EV-related topic will most directly reuse this week's cooling system logic?", "What was this week's overall focus?"]}]}, {"num": 5, "letter": "B5", "title": "Electrical & Electronic Systems", "goal": "Goal: build comfort with 12V battery/charging systems, wiring diagrams, and the sensor-actuator-ECU relationship — the direct conceptual bridge into the EV program's BMS-heavy content.", "days": [{"d": 1, "icon": "🔋", "title": "12V Battery & Charging System Basics", "theoryTerms": ["Alternator"], "writtenQuestions": ["What does the alternator do?", "Roughly what resting voltage indicates a healthy 12V battery?"]}, {"d": 2, "icon": "📐", "title": "Reading Wiring Diagrams", "theoryTerms": ["Ground"], "writtenQuestions": ["What does 'ground' mean in a circuit?", "What 3 things does a basic circuit need?"]}, {"d": 3, "icon": "📡", "title": "Sensors & Actuators — How They Talk to the ECU", "theoryTerms": ["Sensor", "Actuator"], "writtenQuestions": ["What does a sensor do?", "What does an actuator do?"]}, {"d": 4, "icon": "🧩", "title": "Combined Electrical + Mechanical Troubleshooting Practice", "theoryTerms": [], "writtenQuestions": ["What's a quick way to start separating electrical vs mechanical causes?", "What order should checks generally follow?"]}, {"d": 5, "icon": "📋", "title": "Week B3 Wrap-Up — Electrical Systems Review", "theoryTerms": [], "writtenQuestions": ["What recharges a 12V battery while the engine runs?", "What 3-part relationship will resurface in the EV program's BMS content?"]}]}, {"num": 6, "letter": "B6", "title": "Professional Readiness & Gate Check", "goal": "Goal: build professional habits (documentation, communication, safety culture) and confirm — with an honest gate check — readiness to begin Week 1 of the main 12-week EV program.", "days": [{"d": 1, "icon": "📝", "title": "Documentation & Work Orders", "theoryTerms": ["Work order"], "writtenQuestions": ["What should a work order record, in order?", "Why write precise findings instead of vague ones?"]}, {"d": 2, "icon": "💬", "title": "Customer Communication Basics", "theoryTerms": [], "writtenQuestions": ["Why explain WHY a repair is needed, not just the cost?", "What should you do if unsure of an answer to a customer's question?"]}, {"d": 3, "icon": "🦺", "title": "Safety Culture & PPE Fundamentals", "theoryTerms": ["PPE"], "writtenQuestions": ["What does PPE stand for?", "Should a near-miss be reported even if nothing actually happened?"]}, {"d": 4, "icon": "🧠", "title": "Comprehensive Practice Scenario", "theoryTerms": [], "writtenQuestions": ["Why did the burning smell get prioritized in this scenario?", "What did the heat-damaged connector suggest was needed?"]}, {"d": 5, "icon": "🚦", "title": "Readiness Assessment — Gate to Week 1", "theoryTerms": [], "writtenQuestions": ["What should you do if you're not confident in a bridge-track skill area?", "Does the main EV program re-explain bridge-track concepts like Ohm's Law?"]}]}];
+const STORAGE_KEY = 'ice_prelim_workbook_v1';
+const STUDENT_KEY = 'ice_prelim_student_name';
+
+// ===== PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BELOW =====
+// Leave as-is (empty) to run the workbook with local-only saving, no sync.
+const GAS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxXJbMwjKYW-zbadPfS0iGQN5UAVBskJ_KktQKBG7c_fKBZw5ouAW3bJwcXDjS50btp/exec';
+// =============================================================
+
+let savedData = {};
+try { savedData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { savedData = {}; }
+
+function getStudentName() {
+  try { return localStorage.getItem(STUDENT_KEY) || ''; } catch(e) { return ''; }
+}
+
+function submitStudentName() {
+  const val = document.getElementById('nameModalInput').value.trim();
+  if (!val) { alert('Please type your name first.'); return; }
+  try { localStorage.setItem(STUDENT_KEY, val); } catch(e) {}
+  document.getElementById('nameModalOverlay').style.display = 'none';
+  logEvent('session_open', { week: currentWeekLabel() });
+}
+
+function currentWeekLabel() {
+  const active = document.querySelector('.week-section.active');
+  return active ? active.dataset.week : '';
+}
+
+function showSyncIndicator(ok) {
+  const ind = document.getElementById('syncIndicator');
+  ind.textContent = ok ? '☁ Synced' : '☁ Sync failed (saved locally)';
+  ind.className = 'sync-indicator ' + (ok ? 'show-ok' : 'show-fail');
+  clearTimeout(window.__syncTimeout);
+  window.__syncTimeout = setTimeout(() => ind.classList.remove('show-ok', 'show-fail'), 1500);
+}
+
+// Parses a field id like "goal-3-2" or "wq-5-1-0" into week/day numbers for the sheet.
+function parseFieldKey(key) {
+  const m = key.match(/-(\d+)(?:-(\d+))?/);
+  return { week: m ? m[1] : '', day: m && m[2] !== undefined ? m[2] : '' };
+}
+
+function logEvent(type, payload) {
+  if (!GAS_WEBAPP_URL) return; // sync disabled until a Web App URL is configured
+  const body = Object.assign({
+    type: type,
+    student: getStudentName(),
+    timestamp: new Date().toISOString()
+  }, payload || {});
+  fetch(GAS_WEBAPP_URL, {
+    method: 'POST',
+    mode: 'no-cors', // Apps Script Web Apps don't return readable CORS responses; fire-and-forget
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(body)
+  }).then(() => showSyncIndicator(true)).catch(() => showSyncIndicator(false));
+}
+
+function saveField(key) {
+  const el = document.getElementById(key);
+  if (!el) return;
+  savedData[key] = el.value;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData)); } catch(e) {}
+  const ind = document.getElementById('saveIndicator');
+  ind.classList.add('show');
+  clearTimeout(window.__saveTimeout);
+  window.__saveTimeout = setTimeout(() => ind.classList.remove('show'), 1200);
+
+  const { week, day } = parseFieldKey(key);
+  logEvent('field_progress', { field: key, week: week, day: day, hasAnswer: el.value.trim().length > 0 });
+}
+
+function restoreField(key) {
+  return savedData[key] || '';
+}
+
+function selectConfidence(weekNum, val) {
+  savedData['conf-' + weekNum] = val;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(savedData)); } catch(e) {}
+  document.querySelectorAll(`[data-conf-week="${weekNum}"]`).forEach(el => {
+    el.classList.toggle('selected', parseInt(el.dataset.confVal, 10) === val);
+  });
+  logEvent('week_confidence', { week: String(weekNum), confidence: val });
+}
+
+function switchWeek(weekNum) {
+  document.querySelectorAll('.week-section').forEach(el => el.classList.toggle('active', el.dataset.week == weekNum));
+  document.querySelectorAll('.week-nav-btn').forEach(el => el.classList.toggle('active', el.dataset.week == weekNum));
+  logEvent('week_open', { week: String(weekNum) });
+}
+
+function clearAllData() {
+  if (!confirm('Clear all your saved answers in this workbook? This cannot be undone.')) return;
+  savedData = {};
+  try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+  location.reload();
+}
+
+function render() {
+  const nav = document.getElementById('weekNav');
+  nav.innerHTML = WORKBOOK_DATA.map((w, i) => `<button class="week-nav-btn ${i===0?'active':''}" data-week="${w.num}" onclick="switchWeek(${w.num})">${w.letter}</button>`).join('');
+
+  const container = document.getElementById('weeksContainer');
+  container.innerHTML = WORKBOOK_DATA.map((w, wi) => `
+    <div class="week-section ${wi===0?'active':''}" data-week="${w.num}">
+      <div class="week-header">
+        <div class="week-header-title">Week ${w.letter} — ${w.title}</div>
+        <div class="week-header-goal">${w.goal}</div>
+      </div>
+      ${w.days.map(d => `
+        <div class="day-card">
+          <div class="day-card-title">${d.icon} ${w.letter} Day ${d.d} — ${d.title}</div>
+          <div class="field-group">
+            <label class="field-label">TODAY'S GOAL (IN YOUR OWN WORDS)</label>
+            <textarea id="goal-${w.num}-${d.d}" onblur="saveField('goal-${w.num}-${d.d}')">${restoreField('goal-'+w.num+'-'+d.d)}</textarea>
+          </div>
+          ${d.theoryTerms.length ? `
+          <div class="field-group">
+            <label class="field-label">KEY TERMS &amp; NOTES</label>
+            ${d.theoryTerms.map((t, ti) => `
+              <div class="term-row">
+                <div class="term-name">${t}:</div>
+                <textarea id="term-${w.num}-${d.d}-${ti}" onblur="saveField('term-${w.num}-${d.d}-${ti}')">${restoreField('term-'+w.num+'-'+d.d+'-'+ti)}</textarea>
+              </div>
+            `).join('')}
+          </div>` : `
+          <div class="field-group">
+            <label class="field-label">NOTES</label>
+            <textarea id="term-${w.num}-${d.d}-0" onblur="saveField('term-${w.num}-${d.d}-0')">${restoreField('term-'+w.num+'-'+d.d+'-0')}</textarea>
+          </div>`}
+          <div class="field-group">
+            <label class="field-label">SIMULATOR RESULT &amp; WHAT I LEARNED</label>
+            <textarea id="sim-${w.num}-${d.d}" onblur="saveField('sim-${w.num}-${d.d}')">${restoreField('sim-'+w.num+'-'+d.d)}</textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">WRITTEN TEST — ANSWER IN YOUR OWN WORDS FIRST</label>
+            ${d.writtenQuestions.map((q, qi) => `
+              <div class="written-q">
+                <div class="written-q-text">Q${qi+1}. ${q}</div>
+                <textarea id="wq-${w.num}-${d.d}-${qi}" onblur="saveField('wq-${w.num}-${d.d}-${qi}')">${restoreField('wq-'+w.num+'-'+d.d+'-'+qi)}</textarea>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('')}
+      <div class="week-checkin">
+        <div class="week-checkin-title">✅ Week ${w.letter} Self-Check</div>
+        <div class="field-group">
+          <label class="field-label">CONFIDENCE (1 = NOT CONFIDENT, 5 = VERY CONFIDENT)</label>
+          <div class="confidence-row">
+            ${[1,2,3,4,5].map(n => `<div class="conf-btn ${restoreField('conf-'+w.num)==n?'selected':''}" data-conf-week="${w.num}" data-conf-val="${n}" onclick="selectConfidence(${w.num}, ${n})">${n}</div>`).join('')}
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">TOPICS TO REVIEW AGAIN</label>
+          <textarea id="review-${w.num}" onblur="saveField('review-${w.num}')">${restoreField('review-'+w.num)}</textarea>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // restore final reflection fields
+  ['final-1','final-2','final-3'].forEach(k => {
+    const el = document.getElementById(k);
+    if (el) el.value = restoreField(k);
+  });
+}
+
+render();
+
+if (getStudentName()) {
+  document.getElementById('nameModalOverlay').style.display = 'none';
+  logEvent('session_open', { week: currentWeekLabel() });
+} else {
+  document.getElementById('nameModalOverlay').style.display = 'flex';
+}
+</script>
+</body>
+</html>
